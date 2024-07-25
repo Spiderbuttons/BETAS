@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using StardewModdingAPI;
 using HarmonyLib;
 
@@ -6,23 +7,23 @@ namespace BETAS.Helpers;
 
 public static class Log
 {
-    public static void Debug<T>(T message) => ModEntry.ModMonitor.Log(
+    public static void Debug<T>(T message) => BETAS.ModMonitor.Log(
         $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
         LogLevel.Debug);
 
-    public static void Error<T>(T message) => ModEntry.ModMonitor.Log(
+    public static void Error<T>(T message) => BETAS.ModMonitor.Log(
         $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
         LogLevel.Error);
 
-    public static void Warn<T>(T message) => ModEntry.ModMonitor.Log(
+    public static void Warn<T>(T message) => BETAS.ModMonitor.Log(
         $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
         LogLevel.Warn);
 
-    public static void Info<T>(T message) => ModEntry.ModMonitor.Log(
+    public static void Info<T>(T message) => BETAS.ModMonitor.Log(
         $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
         LogLevel.Info);
 
-    public static void Trace<T>(T message) => ModEntry.ModMonitor.Log(
+    public static void Trace<T>(T message) => BETAS.ModMonitor.Log(
         $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
         LogLevel.Trace);
 
@@ -31,6 +32,27 @@ public static class Log
         foreach (var instruction in code)
         {
             Debug($"{instruction.opcode} {instruction.operand}");
+        }
+    }
+    
+    public static void ILCode(IEnumerable<CodeInstruction> newCode, IEnumerable<CodeInstruction> originalCode)
+    {
+        var originalEnumerator = 0;
+        // print each line of newCode. if the current line of newCode is not the same as the current line of originalCode, log it with Warn instead and don't update the originalCode enumerator until they match again
+        foreach (var instruction in newCode)
+        {
+            if (originalEnumerator >= originalCode.Count())
+            {
+                Warn($"{instruction.opcode} {instruction.operand}");
+                continue;
+            }
+            if (instruction.opcode != originalCode.ElementAt(originalEnumerator).opcode || instruction.operand != originalCode.ElementAt(originalEnumerator).operand)
+            {
+                Warn($"{instruction.opcode} {instruction.operand}");
+                continue;
+            }
+            Debug($"{instruction.opcode} {instruction.operand}");
+            originalEnumerator++;
         }
     }
 
