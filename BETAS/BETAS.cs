@@ -27,6 +27,8 @@ namespace BETAS
 
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA", ITEM_MOD_DATA);
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_RANGE", ITEM_MOD_DATA_RANGE);
+            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA", LOCATION_MOD_DATA);
+            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_RANGE", LOCATION_MOD_DATA_RANGE);
             
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught");
@@ -47,7 +49,7 @@ namespace BETAS
         // GSQ for checking whether an item has a specific mod data key with a specific value.
         public static bool ITEM_MOD_DATA(string[] query, GameStateQueryContext context)
         {
-            if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error))
+            if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetOptional(query, 3, out var value, out error))
             {
                 return GameStateQuery.Helpers.ErrorResult(query, error);
             }
@@ -56,8 +58,10 @@ namespace BETAS
                 return false;
             }
 
+            bool ignoreValue = ArgUtility.HasIndex(query, 3);
+
             return item.modData.TryGetValue(key, out var data) &&
-                   string.Equals(data, value, StringComparison.OrdinalIgnoreCase);
+                   (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
         }
         
         // GSQ for checking whether an item has a specific mod data key with a value within a specific range. Values are parsed as ints.
@@ -73,6 +77,39 @@ namespace BETAS
             }
 
             return item.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
+                   dataInt >= minRange && dataInt <= maxRange;
+        }
+        
+        public static bool LOCATION_MOD_DATA(string[] query, GameStateQueryContext context)
+        {
+            GameLocation location = context.Location;
+            if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetOptional(query, 3, out var value, out error))
+            {
+                return GameStateQuery.Helpers.ErrorResult(query, error);
+            }
+            if (location == null)
+            {
+                return false;
+            }
+            bool ignoreValue = ArgUtility.HasIndex(query, 3);
+
+            return location.modData.TryGetValue(key, out var data) &&
+                   (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
+        }
+        
+        public static bool LOCATION_MOD_DATA_RANGE(string[] query, GameStateQueryContext context)
+        {
+            GameLocation location = context.Location;
+            if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetInt(query, 3, out var minRange, out error) || !ArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
+            {
+                return GameStateQuery.Helpers.ErrorResult(query, error);
+            }
+            if (location == null)
+            {
+                return false;
+            }
+
+            return location.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
                    dataInt >= minRange && dataInt <= maxRange;
         }
 
