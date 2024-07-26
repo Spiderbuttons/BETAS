@@ -33,9 +33,8 @@ namespace BETAS
             
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvestedByJunimo");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropDied");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MachineOutputCollected");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_EnemyKilled");
@@ -47,7 +46,7 @@ namespace BETAS
             Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
         
-        // GSQ for checking whether an item has a specific mod data key with a specific value.
+        // GSQ for checking whether an item has a specific mod data key with a specific value. If the value is omitted, it just checks if the key exists at all.
         public static bool ITEM_MOD_DATA(string[] query, GameStateQueryContext context)
         {
             if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetOptional(query, 3, out var value, out error))
@@ -81,6 +80,7 @@ namespace BETAS
                    dataInt >= minRange && dataInt <= maxRange;
         }
         
+        // GSQ for checking whether a location has a specific mod data key with a specific value. If the value is omitted, it just checks if the key exists at all.
         public static bool LOCATION_MOD_DATA(string[] query, GameStateQueryContext context)
         {
             GameLocation location = context.Location;
@@ -98,6 +98,7 @@ namespace BETAS
                    (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
         }
         
+        // GSQ for checking whether a location has a specific mod data key with a value within a specific range. Values are parsed as ints.
         public static bool LOCATION_MOD_DATA_RANGE(string[] query, GameStateQueryContext context)
         {
             GameLocation location = context.Location;
