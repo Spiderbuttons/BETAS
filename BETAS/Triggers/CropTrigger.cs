@@ -14,15 +14,11 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class CropTrigger
     {
-        // Raised whenever the player gains experience. ItemId is the name of the skill, ItemStack is the amount of experience gained, and ItemQuality is whether the experience gain resulted in a level up (0 if not, 1 if it did).
-        // SpaceCore custom skills are not supported. Maybe eventually!
         public static void Trigger_CropHarvested(Item crop, JunimoHarvester junimo = null, int numToHarvest = 1)
         {
-            Log.Debug($"Crop harvested: {crop.Name}, junimo exists: {junimo is not null}, numToHarvest: {numToHarvest}");
-            crop.modData["BETAS/ExperienceGained/IsHarvestedByJunimo"] = $"{junimo is not null}";
-            Log.Debug(crop.Stack);
+            crop.modData["BETAS/CropHarvested/IsHarvestedByJunimo"] = $"{junimo is not null}";
+            crop.Stack = numToHarvest;
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested", targetItem: crop);
-            var x = new Crop();
         }
         
         [HarmonyTranspiler]
