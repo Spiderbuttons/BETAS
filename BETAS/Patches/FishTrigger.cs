@@ -20,16 +20,15 @@ namespace BETAS.Patches
         {
             try
             {
-                var fishItem = ItemRegistry.Create(fishId);
+                var fishItem = ItemRegistry.Create(fishId, numCaught, fishQuality);
                 if (fishItem.Category == -20 || fromFishPond) return;
-                fishItem.Quality = fishQuality;
-                fishItem.Stack = numCaught;
                 fishItem.modData["BETAS/FishCaught/Size"] = $"{fishSize}";
                 fishItem.modData["BETAS/FishCaught/Difficulty"] = $"{fishDifficulty}";
                 fishItem.modData["BETAS/FishCaught/Perfect"] = wasPerfect ? "true" : "false";
                 fishItem.modData["BETAS/FishCaught/Legendary"] = isBossFish ? "true" : "false";
                 fishItem.modData["BETAS/FishCaught/Treasure"] = treasureCaught ? "true" : "false";
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", targetItem: fishItem);
+                Log.Debug(fishItem.ItemId);
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", inputItem: fishItem);
             }
             catch (Exception ex)
             {

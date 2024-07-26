@@ -56,8 +56,6 @@ namespace BETAS.Patches
                     new CodeInstruction(OpCodes.Ldloc_0),
                     new CodeInstruction(OpCodes.Ldloc_1)
                 );
-                
-                Log.ILCode(matcher.InstructionEnumeration(), code);
 
                 return matcher.InstructionEnumeration();
             }
