@@ -12,7 +12,7 @@ using StardewValley.Triggers;
 namespace BETAS.Patches
 {
     [HarmonyPatch]
-    static class fishPatcher
+    static class FishTrigger
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(FishingRod), nameof(FishingRod.pullFishFromWater))]

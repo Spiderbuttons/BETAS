@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using HarmonyLib;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
@@ -73,25 +74,6 @@ namespace BETAS
 
             return item.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
                    dataInt >= minRange && dataInt <= maxRange;
-        }
-
-        // Raised whenever the player gains experience. ItemId is the name of the skill, ItemStack is the amount of experience gained, and ItemQuality is whether the experience gain resulted in a level up (0 if not, 1 if it did).
-        // SpaceCore custom skills are not supported. Maybe eventually!
-        public static void Trigger_ExperienceGained( int levelUp, int skillID, int howMuch)
-        {
-            var skill = skillID switch
-            {
-                0 => "Farming",
-                1 => "Fishing",
-                2 => "Foraging",
-                3 => "Mining",
-                4 => "Combat",
-                _ => null
-            };
-            var skillItem = ItemRegistry.Create(skill);
-            skillItem.Stack = howMuch;
-            skillItem.Quality = levelUp;
-            TriggerActionManager.Raise($"{Manifest.UniqueID}_LevelIncreased", inputItem: skillItem);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)

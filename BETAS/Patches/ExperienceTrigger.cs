@@ -11,8 +11,27 @@ using StardewValley.Triggers;
 namespace BETAS.Patches
 {
     [HarmonyPatch]
-    static class experiencePatcher
+    static class ExperienceTrigger
     {
+        // Raised whenever the player gains experience. ItemId is the name of the skill, ItemStack is the amount of experience gained, and ItemQuality is whether the experience gain resulted in a level up (0 if not, 1 if it did).
+        // SpaceCore custom skills are not supported. Maybe eventually!
+        public static void Trigger_ExperienceGained( int levelUp, int skillID, int howMuch)
+        {
+            var skill = skillID switch
+            {
+                0 => "Farming",
+                1 => "Fishing",
+                2 => "Foraging",
+                3 => "Mining",
+                4 => "Combat",
+                _ => null
+            };
+            var skillItem = ItemRegistry.Create(skill);
+            skillItem.modData["BETAS/ExperienceGained/Amount"] = $"{howMuch}";
+            skillItem.modData["BETAS/ExperienceGained/LevelUp"] = levelUp == 1 ? "true" : "false";
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LevelIncreased", inputItem: skillItem);
+        }
+        
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(Farmer), nameof(Farmer.gainExperience))]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
@@ -33,7 +52,7 @@ namespace BETAS.Patches
                     new CodeInstruction(OpCodes.Sub),
                     new CodeInstruction(OpCodes.Ldarg_1),
                     new CodeInstruction(OpCodes.Ldarg_2),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(BETAS), nameof(BETAS.Trigger_ExperienceGained))),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ExperienceTrigger), nameof(Trigger_ExperienceGained))),
                     new CodeInstruction(OpCodes.Ldloc_0),
                     new CodeInstruction(OpCodes.Ldloc_1)
                 );
