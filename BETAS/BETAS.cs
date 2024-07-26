@@ -6,6 +6,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley;
 using BETAS.Helpers;
+using StardewValley.Delegates;
 using StardewValley.Triggers;
 
 namespace BETAS
@@ -23,8 +24,11 @@ namespace BETAS
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
 
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LevelIncreased");
+            GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA", ITEM_MOD_DATA);
+            GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_RANGE", ITEM_MOD_DATA_RANGE);
+            
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvestedByJunimo");
@@ -38,9 +42,41 @@ namespace BETAS
 
             Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
+        
+        // GSQ for checking whether an item has a specific mod data key with a specific value.
+        public static bool ITEM_MOD_DATA(string[] query, GameStateQueryContext context)
+        {
+            if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error))
+            {
+                return GameStateQuery.Helpers.ErrorResult(query, error);
+            }
+            if (item == null)
+            {
+                return false;
+            }
+
+            return item.modData.TryGetValue(key, out var data) &&
+                   string.Equals(data, value, StringComparison.OrdinalIgnoreCase);
+        }
+        
+        // GSQ for checking whether an item has a specific mod data key with a value within a specific range. Values are parsed as ints.
+        public static bool ITEM_MOD_DATA_RANGE(string[] query, GameStateQueryContext context)
+        {
+            if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error) || !ArgUtility.TryGetInt(query, 4, out var minRange, out error) || !ArgUtility.TryGetOptionalInt(query, 5, out var maxRange, out error, int.MaxValue))
+            {
+                return GameStateQuery.Helpers.ErrorResult(query, error);
+            }
+            if (item == null)
+            {
+                return false;
+            }
+
+            return item.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
+                   dataInt >= minRange && dataInt <= maxRange;
+        }
 
         // Raised whenever the player gains experience. ItemId is the name of the skill, ItemStack is the amount of experience gained, and ItemQuality is whether the experience gain resulted in a level up (0 if not, 1 if it did).
-        // SpaceCore custom skills are not supported.
+        // SpaceCore custom skills are not supported. Maybe eventually!
         public static void Trigger_ExperienceGained( int levelUp, int skillID, int howMuch)
         {
             var skill = skillID switch
@@ -55,7 +91,7 @@ namespace BETAS
             var skillItem = ItemRegistry.Create(skill);
             skillItem.Stack = howMuch;
             skillItem.Quality = levelUp;
-            TriggerActionManager.Raise($"{Manifest.UniqueID}_LevelIncreased", targetItem: skillItem);
+            TriggerActionManager.Raise($"{Manifest.UniqueID}_LevelIncreased", inputItem: skillItem);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
