@@ -20,7 +20,8 @@ namespace BETAS.Triggers
         {
             Log.Debug($"Crop harvested: {crop.Name}, junimo exists: {junimo is not null}, numToHarvest: {numToHarvest}");
             crop.modData["BETAS/ExperienceGained/IsHarvestedByJunimo"] = $"{junimo is not null}";
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested", inputItem: crop);
+            Log.Debug(crop.Stack);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested", targetItem: crop);
             var x = new Crop();
         }
         
@@ -34,6 +35,7 @@ namespace BETAS.Triggers
                 var matcher = new CodeMatcher(code, il);
                 
                 // Need to find the numToHarvest localBuilder. The crop, if it's a forageCrop, is just Ldloc.1 which is nice.
+                //  Edit from future me: Apparently forageCrop just never happens? I wasted half my time here? Oh well...
                 matcher.MatchEndForward(
                     new CodeMatch(static i => i.opcode == OpCodes.Call && i.operand.ToString()!.Contains("Clamp")),
                     new CodeMatch(OpCodes.Stloc_S),

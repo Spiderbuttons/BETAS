@@ -27,7 +27,7 @@ namespace BETAS.Triggers
                 fishItem.modData["BETAS/FishCaught/IsPerfect"] = wasPerfect ? "true" : "false";
                 fishItem.modData["BETAS/FishCaught/IsLegendary"] = isBossFish ? "true" : "false";
                 fishItem.modData["BETAS/FishCaught/IsWithTreasure"] = treasureCaught ? "true" : "false";
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", inputItem: fishItem);
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", targetItem: fishItem);
             }
             catch (Exception ex)
             {

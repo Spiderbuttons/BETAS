@@ -31,7 +31,7 @@ namespace BETAS.Triggers
                     letterItem.modData["BETAS/LetterRead/IsWithItem"] = $"{letter.itemsLeftToGrab()}";
                     if (letter.questID is not null) letterItem.modData["BETAS/LetterRead/Quest"] = $"{letter.questID}";
                     else if (letter.specialOrderId is not null) letterItem.modData["BETAS/LetterRead/SpecialOrder"] = $"{letter.questID}";
-                    TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LetterRead", inputItem: letterItem);
+                    TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LetterRead", targetItem: letterItem);
                 }
             }
             catch (Exception ex)
