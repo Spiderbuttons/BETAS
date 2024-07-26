@@ -29,7 +29,7 @@ namespace BETAS.Patches
             var skillItem = ItemRegistry.Create(skill);
             skillItem.modData["BETAS/ExperienceGained/Amount"] = $"{howMuch}";
             skillItem.modData["BETAS/ExperienceGained/LevelUp"] = levelUp == 1 ? "true" : "false";
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LevelIncreased", inputItem: skillItem);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ExperienceGained", inputItem: skillItem);
         }
         
         [HarmonyTranspiler]

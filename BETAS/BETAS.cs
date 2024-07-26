@@ -63,7 +63,7 @@ namespace BETAS
         // GSQ for checking whether an item has a specific mod data key with a value within a specific range. Values are parsed as ints.
         public static bool ITEM_MOD_DATA_RANGE(string[] query, GameStateQueryContext context)
         {
-            if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error) || !ArgUtility.TryGetInt(query, 4, out var minRange, out error) || !ArgUtility.TryGetOptionalInt(query, 5, out var maxRange, out error, int.MaxValue))
+            if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetInt(query, 3, out var minRange, out error) || !ArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
             {
                 return GameStateQuery.Helpers.ErrorResult(query, error);
             }
@@ -83,7 +83,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                Game1.player.gainExperience(1, 500);
+                Game1.player.gainExperience(1, 100);
             }
 
             if (e.Button == SButton.F8)

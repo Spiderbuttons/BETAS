@@ -16,14 +16,20 @@ namespace BETAS.Patches
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(FishingRod), nameof(FishingRod.pullFishFromWater))]
-        public static void pullFishFromWater_Postfix(string fishId, int fishSize, int fishQuality, int fishDifficulty, bool wasPerfect, bool isBossFish)
+        public static void pullFishFromWater_Postfix(string fishId, int fishSize, int numCaught, int fishQuality, int fishDifficulty, bool fromFishPond, bool wasPerfect, bool isBossFish, bool treasureCaught)
         {
             try
             {
                 var fishItem = ItemRegistry.Create(fishId);
-                fishItem.Stack = fishSize;
+                if (fishItem.Category == -20 || fromFishPond) return;
                 fishItem.Quality = fishQuality;
-                TriggerActionManager.Raise("BETAS_FishCaught", targetItem: fishItem);
+                fishItem.Stack = numCaught;
+                fishItem.modData["BETAS/FishCaught/Size"] = $"{fishSize}";
+                fishItem.modData["BETAS/FishCaught/Difficulty"] = $"{fishDifficulty}";
+                fishItem.modData["BETAS/FishCaught/Perfect"] = wasPerfect ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/Legendary"] = isBossFish ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/Treasure"] = treasureCaught ? "true" : "false";
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", targetItem: fishItem);
             }
             catch (Exception ex)
             {
