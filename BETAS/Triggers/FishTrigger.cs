@@ -9,7 +9,7 @@ using StardewValley;
 using StardewValley.Tools;
 using StardewValley.Triggers;
 
-namespace BETAS.Patches
+namespace BETAS.Triggers
 {
     [HarmonyPatch]
     static class FishTrigger
@@ -24,15 +24,14 @@ namespace BETAS.Patches
                 if (fishItem.Category == -20 || fromFishPond) return;
                 fishItem.modData["BETAS/FishCaught/Size"] = $"{fishSize}";
                 fishItem.modData["BETAS/FishCaught/Difficulty"] = $"{fishDifficulty}";
-                fishItem.modData["BETAS/FishCaught/Perfect"] = wasPerfect ? "true" : "false";
-                fishItem.modData["BETAS/FishCaught/Legendary"] = isBossFish ? "true" : "false";
-                fishItem.modData["BETAS/FishCaught/Treasure"] = treasureCaught ? "true" : "false";
-                Log.Debug(fishItem.ItemId);
+                fishItem.modData["BETAS/FishCaught/IsPerfect"] = wasPerfect ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/IsLegendary"] = isBossFish ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/IsWithTreasure"] = treasureCaught ? "true" : "false";
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", inputItem: fishItem);
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.Fish_FishingRod_pullFishFromWater_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.FishTrigger_FishingRod_pullFishFromWater_Postfix: \n" + ex);
             }
         }
     }

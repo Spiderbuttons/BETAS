@@ -8,7 +8,7 @@ using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Triggers;
 
-namespace BETAS.Patches
+namespace BETAS.Triggers
 {
     [HarmonyPatch]
     static class ExperienceTrigger
@@ -28,7 +28,7 @@ namespace BETAS.Patches
             };
             var skillItem = ItemRegistry.Create(skill);
             skillItem.modData["BETAS/ExperienceGained/Amount"] = $"{howMuch}";
-            skillItem.modData["BETAS/ExperienceGained/LevelUp"] = levelUp == 1 ? "true" : "false";
+            skillItem.modData["BETAS/ExperienceGained/IsLevelUp"] = levelUp == 1 ? "true" : "false";
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ExperienceGained", inputItem: skillItem);
         }
         
@@ -61,7 +61,7 @@ namespace BETAS.Patches
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.Experience_Farmer_gainExperience_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.ExperienceTrigger_Farmer_gainExperience_Transpiler: \n" + ex);
                 return code;
             }
         }

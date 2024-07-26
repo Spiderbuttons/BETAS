@@ -7,6 +7,7 @@ using StardewModdingAPI.Events;
 using StardewModdingAPI.Utilities;
 using StardewValley;
 using BETAS.Helpers;
+using BETAS.Triggers;
 using StardewValley.Delegates;
 using StardewValley.Triggers;
 
@@ -30,8 +31,8 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA", LOCATION_MOD_DATA);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_RANGE", LOCATION_MOD_DATA_RANGE);
             
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvestedByJunimo");
@@ -58,7 +59,7 @@ namespace BETAS
                 return false;
             }
 
-            bool ignoreValue = ArgUtility.HasIndex(query, 3);
+            bool ignoreValue = !ArgUtility.HasIndex(query, 3);
 
             return item.modData.TryGetValue(key, out var data) &&
                    (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
@@ -91,7 +92,7 @@ namespace BETAS
             {
                 return false;
             }
-            bool ignoreValue = ArgUtility.HasIndex(query, 3);
+            bool ignoreValue = !ArgUtility.HasIndex(query, 3);
 
             return location.modData.TryGetValue(key, out var data) &&
                    (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
