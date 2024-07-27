@@ -32,13 +32,13 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_CONTAINS", ITEM_MOD_DATA_CONTAINS);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA", LOCATION_MOD_DATA);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_RANGE", LOCATION_MOD_DATA_RANGE);
+            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_CONTAINS", LOCATION_MOD_DATA_CONTAINS);
             
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BedEntered");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_SpouseKissed");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PetPet");
@@ -86,7 +86,7 @@ namespace BETAS
                    dataInt >= minRange && dataInt <= maxRange;
         }
         
-        // GSQ for checking whether a comma- or space-delimited list of values in mod data contains a specific value.
+        // GSQ for checking whether a comma- or space-delimited list of values in item mod data contains a specific value.
         public static bool ITEM_MOD_DATA_CONTAINS(string[] query, GameStateQueryContext context)
         {
             if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error, false))
@@ -134,6 +134,22 @@ namespace BETAS
 
             return location.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
                    dataInt >= minRange && dataInt <= maxRange;
+        }
+        
+        // GSQ for checking whether a comma- or space-delimited list of values in item mod data contains a specific value.
+        public static bool LOCATION_MOD_DATA_CONTAINS(string[] query, GameStateQueryContext context)
+        {
+            GameLocation location = context.Location;
+            if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error, false))
+            {
+                return GameStateQuery.Helpers.ErrorResult(query, error);
+            }
+            if (location == null)
+            {
+                return false;
+            }
+            
+            return location.modData.TryGetValue(key, out var data) && data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList().Contains(value, StringComparer.OrdinalIgnoreCase);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
