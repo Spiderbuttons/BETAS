@@ -15,9 +15,14 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class EnemyTrigger
     {
-        public static void Trigger_EnemyKilled(Monster mon, GameLocation loc, List<Debris> drops)
+        public static void Trigger_EnemyKilled(Monster mon, GameLocation loc, List<Debris> drops, Farmer killer)
         {
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested");
+            var monsterItem = ItemRegistry.Create(mon.Name.Replace(" ", ""), drops.Count);
+            if (drops.Count > 0) monsterItem.modData["BETAS/MonsterKilled/Drops"] = drops.Join(d => ItemRegistry.QualifyItemId(d.itemId.Value), ",");
+            monsterItem.modData["BETAS/MonsterKilled/MaxHealth"] = mon.MaxHealth.ToString();
+            monsterItem.modData["BETAS/MonsterKilled/Damage"] = mon.DamageToFarmer.ToString();
+            monsterItem.modData["BETAS/MonsterKilled/IsHardmodeMonster"] = mon.isHardModeMonster.Value.ToString();
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MonsterKilled", targetItem: monsterItem, location: loc, player: killer);
         }
         
         [HarmonyTranspiler]
@@ -27,8 +32,19 @@ namespace BETAS.Triggers
             var code = instructions.ToList();
             try
             {
-                var matcher = new CodeMatcher(code, il);
+                var matcher = new CodeMatcher(code, il).End();
 
+                matcher.SetOpcodeAndAdvance(OpCodes.Ldarg_1);
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Ldloc_3),
+                    new CodeInstruction(OpCodes.Ldloc_S, 4),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(EnemyTrigger), nameof(Trigger_EnemyKilled))),
+                    new CodeInstruction(OpCodes.Ret)
+                );
+                
+                Log.ILCode(matcher.InstructionEnumeration(), code);
 
                 return matcher.InstructionEnumeration();
             }

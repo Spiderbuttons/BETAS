@@ -29,6 +29,7 @@ namespace BETAS
 
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA", ITEM_MOD_DATA);
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_RANGE", ITEM_MOD_DATA_RANGE);
+            GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_CONTAINS", ITEM_MOD_DATA_CONTAINS);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA", LOCATION_MOD_DATA);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_RANGE", LOCATION_MOD_DATA_RANGE);
             
@@ -36,7 +37,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_EnemyKilled");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BedEntered");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_SpouseKissed");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven");
@@ -85,7 +86,7 @@ namespace BETAS
                    dataInt >= minRange && dataInt <= maxRange;
         }
         
-        // GSQ for checking whether a space-delimited list of values in mod data contains a specific value.
+        // GSQ for checking whether a comma- or space-delimited list of values in mod data contains a specific value.
         public static bool ITEM_MOD_DATA_CONTAINS(string[] query, GameStateQueryContext context)
         {
             if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error, false))
@@ -97,7 +98,7 @@ namespace BETAS
                 return false;
             }
             
-            return item.modData.TryGetValue(key, out var data) && data.Split(' ').ToList().Contains(value, StringComparer.OrdinalIgnoreCase);
+            return item.modData.TryGetValue(key, out var data) && data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList().Contains(value, StringComparer.OrdinalIgnoreCase);
         }
         
         // GSQ for checking whether a location has a specific mod data key with a specific value. If the value is omitted, it just checks if the key exists at all.
