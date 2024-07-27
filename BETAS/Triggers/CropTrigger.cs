@@ -14,11 +14,11 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class CropTrigger
     {
-        public static void Trigger_CropHarvested(Item crop, JunimoHarvester junimo = null, int numToHarvest = 1)
+        public static void Trigger_CropHarvested(Item crop, GameLocation loc, JunimoHarvester junimo = null, int numToHarvest = 1)
         {
             crop.modData["BETAS/CropHarvested/IsHarvestedByJunimo"] = $"{junimo is not null}";
             crop.Stack = numToHarvest;
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested", targetItem: crop);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested", targetItem: crop, location: loc);
         }
         
         [HarmonyTranspiler]
@@ -52,6 +52,8 @@ namespace BETAS.Triggers
                 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
@@ -68,6 +70,8 @@ namespace BETAS.Triggers
                 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
@@ -84,6 +88,8 @@ namespace BETAS.Triggers
                 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
@@ -107,6 +113,8 @@ namespace BETAS.Triggers
                 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_S, harvestItem.LocalIndex),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
@@ -120,6 +128,8 @@ namespace BETAS.Triggers
                 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_S, harvestItem.LocalIndex),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
@@ -129,7 +139,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.ExperienceTrigger_Farmer_gainExperience_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.CropTrigger_Crop_harvest_Transpiler: \n" + ex);
                 return code;
             }
         }

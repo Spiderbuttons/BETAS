@@ -36,7 +36,6 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MachineOutputCollected");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_EnemyKilled");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BedEntered");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_SpouseKissed");
