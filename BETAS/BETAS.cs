@@ -39,7 +39,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_SpouseKissed");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_NpcKissed");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PetPet");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_TrashcanChecked");

@@ -44,8 +44,6 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(EnemyTrigger), nameof(Trigger_EnemyKilled))),
                     new CodeInstruction(OpCodes.Ret)
                 );
-                
-                Log.ILCode(matcher.InstructionEnumeration(), code);
 
                 return matcher.InstructionEnumeration();
             }
