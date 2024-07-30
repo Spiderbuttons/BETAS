@@ -49,7 +49,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.ExperienceTrigger_Farmer_gainExperience_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.EnemyTrigger_GameLocation_monsterDrop_Transpiler: \n" + ex);
                 return code;
             }
         }
