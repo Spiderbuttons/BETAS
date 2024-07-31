@@ -10,6 +10,7 @@ using StardewValley;
 using BETAS.Helpers;
 using BETAS.Triggers;
 using StardewValley.Delegates;
+using StardewValley.Monsters;
 using StardewValley.Triggers;
 
 namespace BETAS
@@ -43,8 +44,8 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_AnimalPetted"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
 
             Harmony.PatchAll();
@@ -159,7 +160,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                Game1.player.gainExperience(1, 100);
+                return;
             }
 
             if (e.Button == SButton.F8)
