@@ -45,7 +45,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_AnimalPetted"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
 
             Harmony.PatchAll();
