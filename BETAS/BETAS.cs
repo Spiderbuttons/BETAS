@@ -46,6 +46,9 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_TreeShook");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BushHarvested");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
 
             Harmony.PatchAll();
@@ -160,7 +163,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                return;
+                Log.Debug((bool)Game1.player.ActiveObject.questItem);
             }
 
             if (e.Button == SButton.F8)
