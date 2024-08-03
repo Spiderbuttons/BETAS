@@ -163,7 +163,10 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                Log.Debug((bool)Game1.player.ActiveObject.questItem);
+                if (Game1.player.friendshipData.TryGetValue("Haley", out var friendship))
+                {
+                    Log.Debug(friendship.Points);
+                }
             }
 
             if (e.Button == SButton.F8)
