@@ -101,6 +101,60 @@ namespace BETAS.Triggers
         }
 
         [HarmonyTranspiler]
+        [HarmonyPatch(typeof(NPC), "engagementResponse")]
+        public static IEnumerable<CodeInstruction> engagementResponse_Transpiler(IEnumerable<CodeInstruction> instructions,
+            ILGenerator il)
+        {
+            var code = instructions.ToList();
+            try
+            {
+                var matcher = new CodeMatcher(code, il);
+
+                var oldFriendship = il.DeclareLocal(typeof(Friendship));
+
+                matcher.MatchStartForward(
+                    new CodeMatch(OpCodes.Ldloc_1),
+                    new CodeMatch(OpCodes.Ldc_I4_2),
+                    new CodeMatch(OpCodes.Callvirt, AccessTools.PropertySetter(typeof(Friendship), nameof(Friendship.Status)))
+                ).ThrowIfNotMatch("Could not find proper entry point #1 for NPC_engagementResponse_Transpiler");
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                    new CodeInstruction(OpCodes.Stloc, oldFriendship)
+                );
+
+                matcher.MatchEndForward(
+                    new CodeMatch(OpCodes.Ldloc_1),
+                    new CodeMatch(OpCodes.Ldloc_2),
+                    new CodeMatch(OpCodes.Callvirt, AccessTools.PropertySetter(typeof(Friendship), nameof(Friendship.WeddingDate)))
+                ).ThrowIfNotMatch("Could not find proper entry point #2 for NPC_engagementResponse_Transpiler");
+
+                matcher.Advance(1);
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldloc, oldFriendship),
+                    new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Ldarg_1),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                            new Type[] { typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer) }))
+                );
+                
+                Log.ILCode(matcher.InstructionEnumeration(), code);
+
+                return matcher.InstructionEnumeration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error in BETAS.RelationshipTrigger_NPC_engagementResponse_Transpiler: \n" + ex);
+                return code;
+            }
+        }
+
+        [HarmonyTranspiler]
         [HarmonyPatch(typeof(Farmer), nameof(Farmer.wipeExMemories))]
         public static IEnumerable<CodeInstruction> wipeExMemories_Transpiler(IEnumerable<CodeInstruction> instructions,
             ILGenerator il)
@@ -140,8 +194,6 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged), new Type[] {typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer)}))
                 );
-                
-                Log.ILCode(matcher.InstructionEnumeration(), code);
                 
                 return matcher.InstructionEnumeration();    
             }

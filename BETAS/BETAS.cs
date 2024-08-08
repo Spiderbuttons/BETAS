@@ -165,7 +165,7 @@ namespace BETAS
             {
                 if (Game1.player.friendshipData.TryGetValue("Haley", out var friendship))
                 {
-                    Log.Debug(friendship.Points);
+                    Log.Debug(friendship.Status);
                 }
             }
 
