@@ -16,7 +16,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class RelationshipTrigger
     {
-        public static void Trigger_RelationshipChanged(Friendship oldData, Friendship newData, NPC npc, Farmer who)
+        public static void Trigger_RelationshipChanged(Friendship newData, Friendship oldData, NPC npc, Farmer who)
         {
             var oldFriendship = ItemRegistry.Create(npc.Name);
             var newFriendship = ItemRegistry.Create(npc.Name);
@@ -61,7 +61,7 @@ namespace BETAS.Triggers
             Log.Debug($"Old LastGiftDate: {oldData.LastGiftDate?.ToString()}, New LastGiftDate: {newData.LastGiftDate?.ToString()}");
             Log.Debug($"Old TalkedToToday: {oldData.TalkedToToday.ToString()}, New TalkedToToday: {newData.TalkedToToday.ToString()}");
             Log.Debug($"Old RoommateMarriage: {oldData.RoommateMarriage.ToString()}, New RoommateMarriage: {newData.RoommateMarriage.ToString()}");
-            if (oldData.WeddingDate != null)
+            if (oldData.WeddingDate != null && newData.WeddingDate != null)
             {
                 Log.Debug($"Old WeddingDate: {oldData.WeddingDate.SeasonKey} {oldData.WeddingDate.DayOfMonth.ToString()} {oldData.WeddingDate.Year.ToString()}, New WeddingDate: {newData.WeddingDate?.SeasonKey} {newData.WeddingDate?.DayOfMonth.ToString()} {newData.WeddingDate?.Year.ToString()}");
             }
@@ -75,12 +75,12 @@ namespace BETAS.Triggers
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_RelationshipChanged", inputItem: oldFriendship, targetItem: newFriendship, location: npc.currentLocation, player: who);
         }
 
-        public static void Trigger_RelationshipChanged(Friendship oldData, Friendship newData, string npc, Farmer who)
+        public static void Trigger_RelationshipChanged(Friendship newData, Friendship oldData, string npc, Farmer who)
         {
             var character = Game1.getCharacterFromName(npc);
             if (character != null)
             {
-                Trigger_RelationshipChanged(oldData, newData, character, who);
+                Trigger_RelationshipChanged(newData, oldData, character, who);
             }
         }
         
@@ -98,6 +98,61 @@ namespace BETAS.Triggers
                 NextBirthingDate = data.NextBirthingDate,
                 Status = data.Status,
             };
+            
+            
+        }
+        
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(Game1), "_newDayAfterFade", MethodType.Enumerator)]
+        public static IEnumerable<CodeInstruction> newDayAfterFade_Transpiler(IEnumerable<CodeInstruction> instructions,
+            ILGenerator il)
+        {
+            var code = instructions.ToList();
+            try
+            {
+                var matcher = new CodeMatcher(code, il);
+
+                var oldFriendship = il.DeclareLocal(typeof(Friendship));
+
+                matcher.MatchStartForward(
+                    new CodeMatch(OpCodes.Dup),
+                    new CodeMatch(OpCodes.Ldc_I4_3),
+                    new CodeMatch(OpCodes.Callvirt, AccessTools.PropertySetter(typeof(Friendship), nameof(Friendship.Status)))
+                ).ThrowIfNotMatch("Could not find proper entry point #1 for Game1_newDayAfterFade_Transpiler");
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Dup),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                    new CodeInstruction(OpCodes.Stloc, oldFriendship),
+                    new CodeInstruction(OpCodes.Dup)
+                );
+
+                matcher.MatchEndForward(
+                    new CodeMatch(OpCodes.Callvirt, AccessTools.PropertySetter(typeof(Friendship), nameof(Friendship.WeddingDate)))
+                ).ThrowIfNotMatch("Could not find proper entry point #2 for Game1_newDayAfterFade_Transpiler");
+
+                matcher.Advance(1);
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldloc, oldFriendship),
+                    new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(Game1), nameof(Game1.player))),
+                    new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Farmer), nameof(Farmer.spouse))),
+                    new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(Game1), nameof(Game1.player))),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                            new Type[] { typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer) }))
+                );
+                
+                Log.ILCode(matcher.InstructionEnumeration(), code);
+
+                return matcher.InstructionEnumeration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error in BETAS.RelationshipTrigger_Game1_newDayAfterFade_Transpiler: \n" + ex);
+                return code;
+            }
         }
 
         [HarmonyTranspiler]
@@ -134,16 +189,14 @@ namespace BETAS.Triggers
                 matcher.Advance(1);
 
                 matcher.Insert(
-                    new CodeInstruction(OpCodes.Ldloc, oldFriendship),
                     new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Ldloc, oldFriendship),
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldarg_1),
                     new CodeInstruction(OpCodes.Call,
                         AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
                             new Type[] { typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer) }))
                 );
-                
-                Log.ILCode(matcher.InstructionEnumeration(), code);
 
                 return matcher.InstructionEnumeration();
             }
@@ -188,8 +241,8 @@ namespace BETAS.Triggers
                 ).ThrowIfNotMatch("Could not find proper entry point #2 for Farmer_wipeExMemories_Transpiler");
                 
                 matcher.Insert(
-                    new CodeInstruction(OpCodes.Ldloc, oldFriendship),
                     new CodeInstruction(OpCodes.Ldloc_3),
+                    new CodeInstruction(OpCodes.Ldloc, oldFriendship),
                     new CodeInstruction(OpCodes.Ldloc_2),
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged), new Type[] {typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer)}))
@@ -235,8 +288,8 @@ namespace BETAS.Triggers
                 matcher.Advance(1);
 
                 matcher.Insert(
-                    new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Ldloc_0),
+                    new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged), new Type[] {typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)}))
                 );

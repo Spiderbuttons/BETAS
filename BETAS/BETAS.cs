@@ -9,8 +9,10 @@ using StardewModdingAPI.Utilities;
 using StardewValley;
 using BETAS.Helpers;
 using BETAS.Triggers;
+using Netcode;
 using StardewValley.Delegates;
 using StardewValley.Monsters;
+using StardewValley.Network;
 using StardewValley.Triggers;
 
 namespace BETAS
@@ -54,6 +56,11 @@ namespace BETAS
             Harmony.PatchAll();
 
             Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+        }
+        
+        public static void test(object? sender, SerializableDictionary<string,Friendship>.ChangeArgs args)
+        {
+            Log.Debug($"{args.Key} changed!");
         }
         
         // GSQ for checking whether an item has a specific mod data key with a specific value. If the value is omitted, it just checks if the key exists at all.
@@ -165,8 +172,13 @@ namespace BETAS
             {
                 if (Game1.player.friendshipData.TryGetValue("Haley", out var friendship))
                 {
-                    Log.Debug(friendship.Status);
+                    Log.Debug(friendship.WeddingDate.ToString());
                 }
+            }
+            
+            if (e.Button == SButton.F6)
+            {
+                return;
             }
 
             if (e.Button == SButton.F8)
