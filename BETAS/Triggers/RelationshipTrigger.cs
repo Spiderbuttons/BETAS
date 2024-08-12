@@ -20,6 +20,9 @@ namespace BETAS.Triggers
         {
             var oldFriendship = ItemRegistry.Create(npc.Name);
             var newFriendship = ItemRegistry.Create(npc.Name);
+
+            Log.Debug(oldData.Points);
+            
             oldFriendship.modData["BETAS/RelationshipChanged/Status"] = oldData.IsRoommate() ? "Roommate" : oldData.Status.ToString();
             oldFriendship.modData["BETAS/RelationshipChanged/Points"] = oldData.Points.ToString();
             if (oldData.GiftsToday > 0) oldFriendship.modData["BETAS/RelationshipChanged/GiftsToday"] = oldData.GiftsToday.ToString();
@@ -98,8 +101,57 @@ namespace BETAS.Triggers
                 NextBirthingDate = data.NextBirthingDate,
                 Status = data.Status,
             };
-            
-            
+        }
+        
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(NPC), nameof(NPC.tryToReceiveActiveObject))]
+        public static IEnumerable<CodeInstruction> tryToReceiveActiveObject_Transpiler(IEnumerable<CodeInstruction> instructions,
+            ILGenerator il)
+        {
+            var code = instructions.ToList();
+            try
+            {
+                var matcher = new CodeMatcher(code, il);
+
+                var oldFriendship = il.DeclareLocal(typeof(Friendship));
+
+                matcher.MatchStartForward(
+                    new CodeMatch(OpCodes.Ldarg_0),
+                    new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(NPC), nameof(NPC.CanReceiveGifts)))
+                ).ThrowIfNotMatch("Could not find proper entry point #1 for NPC_tryToReceiveActiveObject_Transpiler");
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                    new CodeInstruction(OpCodes.Stloc, oldFriendship)
+                );
+
+                matcher.MatchEndForward(
+                    new CodeMatch(OpCodes.Callvirt,
+                        AccessTools.PropertySetter(typeof(Friendship), nameof(Friendship.Status)))
+                ).Repeat((codeMatcher) =>
+                {
+                    codeMatcher.Advance(1).Insert(
+                        new CodeInstruction(OpCodes.Ldloc_1),
+                        new CodeInstruction(OpCodes.Ldloc, oldFriendship),
+                        new CodeInstruction(OpCodes.Ldarg_0),
+                        new CodeInstruction(OpCodes.Ldarg_1),
+                        new CodeInstruction(OpCodes.Call,
+                            AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                                [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
+                    );
+                });
+                
+                Log.ILCode(matcher.InstructionEnumeration(),code);
+
+                return matcher.InstructionEnumeration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error in BETAS.RelationshipTrigger_NPC_tryToReceiveActiveObject_Transpiler: \n" + ex);
+                return code;
+            }
         }
         
         [HarmonyTranspiler]
@@ -141,10 +193,8 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(Game1), nameof(Game1.player))),
                     new CodeInstruction(OpCodes.Call,
                         AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
-                            new Type[] { typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer) }))
+                            [typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer)]))
                 );
-                
-                Log.ILCode(matcher.InstructionEnumeration(), code);
 
                 return matcher.InstructionEnumeration();
             }
@@ -195,7 +245,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldarg_1),
                     new CodeInstruction(OpCodes.Call,
                         AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
-                            new Type[] { typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer) }))
+                            [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
                 );
 
                 return matcher.InstructionEnumeration();
@@ -291,7 +341,8 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldloc_0),
                     new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Ldarg_0),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged), new Type[] {typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)}))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                        [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
                 );
 
                 return matcher.InstructionEnumeration();
