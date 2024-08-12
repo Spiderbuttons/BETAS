@@ -46,6 +46,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck");
 
             Harmony.PatchAll();
 
@@ -67,7 +68,10 @@ namespace BETAS
             
             if (e.Button == SButton.F6)
             {
-                return;
+                for (int i = 600; i < 2600; i += 10)
+                {
+                    Utility.performLightningUpdate(i);
+                }
             }
 
             if (e.Button == SButton.F8)
