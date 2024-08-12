@@ -36,7 +36,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.LetterTrigger_GameLocation_mailbox_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.LetterRead_GameLocation_mailbox_Postfix: \n" + ex);
             }
         }
     }

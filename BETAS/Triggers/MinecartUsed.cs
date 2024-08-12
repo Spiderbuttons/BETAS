@@ -21,7 +21,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.MinecartTrigger_GameLocation_MinecartWarp_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.MinecartUsed_GameLocation_MinecartWarp_Postfix: \n" + ex);
             }
         }
     }

@@ -147,7 +147,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.RelationshipTrigger_NPC_tryToReceiveActiveObject_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.RelationshipChanged_NPC_tryToReceiveActiveObject_Transpiler: \n" + ex);
                 return code;
             }
         }
@@ -198,7 +198,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.RelationshipTrigger_Game1_newDayAfterFade_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.RelationshipChanged_Game1_newDayAfterFade_Transpiler: \n" + ex);
                 return code;
             }
         }
@@ -250,7 +250,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.RelationshipTrigger_NPC_engagementResponse_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.RelationshipChanged_NPC_engagementResponse_Transpiler: \n" + ex);
                 return code;
             }
         }
@@ -300,7 +300,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.RelationshipTrigger_Farmer_wipeExMemories_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.RelationshipChanged_Farmer_wipeExMemories_Transpiler: \n" + ex);
                 return code;
             }
         }
@@ -347,7 +347,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.RelationshipTrigger_Farmer_doDivorce_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.RelationshipChanged_Farmer_doDivorce_Transpiler: \n" + ex);
                 return code;
             }
         }

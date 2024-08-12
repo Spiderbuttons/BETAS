@@ -140,7 +140,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.CropTrigger_Crop_harvest_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.CropHarvested_Crop_harvest_Transpiler: \n" + ex);
                 return code;
             }
         }

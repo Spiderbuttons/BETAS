@@ -60,7 +60,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.GarbageTrigger_GameLocation_CheckGarbage_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.GarbageChecked_GameLocation_CheckGarbage_Transpiler: \n" + ex);
                 return code;
             }
         }

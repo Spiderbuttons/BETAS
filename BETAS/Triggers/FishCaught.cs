@@ -31,7 +31,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.FishTrigger_FishingRod_pullFishFromWater_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.FishCaught_FishingRod_pullFishFromWater_Postfix: \n" + ex);
             }
         }
     }

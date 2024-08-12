@@ -32,7 +32,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.PassoutTrigger_Farmer_passOutFromTired_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.PassedOut_Farmer_passOutFromTired_Postfix: \n" + ex);
             }
         }
     }

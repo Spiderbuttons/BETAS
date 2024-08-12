@@ -38,7 +38,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.GiftTrigger_NPC_receiveGift_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.GiftGiven_NPC_receiveGift_Postfix: \n" + ex);
             }
         }
     }
