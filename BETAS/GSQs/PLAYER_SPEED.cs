@@ -8,7 +8,7 @@ namespace BETAS.GSQs;
 
 public static class PlayerSpeed
 {
-    // GSQ for checking how long a Target Player has been married for, or 0 if they have no spouse in the first place.
+    // GSQ for checking whether a players speed is between a minimum and optional maximum value.
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtility.TryGet(query, 1, out var playerKey, out var error) || !ArgUtility.TryGetFloat(query, 2, out var minSpeed, out error) || !ArgUtility.TryGetOptionalFloat(query, 3, out var maxSpeed, out error, float.MaxValue))
