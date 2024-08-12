@@ -28,7 +28,7 @@ namespace BETAS.Triggers
             };
             var skillItem = ItemRegistry.Create(skill);
             skillItem.modData["BETAS/ExperienceGained/Amount"] = $"{howMuch}";
-            skillItem.modData["BETAS/ExperienceGained/IsLevelUp"] = levelUp == 1 ? "true" : "false";
+            skillItem.modData["BETAS/ExperienceGained/WasLevelUp"] = levelUp == 1 ? "true" : "false";
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ExperienceGained", targetItem: skillItem);
         }
         

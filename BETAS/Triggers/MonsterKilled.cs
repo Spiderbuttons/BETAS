@@ -22,7 +22,7 @@ namespace BETAS.Triggers
             if (drops.Count > 0) monsterItem.modData["BETAS/MonsterKilled/Drops"] = drops.Join(d => ItemRegistry.QualifyItemId(d.itemId.Value), ",");
             monsterItem.modData["BETAS/MonsterKilled/MaxHealth"] = mon.MaxHealth.ToString();
             monsterItem.modData["BETAS/MonsterKilled/Damage"] = mon.DamageToFarmer.ToString();
-            monsterItem.modData["BETAS/MonsterKilled/IsHardmodeMonster"] = mon.isHardModeMonster.Value.ToString();
+            monsterItem.modData["BETAS/MonsterKilled/WasHardmodeMonster"] = mon.isHardModeMonster.Value.ToString();
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MonsterKilled", targetItem: monsterItem, location: loc, player: killer);
         }
         

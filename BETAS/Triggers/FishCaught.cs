@@ -24,9 +24,9 @@ namespace BETAS.Triggers
                 if (fishItem.Category == -20 || fromFishPond) return;
                 fishItem.modData["BETAS/FishCaught/Size"] = $"{fishSize}";
                 fishItem.modData["BETAS/FishCaught/Difficulty"] = $"{fishDifficulty}";
-                fishItem.modData["BETAS/FishCaught/IsPerfect"] = wasPerfect ? "true" : "false";
-                fishItem.modData["BETAS/FishCaught/IsLegendary"] = isBossFish ? "true" : "false";
-                fishItem.modData["BETAS/FishCaught/IsWithTreasure"] = treasureCaught ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/WasPerfect"] = wasPerfect ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/WasLegendary"] = isBossFish ? "true" : "false";
+                fishItem.modData["BETAS/FishCaught/WasWithTreasure"] = treasureCaught ? "true" : "false";
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FishCaught", targetItem: fishItem, location: __instance.lastUser.currentLocation);
             }
             catch (Exception ex)

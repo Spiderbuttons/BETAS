@@ -16,7 +16,7 @@ namespace BETAS.Triggers
     {
         public static void Trigger(Item crop, GameLocation loc, JunimoHarvester junimo = null, int numToHarvest = 1)
         {
-            crop.modData["BETAS/CropHarvested/IsHarvestedByJunimo"] = $"{junimo is not null}";
+            crop.modData["BETAS/CropHarvested/WasHarvestedByJunimo"] = $"{junimo is not null}";
             crop.Stack = numToHarvest;
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_CropHarvested", targetItem: crop, location: loc);
         }

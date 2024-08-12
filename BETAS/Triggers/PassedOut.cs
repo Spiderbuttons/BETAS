@@ -14,10 +14,10 @@ namespace BETAS.Triggers
         {
             var passoutItem = ItemRegistry.Create(location.Name);
             passoutItem.modData["BETAS/PassedOut/Time"] = Game1.timeOfDay.ToString();
-            passoutItem.modData["BETAS/PassedOut/IsUpTooLate"] = Game1.timeOfDay >= 2600 ? "true" : "false";
+            passoutItem.modData["BETAS/PassedOut/WasUpTooLate"] = Game1.timeOfDay >= 2600 ? "true" : "false";
             if (who.stamina <= -15f && who.CurrentTool is not null) passoutItem.modData["BETAS/PassedOut/Tool"] = who.CurrentTool.QualifiedItemId;
-            passoutItem.modData["BETAS/PassedOut/IsExhausted"] = who.stamina <= -15f ? "true" : "false";
-            passoutItem.modData["BETAS/PassedOut/IsSafe"] = (location is FarmHouse) || (location is IslandFarmHouse) || (location is Cellar) || location.HasMapPropertyWithValue("PassOutSafe") ? "true" : "false";
+            passoutItem.modData["BETAS/PassedOut/WasExhausted"] = who.stamina <= -15f ? "true" : "false";
+            passoutItem.modData["BETAS/PassedOut/WasSafe"] = (location is FarmHouse) || (location is IslandFarmHouse) || (location is Cellar) || location.HasMapPropertyWithValue("PassOutSafe") ? "true" : "false";
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_PassedOut", targetItem: passoutItem, location: location, player: who);
         }
         

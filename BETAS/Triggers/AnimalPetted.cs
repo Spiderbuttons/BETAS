@@ -21,8 +21,8 @@ namespace BETAS.Triggers
             petItem.modData["BETAS/AnimalPetted/Name"] = pet.Name;
             petItem.modData["BETAS/AnimalPetted/Breed"] = pet.whichBreed.Value;
             petItem.modData["BETAS/AnimalPetted/Friendship"] = pet.friendshipTowardFarmer.Value.ToString();
-            petItem.modData["BETAS/AnimalPetted/IsPet"] = "true";
-            petItem.modData["BETAS/AnimalPetted/IsFarmAnimal"] = "false";
+            petItem.modData["BETAS/AnimalPetted/WasPet"] = "true";
+            petItem.modData["BETAS/AnimalPetted/WasFarmAnimal"] = "false";
             
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: petItem, location: pet.currentLocation, player: petter);
         }
@@ -34,9 +34,9 @@ namespace BETAS.Triggers
             animalItem.modData["BETAS/AnimalPetted/Friendship"] = animal.friendshipTowardFarmer.Value.ToString();
             animalItem.modData["BETAS/AnimalPetted/Happiness"] = animal.happiness.Value.ToString();
             animalItem.modData["BETAS/AnimalPetted/ProduceQuality"] = animal.produceQuality.ToString();
-            animalItem.modData["BETAS/AnimalPetted/IsPet"] = "false";
-            animalItem.modData["BETAS/AnimalPetted/IsFarmAnimal"] = "true";
-            animalItem.modData["BETAS/AnimalPetted/IsBaby"] = animal.isBaby() ? "true" : "false";
+            animalItem.modData["BETAS/AnimalPetted/WasPet"] = "false";
+            animalItem.modData["BETAS/AnimalPetted/WasFarmAnimal"] = "true";
+            animalItem.modData["BETAS/AnimalPetted/WasBaby"] = animal.isBaby() ? "true" : "false";
             
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: animalItem, location: animal.currentLocation, player: petter);
         }

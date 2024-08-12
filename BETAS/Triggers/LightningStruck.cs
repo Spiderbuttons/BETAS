@@ -24,7 +24,7 @@ namespace BETAS.Triggers
         {
             var strikeItem = ItemRegistry.Create("Lightning Strike");
             strikeItem.modData["BETAS/LightningStruck/Size"] = strike is { bigFlash: true } ? "Big" : "Small";
-            strikeItem.modData["BETAS/LightningStruck/DidHitLightningRod"] = hitRod ? "true" : "false";
+            strikeItem.modData["BETAS/LightningStruck/WasLightningRod"] = hitRod ? "true" : "false";
             if (hitFeature is not null) strikeItem.modData["BETAS/LightningStruck/StruckTerrainFeature"] = hitFeature switch { FruitTree => "FruitTree", HoeDirt => "Crop", _ => hitFeature.GetType().Name };
             switch (hitFeature)
             {

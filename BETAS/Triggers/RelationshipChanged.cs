@@ -28,8 +28,8 @@ namespace BETAS.Triggers
             if (oldData.GiftsToday > 0) oldFriendship.modData["BETAS/RelationshipChanged/GiftsToday"] = oldData.GiftsToday.ToString();
             if (oldData.GiftsThisWeek > 0) oldFriendship.modData["BETAS/RelationshipChanged/GiftsThisWeek"] = oldData.GiftsThisWeek.ToString();
             if (oldData.LastGiftDate != null) oldFriendship.modData["BETAS/RelationshipChanged/DaysSinceLastGift"] = (Game1.Date.TotalDays - oldData.LastGiftDate.TotalDays).ToString();
-            oldFriendship.modData["BETAS/RelationshipChanged/IsTalkedToToday"] = oldData.TalkedToToday.ToString();
-            oldFriendship.modData["BETAS/RelationshipChanged/IsRoommate"] = oldData.RoommateMarriage.ToString();
+            oldFriendship.modData["BETAS/RelationshipChanged/WasTalkedToToday"] = oldData.TalkedToToday.ToString();
+            oldFriendship.modData["BETAS/RelationshipChanged/WasRoommate"] = oldData.RoommateMarriage.ToString();
             if (oldData.WeddingDate != null)
             {
                 oldFriendship.modData["BETAS/RelationshipChanged/WeddingSeason"] = oldData.WeddingDate.SeasonKey;
@@ -44,8 +44,9 @@ namespace BETAS.Triggers
             if (newData.GiftsToday > 0) newFriendship.modData["BETAS/RelationshipChanged/GiftsToday"] = newData.GiftsToday.ToString();
             if (newData.GiftsThisWeek > 0) newFriendship.modData["BETAS/RelationshipChanged/GiftsThisWeek"] = newData.GiftsThisWeek.ToString();
             if (newData.LastGiftDate != null) newFriendship.modData["BETAS/RelationshipChanged/DaysSinceLastGift"] = (Game1.Date.TotalDays - newData.LastGiftDate.TotalDays).ToString();
-            newFriendship.modData["BETAS/RelationshipChanged/IsTalkedToToday"] = newData.TalkedToToday.ToString();
-            newFriendship.modData["BETAS/RelationshipChanged/IsRoommate"] = newData.RoommateMarriage.ToString();
+            newFriendship.modData["BETAS/RelationshipChanged/WasTalkedToToday"] = newData.TalkedToToday.ToString();
+            newFriendship.modData["BETAS/RelationshipChanged/WasRoommate"] = newData.RoommateMarriage.ToString();
+            newFriendship.modData["BETAS/RelationshipChanged/IsRoommate"] = newData.RoommateMarriage.ToString(); // Since this is the only edge case where this shouldn't actually be past tense, people might get confused, so I'm making both "Is" and "Was" work here.
             if (newData.WeddingDate != null)
             {
                 newFriendship.modData["BETAS/RelationshipChanged/WeddingSeason"] = newData.WeddingDate.SeasonKey;
@@ -55,7 +56,7 @@ namespace BETAS.Triggers
             }
             if (newData.NextBirthingDate != null) newFriendship.modData["BETAS/RelationshipChanged/NextBirthingDate"] = newData.NextBirthingDate.ToString();
             
-            newFriendship.modData["BETAS/RelationshipChanged/IsMemoryWiped"] = oldData.Status == FriendshipStatus.Divorced && newData.Status == FriendshipStatus.Friendly ? "true" : "false";
+            newFriendship.modData["BETAS/RelationshipChanged/WasMemoryWiped"] = oldData.Status == FriendshipStatus.Divorced && newData.Status == FriendshipStatus.Friendly ? "true" : "false";
             
             Log.Debug($"Old Status: {(oldData.IsRoommate() ? "Roommate" : oldData.Status.ToString())}, New Status: {(newData.IsRoommate() ? "Roommate" : newData.Status.ToString())}");
             Log.Debug($"Old Points: {oldData.Points.ToString()}, New Points: {newData.Points.ToString()}");
@@ -73,7 +74,7 @@ namespace BETAS.Triggers
                 Log.Debug($"Old WeddingDate: null, New WeddingDate: null");
             }
             Log.Debug($"Old NextBirthingDate: {oldData.NextBirthingDate?.ToString()}, New NextBirthingDate: {newData.NextBirthingDate?.ToString()}");
-            Log.Debug($"Was Memory Wiped: {newFriendship.modData["BETAS/RelationshipChanged/IsMemoryWiped"]}");
+            Log.Debug($"Was Memory Wiped: {newFriendship.modData["BETAS/RelationshipChanged/WasMemoryWiped"]}");
             
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_RelationshipChanged", inputItem: oldFriendship, targetItem: newFriendship, location: npc.currentLocation, player: who);
         }

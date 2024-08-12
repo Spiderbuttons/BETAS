@@ -26,9 +26,9 @@ namespace BETAS.Triggers
                 {
                     var letterItem = ItemRegistry.Create(letter.mailTitle);
                     if (letter.moneyIncluded is not 0) letterItem.modData["BETAS/LetterRead/Money"] = $"{letter.moneyIncluded}";
-                    letterItem.modData["BETAS/LetterRead/IsRecipe"] = $"{letter.learnedRecipe != ""}";
-                    letterItem.modData["BETAS/LetterRead/IsQuestOrSpecialOrder"] = $"{letter.HasQuestOrSpecialOrder}";
-                    letterItem.modData["BETAS/LetterRead/IsWithItem"] = $"{letter.itemsLeftToGrab()}";
+                    letterItem.modData["BETAS/LetterRead/WasRecipe"] = $"{letter.learnedRecipe != ""}";
+                    letterItem.modData["BETAS/LetterRead/WasQuestOrSpecialOrder"] = $"{letter.HasQuestOrSpecialOrder}";
+                    letterItem.modData["BETAS/LetterRead/WasWithItem"] = $"{letter.itemsLeftToGrab()}";
                     if (letter.questID is not null) letterItem.modData["BETAS/LetterRead/Quest"] = $"{letter.questID}";
                     else if (letter.specialOrderId is not null) letterItem.modData["BETAS/LetterRead/SpecialOrder"] = $"{letter.questID}";
                     TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LetterRead", targetItem: letterItem, location: __instance);

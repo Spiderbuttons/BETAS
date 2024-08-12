@@ -24,7 +24,7 @@ namespace BETAS.Triggers
             try
             {
                 var npcItem = ItemRegistry.Create(__instance.Name);
-                npcItem.modData["BETAS/GiftGiven/IsBirthday"] = __instance.isBirthday() ? "true" : "false";
+                npcItem.modData["BETAS/GiftGiven/WasBirthday"] = __instance.isBirthday() ? "true" : "false";
                 npcItem.modData["BETAS/GiftGiven/Taste"] = __instance.getGiftTasteForThisItem(o) switch
                 {
                     0 => "Love",

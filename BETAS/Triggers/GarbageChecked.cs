@@ -23,8 +23,8 @@ namespace BETAS.Triggers
             trashItem.modData["BETAS/GarbageChecked/GarbageCanId"] = trashId;
             if (data != null)
             {
-                trashItem.modData["BETAS/GarbageChecked/IsMegaSuccess"] = data.IsMegaSuccess ? "true" : "false";
-                trashItem.modData["BETAS/GarbageChecked/IsDoubleMegaSuccess"] = data.IsDoubleMegaSuccess ? "true" : "false";
+                trashItem.modData["BETAS/GarbageChecked/WasMegaSuccess"] = data.IsMegaSuccess ? "true" : "false";
+                trashItem.modData["BETAS/GarbageChecked/WasDoubleMegaSuccess"] = data.IsDoubleMegaSuccess ? "true" : "false";
             }
             if (caught)
             {

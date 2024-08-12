@@ -30,14 +30,14 @@ namespace BETAS.Triggers
                 var treeItem = ItemRegistry.Create(__instance.treeType.Value);
                 treeItem.modData["BETAS/FloraShaken/Stage"] = $"{__instance.growthStage.Value}";
                 treeItem.modData["BETAS/FloraShaken/Seed"] = $"{__instance.GetData().SeedItemId}";
-                treeItem.modData["BETAS/FloraShaken/IsInSeason"] = $"{__instance.IsInSeason()}";
-                treeItem.modData["BETAS/FloraShaken/IsMossy"] = $"{__instance.hasMoss.Value}";
-                treeItem.modData["BETAS/FloraShaken/IsSeedy"] = $"{__instance.hasSeed.Value}";
-                treeItem.modData["BETAS/FloraShaken/IsFertilized"] = $"{__instance.fertilized.Value}";
-                treeItem.modData["BETAS/FloraShaken/IsTapped"] = $"{__instance.tapped.Value}";
-                treeItem.modData["BETAS/FloraShaken/IsTree"] = "true";
-                treeItem.modData["BETAS/FloraShaken/IsFruitTree"] = "false";
-                treeItem.modData["BETAS/FloraShaken/IsBush"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasInSeason"] = $"{__instance.IsInSeason()}";
+                treeItem.modData["BETAS/FloraShaken/WasMossy"] = $"{__instance.hasMoss.Value}";
+                treeItem.modData["BETAS/FloraShaken/WasSeedy"] = $"{__instance.hasSeed.Value}";
+                treeItem.modData["BETAS/FloraShaken/WasFertilized"] = $"{__instance.fertilized.Value}";
+                treeItem.modData["BETAS/FloraShaken/WasTapped"] = $"{__instance.tapped.Value}";
+                treeItem.modData["BETAS/FloraShaken/WasTree"] = "true";
+                treeItem.modData["BETAS/FloraShaken/WasFruitTree"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasBush"] = "false";
                 
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FloraShaken", targetItem: treeItem, location: __instance.Location);
             }
@@ -68,14 +68,14 @@ namespace BETAS.Triggers
                 if (fruits.Count != 0) treeItem.modData["BETAS/FloraShaken/Produce"] = $"{string.Join(",", fruits)}";
                 treeItem.modData["BETAS/FloraShaken/ProduceCount"] = $"{__instance.fruit.Count}";
                 treeItem.modData["BETAS/FloraShaken/PossibleProduce"] = $"{string.Join(",", possibleFruits)}";
-                treeItem.modData["BETAS/FloraShaken/IsInSeason"] = $"{__instance.IsInSeasonHere()}";
-                treeItem.modData["BETAS/FloraShaken/IsMossy"] = "false";
-                treeItem.modData["BETAS/FloraShaken/IsSeedy"] = "false";
-                treeItem.modData["BETAS/FloraShaken/IsFertilized"] = "false";
-                treeItem.modData["BETAS/FloraShaken/IsTapped"] = "false";
-                treeItem.modData["BETAS/FloraShaken/IsTree"] = "true";
-                treeItem.modData["BETAS/FloraShaken/IsFruitTree"] = "true";
-                treeItem.modData["BETAS/FloraShaken/IsBush"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasInSeason"] = $"{__instance.IsInSeasonHere()}";
+                treeItem.modData["BETAS/FloraShaken/WasMossy"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasSeedy"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasFertilized"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasTapped"] = "false";
+                treeItem.modData["BETAS/FloraShaken/WasTree"] = "true";
+                treeItem.modData["BETAS/FloraShaken/WasFruitTree"] = "true";
+                treeItem.modData["BETAS/FloraShaken/WasBush"] = "false";
                 
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FloraShaken", targetItem: treeItem, location: __instance.Location);
             }
@@ -106,14 +106,14 @@ namespace BETAS.Triggers
                 }
 
                 bushItem.modData["BETAS/FloraShaken/Size"] = $"{__instance.size.Value}";
-                bushItem.modData["BETAS/FloraShaken/IsInSeason"] = $"{__instance.inBloom()}";
-                bushItem.modData["BETAS/FloraShaken/IsMossy"] = "false";
-                bushItem.modData["BETAS/FloraShaken/IsSeedy"] = "false";
-                bushItem.modData["BETAS/FloraShaken/IsFertilized"] = "false";
-                bushItem.modData["BETAS/FloraShaken/IsTapped"] = "false";
-                bushItem.modData["BETAS/FloraShaken/IsTree"] = "false";
-                bushItem.modData["BETAS/FloraShaken/IsFruitTree"] = "false";
-                bushItem.modData["BETAS/FloraShaken/IsBush"] = "true";
+                bushItem.modData["BETAS/FloraShaken/WasInSeason"] = $"{__instance.inBloom()}";
+                bushItem.modData["BETAS/FloraShaken/WasMossy"] = "false";
+                bushItem.modData["BETAS/FloraShaken/WasSeedy"] = "false";
+                bushItem.modData["BETAS/FloraShaken/WasFertilized"] = "false";
+                bushItem.modData["BETAS/FloraShaken/WasTapped"] = "false";
+                bushItem.modData["BETAS/FloraShaken/WasTree"] = "false";
+                bushItem.modData["BETAS/FloraShaken/WasFruitTree"] = "false";
+                bushItem.modData["BETAS/FloraShaken/WasBush"] = "true";
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_FloraShaken", targetItem: bushItem, location: __instance.Location);
             }
             catch (Exception ex)

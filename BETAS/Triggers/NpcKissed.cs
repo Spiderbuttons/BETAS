@@ -31,7 +31,7 @@ namespace BETAS.Triggers
                 _ => "Undefined"
             };
             npcItem.modData["BETAS/NpcKissed/Friendship"] = kisser.getFriendshipLevelForNPC(kissee.Name).ToString();
-            npcItem.modData["BETAS/NpcKissed/IsDatingFarmer"] = kisser.friendshipData.ContainsKey(kissee.Name) && kisser.friendshipData[kissee.Name].IsDating() ? "True" : "False";
+            npcItem.modData["BETAS/NpcKissed/WasDatingFarmer"] = kisser.friendshipData.ContainsKey(kissee.Name) && kisser.friendshipData[kissee.Name].IsDating() ? "True" : "False";
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_NpcKissed", targetItem: npcItem, location: location);
         }
         
