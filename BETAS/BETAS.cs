@@ -32,6 +32,7 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_RANGE", PlayerModData.Query_Range);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_CONTAINS", PlayerModData.Query_Contains);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
             
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
