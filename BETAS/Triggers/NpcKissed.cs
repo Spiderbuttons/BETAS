@@ -13,9 +13,9 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class KissTrigger
+    static class NpcKissed
     {
-        public static void Trigger_NpcKissed(NPC kissee, Farmer kisser, GameLocation location)
+        public static void Trigger(NPC kissee, Farmer kisser, GameLocation location)
         {
             var npcItem = ItemRegistry.Create(kissee.Name);
             npcItem.modData["BETAS/NpcKissed/Age"] = kissee.Age switch
@@ -52,7 +52,7 @@ namespace BETAS.Triggers
                         new CodeInstruction(OpCodes.Ldarg_0),
                         new CodeInstruction(OpCodes.Ldarg_1),
                         new CodeInstruction(OpCodes.Ldarg_2),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(KissTrigger), nameof(Trigger_NpcKissed))));
+                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(NpcKissed), nameof(Trigger))));
                 });
 
                 return matcher.InstructionEnumeration();

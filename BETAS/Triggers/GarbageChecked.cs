@@ -15,9 +15,9 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class GarbageTrigger
+    static class GarbageChecked
     {
-        public static void Trigger_GarbageChecked(string trashId, Item result, GarbageCanItemData data, bool caught, Farmer farmer, Vector2 tile, GameLocation location)
+        public static void Trigger(string trashId, Item result, GarbageCanItemData data, bool caught, Farmer farmer, Vector2 tile, GameLocation location)
         {
             var trashItem = result ?? ItemRegistry.Create(trashId);
             trashItem.modData["BETAS/GarbageChecked/GarbageCanId"] = trashId;
@@ -53,7 +53,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldarg_3),
                     new CodeInstruction(OpCodes.Ldarg_2),
                     new CodeInstruction(OpCodes.Ldarg_0),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GarbageTrigger), nameof(Trigger_GarbageChecked)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GarbageChecked), nameof(Trigger)))
                 );
 
                 return matcher.InstructionEnumeration();

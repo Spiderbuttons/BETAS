@@ -14,7 +14,7 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class LetterTrigger
+    static class LetterRead
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(GameLocation), nameof(GameLocation.mailbox))]

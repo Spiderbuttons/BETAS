@@ -13,9 +13,9 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class EnemyTrigger
+    static class MonsterKilled
     {
-        public static void Trigger_EnemyKilled(Monster mon, GameLocation loc, List<Debris> drops, Farmer killer)
+        public static void Trigger(Monster mon, GameLocation loc, List<Debris> drops, Farmer killer)
         {
             // ITEM_ID GSQ etc. does not support spaces in itemId. Just remove them.
             var monsterItem = ItemRegistry.Create(mon.Name.Replace(" ", ""), drops.Count);
@@ -41,7 +41,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldloc_3),
                     new CodeInstruction(OpCodes.Ldloc_S, 4),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(EnemyTrigger), nameof(Trigger_EnemyKilled))),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MonsterKilled), nameof(Trigger))),
                     new CodeInstruction(OpCodes.Ret)
                 );
 

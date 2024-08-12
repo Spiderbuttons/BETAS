@@ -12,9 +12,9 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class CropTrigger
+    static class CropHarvested
     {
-        public static void Trigger_CropHarvested(Item crop, GameLocation loc, JunimoHarvester junimo = null, int numToHarvest = 1)
+        public static void Trigger(Item crop, GameLocation loc, JunimoHarvester junimo = null, int numToHarvest = 1)
         {
             crop.modData["BETAS/CropHarvested/IsHarvestedByJunimo"] = $"{junimo is not null}";
             crop.Stack = numToHarvest;
@@ -31,7 +31,8 @@ namespace BETAS.Triggers
                 var matcher = new CodeMatcher(code, il);
                 
                 // Need to find the numToHarvest localBuilder. The crop, if it's a forageCrop, is just Ldloc.1 which is nice.
-                //  Edit from future me: Apparently forageCrop just never happens? I wasted half my time here? Oh well...
+                // Edit from future me: Apparently forageCrop just never happens? I wasted half my time here? Oh well...
+                // Edit from even more future me: Apparently it's for spring onions. I really don't care about those...
                 matcher.MatchEndForward(
                     new CodeMatch(static i => i.opcode == OpCodes.Call && i.operand.ToString()!.Contains("Clamp")),
                     new CodeMatch(OpCodes.Stloc_S),
@@ -56,7 +57,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropHarvested), nameof(Trigger)))
                 );
                 
                 matcher.MatchStartForward(
@@ -74,7 +75,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropHarvested), nameof(Trigger)))
                 );
                 
                 matcher.MatchEndForward(
@@ -92,7 +93,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropHarvested), nameof(Trigger)))
                 );
                 
                 // Now we need the harvestItem LocalBuilder if it's not a forageCrop.
@@ -117,7 +118,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropHarvested), nameof(Trigger)))
                 );
                 
                 matcher.MatchEndForward(
@@ -132,7 +133,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Crop), nameof(Crop.currentLocation))),
                     new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Ldloc_S, numToHarvestLocal.LocalIndex),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropTrigger), nameof(Trigger_CropHarvested)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(CropHarvested), nameof(Trigger)))
                 );
 
                 return matcher.InstructionEnumeration();

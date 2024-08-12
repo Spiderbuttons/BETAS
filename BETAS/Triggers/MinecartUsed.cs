@@ -9,7 +9,7 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class MinecartTrigger
+    static class MinecartUsed
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(GameLocation), nameof(GameLocation.MinecartWarp))]

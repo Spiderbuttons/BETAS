@@ -14,9 +14,9 @@ using Object = System.Object;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class RelationshipTrigger
+    static class RelationshipChanged
     {
-        public static void Trigger_RelationshipChanged(Friendship newData, Friendship oldData, NPC npc, Farmer who)
+        public static void Trigger(Friendship newData, Friendship oldData, NPC npc, Farmer who)
         {
             var oldFriendship = ItemRegistry.Create(npc.Name);
             var newFriendship = ItemRegistry.Create(npc.Name);
@@ -78,12 +78,12 @@ namespace BETAS.Triggers
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_RelationshipChanged", inputItem: oldFriendship, targetItem: newFriendship, location: npc.currentLocation, player: who);
         }
 
-        public static void Trigger_RelationshipChanged(Friendship newData, Friendship oldData, string npc, Farmer who)
+        public static void Trigger(Friendship newData, Friendship oldData, string npc, Farmer who)
         {
             var character = Game1.getCharacterFromName(npc);
             if (character != null)
             {
-                Trigger_RelationshipChanged(newData, oldData, character, who);
+                Trigger(newData, oldData, character, who);
             }
         }
         
@@ -123,7 +123,7 @@ namespace BETAS.Triggers
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                        AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner))),
                     new CodeInstruction(OpCodes.Stloc, oldFriendship)
                 );
 
@@ -138,7 +138,7 @@ namespace BETAS.Triggers
                         new CodeInstruction(OpCodes.Ldarg_0),
                         new CodeInstruction(OpCodes.Ldarg_1),
                         new CodeInstruction(OpCodes.Call,
-                            AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                            AccessTools.Method(typeof(RelationshipChanged), nameof(Trigger),
                                 [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
                     );
                 });
@@ -175,7 +175,7 @@ namespace BETAS.Triggers
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Dup),
                     new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                        AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner))),
                     new CodeInstruction(OpCodes.Stloc, oldFriendship),
                     new CodeInstruction(OpCodes.Dup)
                 );
@@ -192,7 +192,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Callvirt, AccessTools.PropertyGetter(typeof(Farmer), nameof(Farmer.spouse))),
                     new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(Game1), nameof(Game1.player))),
                     new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                        AccessTools.Method(typeof(RelationshipChanged), nameof(Trigger),
                             [typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer)]))
                 );
 
@@ -226,7 +226,7 @@ namespace BETAS.Triggers
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                        AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner))),
                     new CodeInstruction(OpCodes.Stloc, oldFriendship)
                 );
 
@@ -244,7 +244,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldarg_1),
                     new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                        AccessTools.Method(typeof(RelationshipChanged), nameof(Trigger),
                             [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
                 );
 
@@ -279,7 +279,7 @@ namespace BETAS.Triggers
                 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_3),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner))),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner))),
                     new CodeInstruction(OpCodes.Stloc, oldFriendship)
                 );
                 
@@ -295,7 +295,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldloc, oldFriendship),
                     new CodeInstruction(OpCodes.Ldloc_2),
                     new CodeInstruction(OpCodes.Ldarg_0),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged), new Type[] {typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer)}))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipChanged), nameof(Trigger), new Type[] {typeof(Friendship), typeof(Friendship), typeof(string), typeof(Farmer)}))
                 );
                 
                 return matcher.InstructionEnumeration();    
@@ -326,7 +326,7 @@ namespace BETAS.Triggers
 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(FriendlyCloner)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner)))
                 );
                 
                 matcher.MatchEndForward(
@@ -341,7 +341,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldloc_0),
                     new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Ldarg_0),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipTrigger), nameof(Trigger_RelationshipChanged),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipChanged), nameof(Trigger),
                         [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
                 );
 

@@ -48,7 +48,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_TreeShook");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BushHarvested");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");

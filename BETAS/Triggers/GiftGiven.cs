@@ -15,7 +15,7 @@ using Object = StardewValley.Object;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class GiftTrigger
+    static class GiftGiven
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(NPC), nameof(NPC.receiveGift))]

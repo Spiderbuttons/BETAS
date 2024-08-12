@@ -13,9 +13,9 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class PetTrigger
+    static class AnimalPetted
     {
-        public static void Trigger_AnimalPetted_Pets(Pet pet, Farmer petter)
+        public static void Trigger(Pet pet, Farmer petter)
         {
             var petItem = ItemRegistry.Create(pet.petType.Value);
             petItem.modData["BETAS/AnimalPetted/Name"] = pet.Name;
@@ -27,7 +27,7 @@ namespace BETAS.Triggers
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: petItem, location: pet.currentLocation, player: petter);
         }
         
-        public static void Trigger_AnimalPetted_FarmAnimals(FarmAnimal animal, Farmer petter)
+        public static void Trigger(FarmAnimal animal, Farmer petter)
         {
             var animalItem = ItemRegistry.Create(animal.type.Value);
             animalItem.modData["BETAS/AnimalPetted/Name"] = animal.Name;
@@ -57,7 +57,7 @@ namespace BETAS.Triggers
                     codeMatcher.Advance(1).Insert(
                         new CodeInstruction(OpCodes.Ldarg_0),
                         new CodeInstruction(OpCodes.Ldarg_1),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PetTrigger), nameof(Trigger_AnimalPetted_Pets))));
+                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AnimalPetted), nameof(Trigger), [typeof(Pet), typeof(Farmer)])));
                 });
 
                 return matcher.InstructionEnumeration();
@@ -85,7 +85,7 @@ namespace BETAS.Triggers
                     codeMatcher.Advance(1).Insert(
                         new CodeInstruction(OpCodes.Ldarg_0),
                         new CodeInstruction(OpCodes.Ldarg_1),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PetTrigger), nameof(Trigger_AnimalPetted_FarmAnimals))));
+                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AnimalPetted), nameof(Trigger), [typeof(FarmAnimal), typeof(Farmer)])));
                 });
 
                 return matcher.InstructionEnumeration();

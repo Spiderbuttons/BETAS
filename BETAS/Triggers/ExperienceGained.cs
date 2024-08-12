@@ -11,11 +11,11 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class ExperienceTrigger
+    static class ExperienceGained
     {
         // Raised whenever the player gains experience. ItemId is the name of the skill, ItemStack is the amount of experience gained, and ItemQuality is whether the experience gain resulted in a level up (0 if not, 1 if it did).
         // SpaceCore custom skills are not supported. Maybe eventually!
-        public static void Trigger_ExperienceGained( int levelUp, int skillID, int howMuch)
+        public static void Trigger( int levelUp, int skillID, int howMuch)
         {
             var skill = skillID switch
             {
@@ -52,7 +52,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Sub),
                     new CodeInstruction(OpCodes.Ldarg_1),
                     new CodeInstruction(OpCodes.Ldarg_2),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ExperienceTrigger), nameof(Trigger_ExperienceGained))),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ExperienceGained), nameof(Trigger))),
                     new CodeInstruction(OpCodes.Ldloc_0),
                     new CodeInstruction(OpCodes.Ldloc_1)
                 );

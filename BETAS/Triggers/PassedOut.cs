@@ -8,9 +8,9 @@ using StardewValley.Triggers;
 namespace BETAS.Triggers
 {
     [HarmonyPatch]
-    static class PassoutTrigger
+    static class PassedOut
     {
-        public static void Trigger_PassedOut(Farmer who, GameLocation location)
+        public static void Trigger(Farmer who, GameLocation location)
         {
             var passoutItem = ItemRegistry.Create(location.Name);
             passoutItem.modData["BETAS/PassedOut/Time"] = Game1.timeOfDay.ToString();
@@ -28,7 +28,7 @@ namespace BETAS.Triggers
             try
             {
                 if (!who.IsLocalPlayer) return;
-                Trigger_PassedOut(who, who.currentLocation);
+                Trigger(who, who.currentLocation);
             }
             catch (Exception ex)
             {
