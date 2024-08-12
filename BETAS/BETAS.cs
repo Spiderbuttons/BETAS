@@ -37,6 +37,9 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA", LocationModData.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_RANGE", LocationModData.Query_Range);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_CONTAINS", LocationModData.Query_Contains);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA", PlayerModData.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_RANGE", PlayerModData.Query_Range);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_CONTAINS", PlayerModData.Query_Contains);
             
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
