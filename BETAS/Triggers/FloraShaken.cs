@@ -59,6 +59,7 @@ namespace BETAS.Triggers
                 var treeItem = ItemRegistry.Create(__instance.treeId.Value);
 
                 var fruits = __instance.fruit.Select(fruit => fruit.QualifiedItemId).ToList();
+                if (__instance.struckByLightningCountdown.Value > 0) fruits.Add("(O)382");
                 var possibleFruits = __instance.GetData().Fruit.Select(fruit => ItemRegistry.QualifyItemId(fruit.ItemId)).ToList();
 
                 treeItem.modData["BETAS/FloraShaken/Stage"] = $"{__instance.growthStage.Value}";
