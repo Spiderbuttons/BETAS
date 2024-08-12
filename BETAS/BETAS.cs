@@ -31,6 +31,7 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA", PlayerModData.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_RANGE", PlayerModData.Query_Range);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_CONTAINS", PlayerModData.Query_Contains);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
             
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
@@ -46,7 +47,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck"); // Done!
 
             Harmony.PatchAll();
 
@@ -68,10 +69,7 @@ namespace BETAS
             
             if (e.Button == SButton.F6)
             {
-                for (int i = 600; i < 2600; i += 10)
-                {
-                    Utility.performLightningUpdate(i);
-                }
+                Log.Debug(Game1.player.GetDaysMarried());
             }
 
             if (e.Button == SButton.F8)
