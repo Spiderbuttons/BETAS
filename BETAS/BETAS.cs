@@ -1,19 +1,10 @@
 ﻿#nullable enable
-using System;
-using System.Linq;
 using BETAS.GSQs;
 using HarmonyLib;
-using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewModdingAPI.Utilities;
 using StardewValley;
 using BETAS.Helpers;
-using BETAS.Triggers;
-using Netcode;
-using StardewValley.Delegates;
-using StardewValley.Monsters;
-using StardewValley.Network;
 using StardewValley.Triggers;
 
 namespace BETAS
@@ -53,8 +44,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_TreeShook");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BushHarvested");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken");
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
 
             Harmony.PatchAll();

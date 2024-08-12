@@ -142,8 +142,6 @@ namespace BETAS.Triggers
                                 [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
                     );
                 });
-                
-                Log.ILCode(matcher.InstructionEnumeration(),code);
 
                 return matcher.InstructionEnumeration();
             }
