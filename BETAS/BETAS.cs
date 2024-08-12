@@ -44,8 +44,8 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
 
             Harmony.PatchAll();
 
