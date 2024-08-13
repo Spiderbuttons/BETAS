@@ -50,6 +50,9 @@ public static class MakeMachineReady
                 }
             }
             
+            if (count == 0)
+                return true;
+            
             foreach (var machine in location.Objects.Values)
             {
                 if (count == 0)
