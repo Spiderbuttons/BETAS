@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using BETAS.GSQs;
 using HarmonyLib;
 using StardewModdingAPI;
@@ -21,7 +22,18 @@ namespace BETAS
             ModMonitor = Monitor;
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
+            
+            RegisterQueries();
+            RegisterTriggers();
+            RegisterActions();
 
+            Harmony.PatchAll();
+
+            Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+        }
+
+        private static void RegisterQueries()
+        {
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA", ItemModData.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_RANGE", ItemModData.Query_Range);
             GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_CONTAINS", ItemModData.Query_Contains);
@@ -34,7 +46,10 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOUNTED", PlayerMounted.Query);
-            
+        }
+
+        private static void RegisterTriggers()
+        {
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
@@ -50,10 +65,13 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck"); // Done!
+        }
 
-            Harmony.PatchAll();
-
-            Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+        private static void RegisterActions()
+        {
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_SetNewDialogue", SetNewDialogue.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpCharacter", WarpCharacter.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpFarmer", WarpFarmer.Action);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -63,15 +81,14 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                if (Game1.player.friendshipData.TryGetValue("Haley", out var friendship))
-                {
-                    Log.Debug(friendship.Status);
-                }
+                for (int i = 0; i < 100; i++) Log.Debug($"\x1b[{i}mTEST\x1b[0m");
             }
             
             if (e.Button == SButton.F6)
             {
-                Log.Debug(Game1.player.GetDaysMarried());
+                string action = "Spiderbuttons.BETAS_WarpFarmer BusStop 22 15 1";
+                if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
+                    Log.Error($"Failed running action '{action}': {error}\n{ex}");
             }
 
             if (e.Button == SButton.F8)
