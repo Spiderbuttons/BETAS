@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
+using BETAS.Actions;
 using BETAS.GSQs;
 using HarmonyLib;
 using StardewModdingAPI;
@@ -14,8 +16,8 @@ namespace BETAS
     {
         internal static IMonitor ModMonitor { get; set; } = null!;
         internal static Harmony Harmony { get; set; } = null!;
-        
         internal static IManifest Manifest { get; set; } = null!;
+        internal static HashSet<string> LoadedMods { get; set; } = [];
 
         public override void Entry(IModHelper helper)
         {
@@ -29,7 +31,16 @@ namespace BETAS
 
             Harmony.PatchAll();
 
+            helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
             Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+        }
+        
+        private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
+        {
+            foreach (var mod in Helper.ModRegistry.GetAll())
+            {
+                if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID)) LoadedMods.Add(mod.Manifest.UniqueID);
+            }
         }
 
         private static void RegisterQueries()
@@ -46,6 +57,8 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOUNTED", PlayerMounted.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_LOCATION", NpcLocation.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_HAS_MOD", HasMod.Query);
         }
 
         private static void RegisterTriggers()
@@ -72,6 +85,7 @@ namespace BETAS
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_SetNewDialogue", SetNewDialogue.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpCharacter", WarpCharacter.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpFarmer", WarpFarmer.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_MakeMachineReady", MakeMachineReady.Action);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -81,12 +95,12 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                for (int i = 0; i < 100; i++) Log.Debug($"\x1b[{i}mTEST\x1b[0m");
+                //
             }
             
             if (e.Button == SButton.F6)
             {
-                string action = "Spiderbuttons.BETAS_WarpFarmer BusStop 22 15 1";
+                string action = "Spiderbuttons.BETAS_MakeMachineReady -1 (O)337 -1 -1";
                 if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
                     Log.Error($"Failed running action '{action}': {error}\n{ex}");
             }

@@ -16,8 +16,6 @@ public static class PlayerDaysMarried
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
         
-        Log.Debug($"PlayerDaysMarried.Query: playerKey={playerKey}, minDays={minDays}, maxDays={maxDays}");
-        
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, delegate(Farmer target)
         {
             var daysMarried = target.GetDaysMarried();

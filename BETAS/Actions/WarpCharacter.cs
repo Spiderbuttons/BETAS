@@ -6,7 +6,7 @@ using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.TokenizableStrings;
 
-namespace BETAS.GSQs;
+namespace BETAS.Actions;
 
 public static class WarpCharacter
 {
