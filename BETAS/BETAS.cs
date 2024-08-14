@@ -86,6 +86,7 @@ namespace BETAS
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpCharacter", WarpCharacter.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpFarmer", WarpFarmer.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_MakeMachineReady", MakeMachineReady.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_TextAboveHead", TextAboveHead.Action);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -100,7 +101,7 @@ namespace BETAS
             
             if (e.Button == SButton.F6)
             {
-                string action = "Spiderbuttons.BETAS_MakeMachineReady -1 (O)337 -1 -1";
+                string action = "Spiderbuttons.BETAS_TextAboveHead Haley \"Cool text!\" null 3000 0";
                 if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
                     Log.Error($"Failed running action '{action}': {error}\n{ex}");
             }

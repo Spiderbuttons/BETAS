@@ -31,12 +31,12 @@ public static class SetNewDialogue
         }
         catch (Exception ex)
         {
-            Log.Trace("BETAS.GSQs.SetNewDialogue: Argument is not a translation key.");
+            Log.Trace("BETAS.Actions.SetNewDialogue: Argument is not a translation key.");
         }
 
         if (dialogue.Contains($"Spiderbuttons.BETAS_SetNewDialogue {npcName}") && delay <= 500)
         {
-            Log.Warn("BETAS.GSQs.SetNewDialogue: Dialogue contains action that adds more dialogue to the same NPC. This will likely cause errors if the delay is not high enough.");
+            Log.Warn("BETAS.Actions.SetNewDialogue: Dialogue contains action that adds more dialogue to the same NPC. This will likely cause errors if the delay is not high enough.");
             delay = 500;
         }
         
