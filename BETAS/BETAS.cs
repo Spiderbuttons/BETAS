@@ -110,7 +110,7 @@ namespace BETAS
             
             if (e.Button == SButton.F6)
             {
-                string action = $"Spiderbuttons.BETAS_WarpFarmer Farm RelativeX:Haley:0 RelativeY:Haley:3";
+                string action = $"Spiderbuttons.BETAS_WarpFarmer NPC:Emily RelativeX:Emily:1 RelativeY:Emily:-1";
                 if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
                     Log.Error($"Failed running action '{action}': {error}\n{ex}");
             }
