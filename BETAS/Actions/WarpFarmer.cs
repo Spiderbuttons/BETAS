@@ -13,7 +13,7 @@ public static class WarpFarmer
     // Warp the current player to a specific map and X/Y coordinate, with optional facing direction.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string locationName, out error, allowBlank: false) || !ArgUtilityExtensions.TryGetOptionalPossiblyOffsetCoordinate(args, 2, out int x, out error) || !ArgUtilityExtensions.TryGetOptionalPossiblyOffsetCoordinate(args, 3, out int y, out error) || !ArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2))
+        if (!ArgUtility.TryGet(args, 1, out string locationName, out error, allowBlank: false) || !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 2, out int x, out error) || !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 3, out int y, out error) || !ArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2))
         {
             error = "Usage: WarpFarmer <Location Name> <X> <Y> [Facing Direction]";
             return false;

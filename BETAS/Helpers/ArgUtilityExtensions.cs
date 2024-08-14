@@ -22,7 +22,7 @@ public static class ArgUtilityExtensions
         return defaultInterpolatedStringHandler.ToStringAndClear();
     }
     
-    public static bool TryGetOptionalPossiblyOffsetCoordinate(string[] array, int index, out int value, out string error, int defaultValue = 0)
+    public static bool TryGetOptionalPossiblyRelativeCoordinate(string[] array, int index, out int value, out string error, int defaultValue = 0)
     {
         if (array == null || index < 0 || index >= array.Length || array[index] == string.Empty)
         {
