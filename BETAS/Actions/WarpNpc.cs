@@ -8,12 +8,12 @@ using StardewValley.TokenizableStrings;
 
 namespace BETAS.Actions;
 
-public static class WarpCharacter
+public static class WarpNpc
 {
     // Warp an NPC to a specific map and X/Y coordinate, with optional facing direction.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) || !ArgUtility.TryGet(args, 2, out string locationName, out error, allowBlank: false) || !ArgUtility.TryGetInt(args, 3, out int x, out error) || !ArgUtility.TryGetInt(args, 4, out int y, out error) || !ArgUtility.TryGetOptionalInt(args, 5, out int facingDirection, out error, 2))
+        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) || !ArgUtility.TryGet(args, 2, out string locationName, out error, allowBlank: false) || !ArgUtilityExtensions.TryGetOptionalPossiblyOffsetCoordinate(args, 3, out int x, out error) || !ArgUtilityExtensions.TryGetOptionalPossiblyOffsetCoordinate(args, 4, out int y, out error) || !ArgUtility.TryGetOptionalInt(args, 5, out int facingDirection, out error, 2))
         {
             error = "Usage: WarpCharacter <NPC Name> <Location Name> <X> <Y> [Facing Direction]";
             return false;

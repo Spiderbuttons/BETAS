@@ -58,6 +58,9 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOUNTED", PlayerMounted.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_NPC_LOCATION", NpcLocation.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_HAS_NPC", LocationHasNpc.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_PLAYER", NpcNearPlayer.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_NPC", NpcNearNpc.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_HAS_MOD", HasMod.Query);
         }
 
@@ -78,17 +81,19 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DialogueOpened"); // Done!
         }
 
         private static void RegisterActions()
         {
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_SetNewDialogue", SetNewDialogue.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpCharacter", WarpCharacter.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpNpc", WarpNpc.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpFarmer", WarpFarmer.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_MakeMachineReady", MakeMachineReady.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_TextAboveHead", TextAboveHead.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteNpc", EmoteNpc.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteFarmer", EmoteFarmer.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_Lightning", Lightning.Action);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -98,14 +103,21 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                //
+                string action = $"Spiderbuttons.BETAS_SetNewDialogue Haley \"Test dialogue!\" true";
+                if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
+                    Log.Error($"Failed running action '{action}': {error}\n{ex}");
             }
             
             if (e.Button == SButton.F6)
             {
-                string action = "Spiderbuttons.BETAS_EmoteFarmer 32";
+                string action = $"Spiderbuttons.BETAS_WarpFarmer Farm RelativeX:Haley:0 RelativeY:Haley:3";
                 if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
                     Log.Error($"Failed running action '{action}': {error}\n{ex}");
+            }
+            
+            if (e.Button == SButton.F7)
+            {
+                //
             }
 
             if (e.Button == SButton.F8)
