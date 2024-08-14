@@ -87,6 +87,8 @@ namespace BETAS
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpFarmer", WarpFarmer.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_MakeMachineReady", MakeMachineReady.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_TextAboveHead", TextAboveHead.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteNpc", EmoteNpc.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteFarmer", EmoteFarmer.Action);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -101,7 +103,7 @@ namespace BETAS
             
             if (e.Button == SButton.F6)
             {
-                string action = "Spiderbuttons.BETAS_TextAboveHead Haley \"Cool text!\" null 3000 0";
+                string action = "Spiderbuttons.BETAS_EmoteFarmer 32";
                 if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
                     Log.Error($"Failed running action '{action}': {error}\n{ex}");
             }
