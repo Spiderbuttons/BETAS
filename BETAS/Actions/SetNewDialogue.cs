@@ -3,6 +3,7 @@ using System.Linq;
 using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
+using StardewValley.Menus;
 using StardewValley.TokenizableStrings;
 
 namespace BETAS.Actions;
@@ -34,13 +35,15 @@ public static class SetNewDialogue
             Log.Trace("BETAS.Actions.SetNewDialogue: Argument is not a translation key.");
         }
 
-        if (dialogue.Contains($"Spiderbuttons.BETAS_SetNewDialogue {npcName}") && delay <= 500)
+        if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is DialogueBox dialogueBox && dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
         {
-            Log.Warn("BETAS.Actions.SetNewDialogue: Dialogue contains action that adds more dialogue to the same NPC. This will likely cause errors if the delay is not high enough.");
-            delay = 500;
+            dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues);
         }
-        
-        DelayedAction.functionAfterDelay(() => { npc.setNewDialogue(new Dialogue(npc, null, dialogue), append); }, delay);
+        else
+        {
+            npc.setNewDialogue(new Dialogue(npc, null, dialogue), append);
+        }
+
         return true;
     }
 }
