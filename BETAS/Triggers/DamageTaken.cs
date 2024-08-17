@@ -18,7 +18,7 @@ namespace BETAS.Triggers
             var damageItem = ItemRegistry.Create(damager.Name);
             damageItem.modData["BETAS/DamageTaken/Damage"] = damage.ToString();
             damageItem.modData["BETAS/DamageTaken/WasParried"] = parried ? "true" : "false";
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_PassedOut", targetItem: damageItem, location: who.currentLocation, player: who);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_DamageTaken", targetItem: damageItem, location: who.currentLocation, player: who);
         }
         
         [HarmonyPostfix]
@@ -46,7 +46,7 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.PassedOut_Farmer_passOutFromTired_Postfix: \n" + ex);
+                Log.Error("Error in BETAS.DamageTaken_Farmer_takeDamage_Postfix: \n" + ex);
             }
         }
     }
