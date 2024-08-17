@@ -21,14 +21,12 @@ public static class NpcNearPlayer
         {
             var playerPosition = Utility.Vector2ToPoint(target.Position);
             Rectangle rect = new Rectangle(playerPosition.X - radius * 64, playerPosition.Y - radius * 64, (radius * 2 + 1) * 64, (radius * 2 + 1) * 64);
-            Log.Debug(query.Length);
             if (!ArgUtility.HasIndex(query, 3))
             {
                 return target.currentLocation.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
             }
             return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawName) =>
             {
-                Log.Debug(rawName);
                 return target.currentLocation.characters.Any(i => i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
             });
         });

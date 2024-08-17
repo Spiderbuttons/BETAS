@@ -19,7 +19,6 @@ public static class PlayerSpeed
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, delegate(Farmer target)
         {
             var speed = target.getMovementSpeed();
-            Log.Debug(speed);
             return speed >= minSpeed && speed <= maxSpeed;
         });
     }

@@ -18,8 +18,6 @@ public static class MakeMachineReady
             return false;
         }
         
-        Log.Debug($"MachineId: {machineID}, OutputId: {outputID}, LocationName: {locationName}, Count: {count}");
-        
         Utility.ForEachLocation(delegate(GameLocation location)
         {
             if (locationName != "-1" && !string.Equals(location.Name, locationName, StringComparison.OrdinalIgnoreCase))

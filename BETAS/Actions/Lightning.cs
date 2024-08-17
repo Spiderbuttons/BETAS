@@ -20,8 +20,6 @@ public static class Lightning
             error = "Usage: Lightning <X> <Y>";
             return false;
         }
-        
-        Log.Debug($"Lightning at {x}, {y}");
 
         Game1.flashAlpha = (float)(1.5);
         Utility.drawLightningBolt(new Vector2(x * Game1.tileSize + Game1.tileSize / 2, y * Game1.tileSize + Game1.tileSize / 2), Game1.player.currentLocation);

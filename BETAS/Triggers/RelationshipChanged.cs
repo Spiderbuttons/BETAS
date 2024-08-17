@@ -20,8 +20,6 @@ namespace BETAS.Triggers
         {
             var oldFriendship = ItemRegistry.Create(npc.Name);
             var newFriendship = ItemRegistry.Create(npc.Name);
-
-            Log.Debug(oldData.Points);
             
             oldFriendship.modData["BETAS/RelationshipChanged/Status"] = oldData.IsRoommate() ? "Roommate" : oldData.Status.ToString();
             oldFriendship.modData["BETAS/RelationshipChanged/Points"] = oldData.Points.ToString();
@@ -57,24 +55,6 @@ namespace BETAS.Triggers
             if (newData.NextBirthingDate != null) newFriendship.modData["BETAS/RelationshipChanged/NextBirthingDate"] = newData.NextBirthingDate.ToString();
             
             newFriendship.modData["BETAS/RelationshipChanged/WasMemoryWiped"] = oldData.Status == FriendshipStatus.Divorced && newData.Status == FriendshipStatus.Friendly ? "true" : "false";
-            
-            Log.Debug($"Old Status: {(oldData.IsRoommate() ? "Roommate" : oldData.Status.ToString())}, New Status: {(newData.IsRoommate() ? "Roommate" : newData.Status.ToString())}");
-            Log.Debug($"Old Points: {oldData.Points.ToString()}, New Points: {newData.Points.ToString()}");
-            Log.Debug($"Old GiftsToday: {oldData.GiftsToday.ToString()}, New GiftsToday: {newData.GiftsToday.ToString()}");
-            Log.Debug($"Old GiftsThisWeek: {oldData.GiftsThisWeek.ToString()}, New GiftsThisWeek: {newData.GiftsThisWeek.ToString()}");
-            Log.Debug($"Old LastGiftDate: {oldData.LastGiftDate?.ToString()}, New LastGiftDate: {newData.LastGiftDate?.ToString()}");
-            Log.Debug($"Old TalkedToToday: {oldData.TalkedToToday.ToString()}, New TalkedToToday: {newData.TalkedToToday.ToString()}");
-            Log.Debug($"Old RoommateMarriage: {oldData.RoommateMarriage.ToString()}, New RoommateMarriage: {newData.RoommateMarriage.ToString()}");
-            if (oldData.WeddingDate != null && newData.WeddingDate != null)
-            {
-                Log.Debug($"Old WeddingDate: {oldData.WeddingDate.SeasonKey} {oldData.WeddingDate.DayOfMonth.ToString()} {oldData.WeddingDate.Year.ToString()}, New WeddingDate: {newData.WeddingDate?.SeasonKey} {newData.WeddingDate?.DayOfMonth.ToString()} {newData.WeddingDate?.Year.ToString()}");
-            }
-            else
-            {
-                Log.Debug($"Old WeddingDate: null, New WeddingDate: null");
-            }
-            Log.Debug($"Old NextBirthingDate: {oldData.NextBirthingDate?.ToString()}, New NextBirthingDate: {newData.NextBirthingDate?.ToString()}");
-            Log.Debug($"Was Memory Wiped: {newFriendship.modData["BETAS/RelationshipChanged/WasMemoryWiped"]}");
             
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_RelationshipChanged", inputItem: oldFriendship, targetItem: newFriendship, location: npc.currentLocation, player: who);
         }

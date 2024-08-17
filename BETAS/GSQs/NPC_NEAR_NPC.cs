@@ -28,7 +28,6 @@ public static class NpcNearNpc
         var npcPosition = Utility.Vector2ToPoint(npc.Position);
         Rectangle rect = new Rectangle(npcPosition.X - radius * 64, npcPosition.Y - radius * 64,
             (radius * 2 + 1) * 64, (radius * 2 + 1) * 64);
-        Log.Debug(query.Length);
         if (!ArgUtility.HasIndex(query, 3))
         {
             return npc.currentLocation.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
@@ -36,7 +35,6 @@ public static class NpcNearNpc
 
         return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawName) =>
         {
-            Log.Debug(rawName);
             return npc.currentLocation.characters.Any(i =>
                 i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
         });
