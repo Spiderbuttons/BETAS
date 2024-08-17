@@ -17,8 +17,7 @@ namespace BETAS.Triggers
     {
         public static void Trigger(Monster mon, GameLocation loc, List<Debris> drops, Farmer killer)
         {
-            // ITEM_ID GSQ etc. does not support spaces in itemId. Just remove them.
-            var monsterItem = ItemRegistry.Create(mon.Name.Replace(" ", ""), drops.Count);
+            var monsterItem = ItemRegistry.Create(mon.Name, drops.Count);
             if (drops.Count > 0) monsterItem.modData["BETAS/MonsterKilled/Drops"] = drops.Join(d => ItemRegistry.QualifyItemId(d.itemId.Value), ",");
             monsterItem.modData["BETAS/MonsterKilled/MaxHealth"] = mon.MaxHealth.ToString();
             monsterItem.modData["BETAS/MonsterKilled/Damage"] = mon.DamageToFarmer.ToString();

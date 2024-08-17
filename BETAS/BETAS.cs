@@ -122,7 +122,11 @@ namespace BETAS
             
             if (e.Button == SButton.F7)
             {
-                //
+                Log.Debug($"Is player temporarily invincible: {Game1.player.temporarilyInvincible}");
+                Log.Debug($"Is eating: {Game1.player.isEating}");
+                Log.Debug($"Fade to black: {Game1.fadeToBlack}");
+                Log.Debug($"Has buff: {Game1.player.hasBuff("21")}");
+                Log.Debug($"Can be damaged: {Game1.player.CanBeDamaged()}");
             }
 
             if (e.Button == SButton.F8)
