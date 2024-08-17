@@ -57,6 +57,9 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOUNTED", PlayerMounted.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_QI_GEMS", PlayerQiGems.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPOUSE_GENDER", PlayerSpouseGender.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_STARDROPS_FOUND", PlayerStardropsFound.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_NPC_LOCATION", NpcLocation.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_HAS_NPC", LocationHasNpc.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_PLAYER", NpcNearPlayer.Query);
@@ -82,6 +85,7 @@ namespace BETAS
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck"); // Done!
             TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DialogueOpened"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DamageTaken"); // Done!
         }
 
         private static void RegisterActions()
