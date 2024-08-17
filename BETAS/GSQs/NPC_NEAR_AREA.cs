@@ -7,7 +7,7 @@ using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
 
-public static class NpcNearLocation
+public static class NpcNearArea
 {
     // Check whether a given NPC is currently within a specific radius of the player.
     public static bool Query(string[] query, GameStateQueryContext context)

@@ -64,6 +64,7 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_HAS_NPC", LocationHasNpc.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_PLAYER", NpcNearPlayer.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_NPC", NpcNearNpc.Query);
+            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_AREA", NpcNearArea.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_HAS_MOD", HasMod.Query);
         }
 
