@@ -23,6 +23,7 @@ namespace BETAS.Triggers
             petItem.modData["BETAS/AnimalPetted/Friendship"] = pet.friendshipTowardFarmer.Value.ToString();
             petItem.modData["BETAS/AnimalPetted/WasPet"] = "true";
             petItem.modData["BETAS/AnimalPetted/WasFarmAnimal"] = "false";
+            petItem.modData["BETAS/AnimalPetted/WasBaby"] = "false";
             
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: petItem, location: pet.currentLocation, player: petter);
         }
