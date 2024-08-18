@@ -108,31 +108,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                string action = $"Spiderbuttons.BETAS_SetNewDialogue Haley \"Test dialogue!\" true";
-                if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
-                    Log.Error($"Failed running action '{action}': {error}\n{ex}");
-            }
-            
-            if (e.Button == SButton.F6)
-            {
-                string action = $"Spiderbuttons.BETAS_WarpFarmer NPC:Emily RelativeX:Emily:1 RelativeY:Emily:-1";
-                if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
-                    Log.Error($"Failed running action '{action}': {error}\n{ex}");
-            }
-            
-            if (e.Button == SButton.F7)
-            {
-                Log.Debug($"Is player temporarily invincible: {Game1.player.temporarilyInvincible}");
-                Log.Debug($"Is eating: {Game1.player.isEating}");
-                Log.Debug($"Fade to black: {Game1.fadeToBlack}");
-                Log.Debug($"Has buff: {Game1.player.hasBuff("21")}");
-                Log.Debug($"Can be damaged: {Game1.player.CanBeDamaged()}");
-            }
-
-            if (e.Button == SButton.F8)
-            {
-                Harmony.UnpatchAll(ModManifest.UniqueID);
-                Harmony.PatchAll();
+                return;
             }
         }
     }
