@@ -17,6 +17,8 @@ namespace BETAS.Triggers
     {
         public static void Trigger(Monster mon, GameLocation loc, List<Debris> drops, Farmer killer)
         {
+            Log.Debug(mon);
+            
             var monsterItem = ItemRegistry.Create(mon.Name, drops.Count);
             if (drops.Count > 0) monsterItem.modData["BETAS/MonsterKilled/Drops"] = drops.Join(d => ItemRegistry.QualifyItemId(d.itemId.Value), ",");
             monsterItem.modData["BETAS/MonsterKilled/MaxHealth"] = mon.MaxHealth.ToString();
@@ -39,7 +41,7 @@ namespace BETAS.Triggers
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldloc_3),
-                    new CodeInstruction(OpCodes.Ldloc_S, 4),
+                    new CodeInstruction(OpCodes.Ldarg_S, 4),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(MonsterKilled), nameof(Trigger))),
                     new CodeInstruction(OpCodes.Ret)
                 );
