@@ -1,6 +1,6 @@
 ﻿# TRIGGERS
 
-Triggers are `Raised` whenever a specific event occurs in the game. Unmodded Stardew Valley includes three triggers: DayStarted, DayEnding, and LocationChanged. BETAS adds 17 new triggers to the game that your mod can react to.
+Triggers are `Raised` whenever a specific event occurs in the game. Unmodded Stardew Valley includes three triggers: DayStarted, DayEnding, and LocationChanged. BETAS adds 17 new Triggers to the game that your mod can react to.
 
 In order to provide more information about the event that occured, most of the triggers will also create an item to send along with the trigger as the `Target` item. This item will sometimes be an ordinary Stardew Valley Item. Other times, it will be a fake item that only exists for the purpose of the trigger, which I will simply call a `Trigger Item`. The documentation for each trigger will specify whether the `Target` item is just a `Trigger Item` or if it is an actual item. If it is a `Trigger Item`, it may still contain useful data in its ordinary fields, which will be shown as necessary. You will be able to use [the standard item Game State Queries](https://stardewvalleywiki.com/Modding:Game_state_queries#For_items_only) to get information from the `Target` item along with [the new item Game State Queries added by BETAS](GameStateQueries.md).
 
