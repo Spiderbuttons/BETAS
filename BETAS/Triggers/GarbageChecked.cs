@@ -26,6 +26,11 @@ namespace BETAS.Triggers
                 trashItem.modData["BETAS/GarbageChecked/WasMegaSuccess"] = data.IsMegaSuccess ? "true" : "false";
                 trashItem.modData["BETAS/GarbageChecked/WasDoubleMegaSuccess"] = data.IsDoubleMegaSuccess ? "true" : "false";
             }
+            else
+            {
+                trashItem.modData["BETAS/GarbageChecked/WasMegaSuccess"] = "false";
+                trashItem.modData["BETAS/GarbageChecked/WasDoubleMegaSuccess"] = "false";
+            }
             if (caught)
             {
                 var witnesses = (from npc in Utility.GetNpcsWithinDistance(tile, 7, location)
