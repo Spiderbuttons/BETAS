@@ -1,6 +1,6 @@
 ﻿# ACTIONS
 
-BETAS adds 8 new Actions for you to use. Not all of them will be useful without using the new triggers to activate them, but just like other actions, you can use them in dialogue, letters, etc. if you still choose to. If a parameter is wrapped in `< >` then it is a _required_ parameter. If the parameter is wrapped in `[ ]` then it is optional. If the parameter has a `+` after it, it means you can provide multiple of that parameter separated by spaces.
+BETAS adds 8 new Actions for you to use. Not all of them will be useful without using the [new Triggers](Triggers.md) or [new Game State Queries](GameStateQueries.md) added by BETAS, but just like other actions, you can use them in dialogue, letters, etc. if you still want to. If a parameter is wrapped in `< >` then it is a _required_ parameter. If the parameter is wrapped in `[ ]` then it is optional. If the parameter has a `+` after it, it means you can provide multiple of that parameter separated by spaces.
 
 <br>
 

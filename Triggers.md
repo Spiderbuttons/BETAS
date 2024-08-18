@@ -10,6 +10,8 @@ The `Target` location of the trigger will be wherever the trigger occured or the
 
 Please keep in mind that all triggers will look for these events from the perspective of the **current, local player.** This means that if you are playing multiplayer, the triggers will not apply if anyone other than yourself witnesses or causes the event in question.
 
+All Triggers, both vanilla or otherwise, can be used to perform the [new Actions added by BETAS](Actions.md).
+
 ### List of Triggers:
 - [AnimalPetted](#animalpetted)
 - [BombExploded](#bombexploded)
