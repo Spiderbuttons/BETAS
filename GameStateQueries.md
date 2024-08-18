@@ -2,11 +2,15 @@
 
 BETAS adds 21 new game state queries for you to use. Some were made with the intent to use them alongside the new triggers, but they can all be used in whatever `Condition` fields you see fit. If a parameter is wrapped in `< >` then it is a _required_ parameter. If the parameter is wrapped in `[ ]` then it is optional. If the parameter has a `+` after it, it means you can provide multiple of that parameter separated by spaces.
 
+<br>
+
+* * *
+
 ## UTILITY
 
 | Condition                                                                                           | Effect |
 |:----------------------------------------------------------------------------------------------------|:------|
-| $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_HAS\_MOD}}`$ \$`{\textsf{\color{BrickRed}<ModId>}}`$+ | Whether or not a mod that matches any `ModId` is found and loaded. |
+| $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_HAS\_MOD}}`$ \$`{\textsf{\color{RedOrange}<ModId>}}`$+ | Whether or not a mod that matches any `ModId` is found and loaded. |
 <br>
 
 * * *
@@ -16,7 +20,7 @@ BETAS adds 21 new game state queries for you to use. Some were made with the int
 | ${\textsf{\color{white}USAGE}}$                                                                                                                                                                                                             |                                                                                     EFFECT                                                                                     |
 |:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_ITEM\_MOD\_DATA}}`$ $`{\textsf{\color{YellowOrange}<Type>}}`$ $`{\textsf{\color{Cerulean}<Key>}}`$ $`{\textsf{\color{BlueGreen}[Value]}}`$                                                    |                Whether or not the item has a mod data entry with the given `Key` and `Value`. If no `Value` is given, it checks whether the key exists at all.                 |
-| $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_ITEM\_MOD\_DATA\_RANGE}}`$ $`{\textsf{\color{YellowOrange}<Type>}}`$ $`{\textsf{\color{Cerulean}<Key>}}`$ $`{\textsf{\color{BlueGreen}<Min>}}`$ $`{\textsf{\color{BlueGreen}[Max]}}`$         |    If the item has a mod data entry with the given `Key and the `Value` is an integer, this checks whether that `Value` is between the `Min` and `Max` (default unlimited).    |
+| $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_ITEM\_MOD\_DATA\_RANGE}}`$ $`{\textsf{\color{YellowOrange}<Type>}}`$ $`{\textsf{\color{Cerulean}<Key>}}`$ $`{\textsf{\color{BlueGreen}<Min>}}`$ $`{\textsf{\color{BlueGreen}[Max]}}`$         |    If the item has a mod data entry with the given `Key` and the `Value` is an integer, this checks whether that `Value` is between the `Min` and `Max` (default unlimited).    |
 | $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_ITEM\_MOD\_DATA\_CONTAINS}}`$ $`{\textsf{\color{YellowOrange}<Type>}}`$ $`{\textsf{\color{Cerulean}<Key>}}`$ $`{\textsf{\color{BlueGreen}<Value>}}`$+                                         |          If the item has a mod data entry with the given `Key` and the `Value` is a comma or space separated list, this checks whether that list contains any `Value`          |
 |                                                                                                                                                                                                                                             |                                                                                                                                                                                |
 | $`{\textsf{\color{Orchid}Spiderbuttons.BETAS\_PLAYER\_MOD\_DATA}}`$ $`{\textsf{\color{YellowOrange}<Player>}}`$ $`{\textsf{\color{Cerulean}<Key>}}`$ $`{\textsf{\color{BlueGreen}[Value]}}`$                                                |               Whether or not the player has a mod data entry with the given `Key` and `Value`. If no `Value` is given, it checks whether the key exists at all.                |
