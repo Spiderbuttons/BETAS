@@ -34,6 +34,8 @@ namespace BETAS.Triggers
                     7 => "Special",
                     _ => "Neutral"
                 };
+                npcItem.modData["BETAS/GiftGiven/Friendship"] =
+                    giver.getFriendshipLevelForNPC(__instance.Name).ToString();
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_GiftGiven", targetItem: npcItem, inputItem: o, location: __instance.currentLocation, player: giver);
             }
             catch (Exception ex)
