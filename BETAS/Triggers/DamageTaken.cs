@@ -15,7 +15,7 @@ namespace BETAS.Triggers
     {
         public static void Trigger(Farmer who, int damage, Monster damager, bool parried)
         {
-            var damageItem = ItemRegistry.Create(damager.Name);
+            var damageItem = ItemRegistry.Create(damager?.Name ?? "Unknown");
             damageItem.modData["BETAS/DamageTaken/Damage"] = damage.ToString();
             damageItem.modData["BETAS/DamageTaken/WasParried"] = parried ? "true" : "false";
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_DamageTaken", targetItem: damageItem, location: who.currentLocation, player: who);
