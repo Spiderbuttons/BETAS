@@ -52,7 +52,13 @@ public static class ItemModData
         {
             return false;
         }
-            
-        return item.modData.TryGetValue(key, out var data) && data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList().Contains(value, StringComparer.OrdinalIgnoreCase);
+
+        if (!item.modData.TryGetValue(key, out var data))
+        {
+            return false;
+        }
+
+        var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+        return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }

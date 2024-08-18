@@ -42,6 +42,15 @@ public static class PlayerModData
         }
             
         string data;
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) => target.modData.TryGetValue(key, out data) && data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList().Contains(value, StringComparer.OrdinalIgnoreCase));
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) =>
+        {
+            if (!target.modData.TryGetValue(key, out var data))
+            {
+                return false;
+            }
+
+            var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
+        });
     }
 }
