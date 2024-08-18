@@ -89,9 +89,9 @@ There are three different queries that all fall under the `LOCATION_MOD_DATA` ca
 * * *
 ## NPC_NEAR_AREA <a name="npcneararea"></a>
 
-|                               CONDITION                                |                                                                                                                                                       EFFECT                                                                                                                                                        |
-|:----------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| `Spiderbuttons.BETAS_NPC_NEAR_AREA <Location> <X> <Y> <Radius> [NPC]+` | Whether or not any `NPC` is within a certain integer radius of the `X` and `Y` tile coordinates of the given `Location`. If no `NPC` is given, this checks whether there is any `NPC` at all within that radius. The `Location` parameter accepts [relative location names](RelativeQueries.md#relativelocations]). |
+|                               CONDITION                                |                                                                                                                                                       EFFECT                                                                                                                                                       |
+|:----------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| `Spiderbuttons.BETAS_NPC_NEAR_AREA <Location> <X> <Y> <Radius> [NPC]+` | Whether or not any `NPC` is within a certain integer radius of the `X` and `Y` tile coordinates of the given `Location`. If no `NPC` is given, this checks whether there is any `NPC` at all within that radius. The `Location` parameter accepts [relative location names](RelativeQueries.md#relativelocations). |
 <br>
 
 * * *
