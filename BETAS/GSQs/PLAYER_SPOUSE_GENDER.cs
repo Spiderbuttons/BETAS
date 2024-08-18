@@ -16,13 +16,20 @@ public static class PlayerSpouseGender
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
-        bool isMale = string.Equals(genderName, "Male", StringComparison.OrdinalIgnoreCase);
+
+        var genderEnum = genderName switch
+        {
+            "Male" => Gender.Male,
+            "Female" => Gender.Female,
+            _ => Gender.Undefined
+        };
+        
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) =>
         {
             var spouse = target.getSpouse();
             if (spouse == null)
                 return false;
-            return isMale == Utility.isMale(spouse.Name);
+            return spouse.Gender == genderEnum;
         });
     }
 }
