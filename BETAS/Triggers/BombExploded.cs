@@ -24,6 +24,9 @@ namespace BETAS.Triggers
         {
             try
             {
+                var bombItem = ItemRegistry.Create("(O)287");
+                bombItem.modData["BETAS/BombExploded/Radius"] = radius.ToString();
+                
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_BombExploded", location: __instance, player: who);
             }
             catch (Exception ex)
