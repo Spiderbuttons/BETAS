@@ -22,12 +22,13 @@ namespace BETAS.Triggers
             var newFriendship = ItemRegistry.Create(npc.Name);
             
             oldFriendship.modData["BETAS/RelationshipChanged/Status"] = oldData.IsRoommate() ? "Roommate" : oldData.Status.ToString();
-            oldFriendship.modData["BETAS/RelationshipChanged/Points"] = oldData.Points.ToString();
+            oldFriendship.modData["BETAS/RelationshipChanged/Friendship"] = oldData.Points.ToString();
             if (oldData.GiftsToday > 0) oldFriendship.modData["BETAS/RelationshipChanged/GiftsToday"] = oldData.GiftsToday.ToString();
             if (oldData.GiftsThisWeek > 0) oldFriendship.modData["BETAS/RelationshipChanged/GiftsThisWeek"] = oldData.GiftsThisWeek.ToString();
             if (oldData.LastGiftDate != null) oldFriendship.modData["BETAS/RelationshipChanged/DaysSinceLastGift"] = (Game1.Date.TotalDays - oldData.LastGiftDate.TotalDays).ToString();
             oldFriendship.modData["BETAS/RelationshipChanged/WasTalkedToToday"] = oldData.TalkedToToday.ToString();
             oldFriendship.modData["BETAS/RelationshipChanged/WasRoommate"] = oldData.RoommateMarriage.ToString();
+            oldFriendship.modData["BETAS/RelationshipChanged/IsRoommate"] = oldData.RoommateMarriage.ToString();
             if (oldData.WeddingDate != null)
             {
                 oldFriendship.modData["BETAS/RelationshipChanged/WeddingSeason"] = oldData.WeddingDate.SeasonKey;
@@ -38,7 +39,7 @@ namespace BETAS.Triggers
             if (oldData.NextBirthingDate != null) oldFriendship.modData["BETAS/RelationshipChanged/NextBirthingDate"] = oldData.NextBirthingDate.ToString();
             
             newFriendship.modData["BETAS/RelationshipChanged/Status"] = newData.IsRoommate() ? "Roommate" : newData.Status.ToString();
-            newFriendship.modData["BETAS/RelationshipChanged/Points"] = newData.Points.ToString();
+            newFriendship.modData["BETAS/RelationshipChanged/Friendship"] = newData.Points.ToString();
             if (newData.GiftsToday > 0) newFriendship.modData["BETAS/RelationshipChanged/GiftsToday"] = newData.GiftsToday.ToString();
             if (newData.GiftsThisWeek > 0) newFriendship.modData["BETAS/RelationshipChanged/GiftsThisWeek"] = newData.GiftsThisWeek.ToString();
             if (newData.LastGiftDate != null) newFriendship.modData["BETAS/RelationshipChanged/DaysSinceLastGift"] = (Game1.Date.TotalDays - newData.LastGiftDate.TotalDays).ToString();
