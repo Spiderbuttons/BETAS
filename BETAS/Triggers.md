@@ -49,16 +49,16 @@ Raised whenever the local player pets an animal, whether it is a farm animal or 
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                              Value                              |                                                Usage Notes |
-|:----------------------------------|:---------------------------------------------------------------:|-----------------------------------------------------------:|
-| BETAS/AnimalPetted/Name           |                     The name of the animal.                     |                                                            |
-| BETAS/AnimalPetted/Friendship     | The friendship of the animal towards the player that petted it. |                                                            |
-| BETAS/AnimalPetted/Breed          |                  What breed of animal this is.                  |         This value will only exist if the animal is a pet. |
-| BETAS/AnimalPetted/Happiness      |                  The happiness of the animal.                   | This value will only exist if the animal is a farm animal. |
-| BETAS/AnimalPetted/ProduceQuality |      The quality level of the produce this animal creates.      | This value will only exist if the animal is a farm animal. |
-| BETAS/AnimalPetted/WasPet         |   Whether or not the animal was a pet and not a farm animal.    |                                                            |
-| BETAS/AnimalPetted/WasFarmAnimal  |   Whether or not the animal was a farm animal and not a pet.    |                                                            |
-| BETAS/AnimalPetted/WasBaby        |          Whether or not the animal was a baby or not.           |                       This value is always false for pets. |
+| Mod Data Key                      |                                                                Value                                                                 |                                                Usage Notes |
+|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------:|-----------------------------------------------------------:|
+| BETAS/AnimalPetted/Name           |                                                       The name of the animal.                                                        |                                                            |
+| BETAS/AnimalPetted/Friendship     |                                   The friendship of the animal towards the player that petted it.                                    |                                             Integer value. |
+| BETAS/AnimalPetted/Breed          |                                                    What breed of animal this is.                                                     |         This value will only exist if the animal is a pet. |
+| BETAS/AnimalPetted/Happiness      |                                                     The happiness of the animal.                                                     | This value will only exist if the animal is a farm animal. |
+| BETAS/AnimalPetted/ProduceQuality | The quality level of the produce this animal creates. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | This value will only exist if the animal is a farm animal. |
+| BETAS/AnimalPetted/WasPet         |                                      Whether or not the animal was a pet and not a farm animal.                                      |                                                            |
+| BETAS/AnimalPetted/WasFarmAnimal  |                                      Whether or not the animal was a farm animal and not a pet.                                      |                                                            |
+| BETAS/AnimalPetted/WasBaby        |                                             Whether or not the animal was a baby or not.                                             |                       This value is always false for pets. |
 <br>
 
 * * *
@@ -80,9 +80,9 @@ Raised whenever a bomb explodes, including when that bomb is a Hot Head.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key              |            Value             | Usage Notes |
-|:--------------------------|:----------------------------:|------------:|
-| BETAS/BombExploded/Radius | The radius of the explosion. |             |
+| Mod Data Key              |            Value             |    Usage Notes |
+|:--------------------------|:----------------------------:|---------------:|
+| BETAS/BombExploded/Radius | The radius of the explosion. | Integer value. |
 <br>
 
 * * *
@@ -126,10 +126,10 @@ Raised whenever the local player takes damage.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                 |                             Value                             |                                                 Usage Notes |
-|:-----------------------------|:-------------------------------------------------------------:|------------------------------------------------------------:|
-| BETAS/DamageTaken/Damage     | The amount of damage that the damage source tried to inflict. | This does not take defense or other modifiers into account. |
-| BETAS/DamageTaken/WasParried |         Whether or not the player parried the damage.         |                                                             |
+| Mod Data Key                 |                             Value                             |                                                                Usage Notes |
+|:-----------------------------|:-------------------------------------------------------------:|---------------------------------------------------------------------------:|
+| BETAS/DamageTaken/Damage     | The amount of damage that the damage source tried to inflict. | Integer value. This does not take defense or other modifiers into account. |
+| BETAS/DamageTaken/WasParried |         Whether or not the player parried the damage.         |                                                                            |
 <br>
 
 * * *
@@ -155,8 +155,8 @@ Raised whenever the local player opens a dialogue box/starts a conversation with
 | Mod Data Key                         |                                            Value                                            |                                                                                                                               Usage Notes |
 |:-------------------------------------|:-------------------------------------------------------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------:|
 | BETAS/DialogueOpened/Age             |    The age of the NPC being spoken to. Possible values are `Adult`, `Teen`, or `Child`.     |                                                                                                                                           |
-| BETAS/DialogueOpened/Gender          | The gender of the NPC being spoken to. Possible values are `Male`, `Female`, or `Undefined` |                                                                                                                                           |
-| BETAS/DialogueOpened/Friendship      |                     The current friendship for the NPC being spoken to.                     |                                                                                                                                           |
+| BETAS/DialogueOpened/Gender          | The gender of the NPC being spoken to. Possible values are `Female`, `Male`, or `Undefined` |                                                                                                                                           |
+| BETAS/DialogueOpened/Friendship      |                     The current friendship for the NPC being spoken to.                     |                                                                                                                            Integer value. |
 | BETAS/DialogueOpened/WasDatingFarmer |       Whether or not the player was dating this NPC when the dialogue box was opened.       | This may not behave as expected when giving a relationship-changing item (e.g. bouquet). See [RelationshipChanged](#relationshipchanged). |
 <br>
 
@@ -179,10 +179,10 @@ Raised whenever the local player gains experience in a skill.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                            Value                            | Usage Notes |
-|:----------------------------------|:-----------------------------------------------------------:|------------:|
-| BETAS/ExperienceGained/Amount     |               How much experience was gained.               |             |
-| BETAS/ExperienceGained/WasLevelUp | Whether or not this experience gain resulted in a level up. |             |
+| Mod Data Key                      |                            Value                            |    Usage Notes |
+|:----------------------------------|:-----------------------------------------------------------:|---------------:|
+| BETAS/ExperienceGained/Amount     |               How much experience was gained.               | Integer value. |
+| BETAS/ExperienceGained/WasLevelUp | Whether or not this experience gain resulted in a level up. |                |
 <br>
 
 * * *
@@ -202,13 +202,13 @@ The `Target` item in this case is the fish that was caught. Therefore, you can u
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                     |                           Value                            | Usage Notes |
-|:---------------------------------|:----------------------------------------------------------:|------------:|
-| BETAS/FishCaught/Size            |           The size of the fish that was caught.            |             |
-| BETAS/FishCaught/Difficulty      |     The difficulty value for the fish that was caught.     |             |
-| BETAS/FishCaught/WasPerfect      |       Whether or not this fish was caught perfectly.       |             |
-| BETAS/FishCaught/WasLegendary    |         Whether or not this was a legendary fish.          |             |
-| BETAS/FishCaught/WasWithTreasure | Whether or not the player also fished up a treasure chest. |             |
+| Mod Data Key                     |                           Value                            |    Usage Notes |
+|:---------------------------------|:----------------------------------------------------------:|---------------:|
+| BETAS/FishCaught/Size            |           The size of the fish that was caught.            | Integer value. |
+| BETAS/FishCaught/Difficulty      |     The difficulty value for the fish that was caught.     | Integer value. |
+| BETAS/FishCaught/WasPerfect      |       Whether or not this fish was caught perfectly.       |                |
+| BETAS/FishCaught/WasLegendary    |         Whether or not this was a legendary fish.          |                |
+| BETAS/FishCaught/WasWithTreasure | Whether or not the player also fished up a treasure chest. |                |
 <br>
 
 * * *
@@ -230,23 +230,23 @@ Raised whenever the local player shakes a tree or bush.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                              Value                               |                                                                                                                                                                                         Usage Notes |
-|:----------------------------------|:----------------------------------------------------------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
-| BETAS/FloraShaken/Stage           |      The current growth stage of the flora that was shaken.      |                                                                                                                                                               This value will not exist for bushes. |
-| BETAS/FloraShaken/Seed            |         The item ID of the seed used to grow this flora.         |                                                                                                                                                               This value will not exist for bushes. |
-| BETAS/FloraShaken/Quality         |         The quality of the produce this flora produces.          |                                                                                                                                                         This value will only exist for fruit trees. |
-| BETAS/FloraShaken/Produce         | A list of the produce that was on this flora when it was shaken. |                                                                                                                                                      This value will not exist for non-fruit trees. |
-| BETAS/FloraShaken/ProduceCount    | The number of produce that was on this flora when it was shaken. |                                                                                                                                                         This value will only exist for fruit trees. |
-| BETAS/FloraShaken/PossibleProduce |   A list of produce that this flora can ever possibly produce.   |                                                                                                                                                         This value will only exist for fruit trees. |
-| BETAS/FloraShaken/Size            |                     The size of this flora.                      |                                                                                                                                                              This value will only exist for bushes. |
-| BETAS/FloraShaken/WasInSeason     |             Whether or not this flora is in season.              | For non-fruit trees, this checks whether the tree can grow. For fruit trees, this checks whether or not the tree can currently produce fruit. For bushes, this checks whether the bush is in bloom. |
-| BETAS/FloraShaken/WasMossy        |               Whether or not this flora was mossy.               |                                                                                                                                                                                                     |
-| BETAS/FloraShaken/WasSeedy        |  Whether or not this flora had a seed that fell out (I think).   |                                                                                                                                                                                                     |
-| BETAS/FloraShaken/WasFertilized   |         Whether or not this flora was fertilized or not.         |                                                                                                                                                                                                     |
-| BETAS/FloraShaken/WasTapped       |          Whether or not this flora had a tapper on it.           |                                                                                                                                                                                                     |
-| BETAS/FloraShaken/WasTree         |              Whether or not this flora was a tree.               |                                                                                                                                                                                                     |
-| BETAS/FloraShaken/WasFruitTree    |           Whether or not this flora was a fruit tree.            |                                                                                                                                                                                                     |
-| BETAS/FloraShaken/WasBush         |              Whether or not this flora was a bush.               |                                                                                                                                                                                                     |
+| Mod Data Key                      |                                                             Value                                                              |                                                                                                                                                                                                                                      Usage Notes |
+|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| BETAS/FloraShaken/Stage           |                                     The current growth stage of the flora that was shaken.                                     |                Integer value between 0 and 15.                                                                                                                                                             This value will not exist for bushes. |
+| BETAS/FloraShaken/Seed            |                                        The item ID of the seed used to grow this flora.                                        |                                                                                                                                                                                                            This value will not exist for bushes. |
+| BETAS/FloraShaken/Quality         | The quality of the produce this flora produces. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). |                                                                                                                                                                                                      This value will only exist for fruit trees. |
+| BETAS/FloraShaken/Produce         |                                A list of the produce that was on this flora when it was shaken.                                |                                                                                                                                                                                                   This value will not exist for non-fruit trees. |
+| BETAS/FloraShaken/ProduceCount    |                                The number of produce that was on this flora when it was shaken.                                | Integer value.                                                                                                                                                                                       This value will only exist for fruit trees. |
+| BETAS/FloraShaken/PossibleProduce |                                  A list of produce that this flora can ever possibly produce.                                  |                                                                                                                                                                                                      This value will only exist for fruit trees. |
+| BETAS/FloraShaken/Size            |                            The size of this flora. Possible values are `0`, `1`, `2`, `3`, and `4`.                            |                                                                 This value will only exist for bushes. Sizes `0`, `1`, and `2` are small, medium, and large bushes respectively. Size `3` is a green tea bush. Size `4` is a golden walnut bush. |
+| BETAS/FloraShaken/WasInSeason     |                                            Whether or not this flora is in season.                                             |                                              For non-fruit trees, this checks whether the tree can grow. For fruit trees, this checks whether or not the tree can currently produce fruit. For bushes, this checks whether the bush is in bloom. |
+| BETAS/FloraShaken/WasMossy        |                                              Whether or not this flora was mossy.                                              |                                                                                                                                                                                                                                                  |
+| BETAS/FloraShaken/WasSeedy        |                                 Whether or not this flora had a seed that fell out (I think).                                  |                                                                                                                                                                                                                                                  |
+| BETAS/FloraShaken/WasFertilized   |                                        Whether or not this flora was fertilized or not.                                        |                                                                                                                                                                                                                                                  |
+| BETAS/FloraShaken/WasTapped       |                                         Whether or not this flora had a tapper on it.                                          |                                                                                                                                                                                                                                                  |
+| BETAS/FloraShaken/WasTree         |                                             Whether or not this flora was a tree.                                              |                                                                                                                                                                                                                                                  |
+| BETAS/FloraShaken/WasFruitTree    |                                          Whether or not this flora was a fruit tree.                                           |                                                                                                                                                                                                                                                  |
+| BETAS/FloraShaken/WasBush         |                                             Whether or not this flora was a bush.                                              |                                                                                                                                                                                                                                                  |
 <br>
 
 * * *
@@ -304,7 +304,7 @@ The `Input` item in this case is the item that was given as a gift. Therefore, y
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                |                                                             Value                                                              |                         Usage Notes |
 |:----------------------------|:------------------------------------------------------------------------------------------------------------------------------:|------------------------------------:|
-| BETAS/GiftGiven/Friendship  |                                    The friendship level of the NPC that was given the gift.                                    |                                     |
+| BETAS/GiftGiven/Friendship  |                                    The friendship level of the NPC that was given the gift.                                    |                      Integer value. |
 | BETAS/GiftGiven/Taste       | The gift taste that the NPC had for the item. Possible values are `Love`, `Hate`, `Like`, `Dislike`, `Neutral`, and `Special`. | `Special` is used for Stardrop Tea. |
 | BETAS/GiftGiven/WasBirthday |                               Whether or not it was the NPC's birthday when the gift was given.                                |                                     |
 <br>
@@ -329,14 +329,14 @@ Raised whenever the local player opens their mailbox to read a letter. This trig
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                            |                                 Value                                  |                                                            Usage Notes |
-|:----------------------------------------|:----------------------------------------------------------------------:|-----------------------------------------------------------------------:|
-| BETAS/LetterRead/Money                  |               How much money was included in the letter.               |         This value will not exist if there was no money in the letter. |
-| BETAS/LetterRead/Quest                  |             The quest ID that was attached to the letter.              |         This value will not exist if there was no quest in the letter. |
-| BETAS/LetterRead/SpecialOrder           |         The special order ID that was attached to the letter.          | This value will not exist if there was no special order in the letter. |
-| BETAS/LetterRead/WasRecipe              |   Whether or not the letter contained a cooking or crafting recipe.    |                                                                        |
-| BETAS/LetterRead/WasQuestOrSpecialOrder | Whether or not the letter contained either a quest or a special order. |                                                                        |
-| BETAS/LetterRead/WasWithItem            |           Whether or not the letter had an attached item(s).           |                                                                        |
+| Mod Data Key                            |                                 Value                                  |                                                                   Usage Notes |
+|:----------------------------------------|:----------------------------------------------------------------------:|------------------------------------------------------------------------------:|
+| BETAS/LetterRead/Money                  |               How much money was included in the letter.               | Integer value. This value will not exist if there was no money in the letter. |
+| BETAS/LetterRead/Quest                  |             The quest ID that was attached to the letter.              |                This value will not exist if there was no quest in the letter. |
+| BETAS/LetterRead/SpecialOrder           |         The special order ID that was attached to the letter.          |        This value will not exist if there was no special order in the letter. |
+| BETAS/LetterRead/WasRecipe              |   Whether or not the letter contained a cooking or crafting recipe.    |                                                                               |
+| BETAS/LetterRead/WasQuestOrSpecialOrder | Whether or not the letter contained either a quest or a special order. |                                                                               |
+| BETAS/LetterRead/WasWithItem            |           Whether or not the letter had an attached item(s).           |                                                                               |
 <br>
 
 * * *
@@ -403,12 +403,12 @@ Raised whenever the local player kills a monster.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                           |                                Value                                | Usage Notes |
-|:---------------------------------------|:-------------------------------------------------------------------:|------------:|
-| BETAS/MonsterKilled/MaxHealth          |         The maximum health of the monster that was killed.          |             |
-| BETAS/MonsterKilled/Damage             | How much damage the monster that was killed would do to the player. |             |
-| BETAS/MonsterKilled/Drops              |   A list of item IDs that the monster dropped when it was killed.   |             |
-| BETAS/MonsterKilled/WasHardmodeMonster |             Whether or not this was a hardmode monster.             |             |
+| Mod Data Key                           |                                Value                                |    Usage Notes |
+|:---------------------------------------|:-------------------------------------------------------------------:|---------------:|
+| BETAS/MonsterKilled/MaxHealth          |         The maximum health of the monster that was killed.          | Integer value. |
+| BETAS/MonsterKilled/Damage             | How much damage the monster that was killed would do to the player. | Integer value. |
+| BETAS/MonsterKilled/Drops              |   A list of item IDs that the monster dropped when it was killed.   |                |
+| BETAS/MonsterKilled/WasHardmodeMonster |             Whether or not this was a hardmode monster.             |                |
 <br>
 
 * * *
@@ -430,12 +430,12 @@ Raised whenever the local player kisses an NPC.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                    |                                             Value                                             | Usage Notes |
-|:--------------------------------|:---------------------------------------------------------------------------------------------:|------------:|
-| BETAS/NpcKissed/Age             |     The age of the NPC that was kissed. Possible values are `Adult`, `Teen`, and `Child`.     |             |
-| BETAS/NpcKissed/Gender          | The gender of the NPC that was kissed. Possible values are `Female`, `Male`, and `Undefined`. |             |
-| BETAS/NpcKissed/Friendship      |                      The friendship value for the player with this NPC.                       |             |
-| BETAS/NpcKissed/WasDatingFarmer |              Whether or not the NPC was dating the farmer when they were kissed.              |             |
+| Mod Data Key                    |                                             Value                                             |    Usage Notes |
+|:--------------------------------|:---------------------------------------------------------------------------------------------:|---------------:|
+| BETAS/NpcKissed/Age             |     The age of the NPC that was kissed. Possible values are `Adult`, `Teen`, and `Child`.     |                |
+| BETAS/NpcKissed/Gender          | The gender of the NPC that was kissed. Possible values are `Female`, `Male`, and `Undefined`. |                |
+| BETAS/NpcKissed/Friendship      |                      The friendship value for the player with this NPC.                       | Integer value. |
+| BETAS/NpcKissed/WasDatingFarmer |              Whether or not the NPC was dating the farmer when they were kissed.              |                |
 <br>
 
 * * *
@@ -459,8 +459,8 @@ Raised whenever the local player passes out either from exhaustion or from being
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                 |                                          Value                                          |                                                                             Usage Notes |
 |:-----------------------------|:---------------------------------------------------------------------------------------:|----------------------------------------------------------------------------------------:|
-| BETAS/PassedOut/Time         |                       The time of day when the player passed out.                       |                                                                                         |
-| BETAS/PassedOut/Tool         |                   The tool that the player exhausted themselves with.                   | This value will only exist if the player passed out from exhaustion through tool usage. |
+| BETAS/PassedOut/Time         |                       The time of day when the player passed out.                       |                                                              Standard `0600–2600` form. |
+| BETAS/PassedOut/Tool         |           The item ID of the tool that the player exhausted themselves with.            | This value will only exist if the player passed out from exhaustion through tool usage. |
 | BETAS/PassedOut/WasUpTooLate |        Whether or not the player passed out because they stayed awake too late.         |                                                                                         |
 | BETAS/PassedOut/WasExhausted |         Whether or not the player passed out because they exhausted themselves.         |                                                                                         |
 | BETAS/PassedOut/WasSafe      | Whether or not the player passed out in a safe location (e.g. FarmHouse or IslandWest). |                                                                                         |
@@ -480,34 +480,34 @@ Raised whenever the local player's relationship status (_not_ friendship value) 
 <br>
 
 #### TARGET ITEM:
-| Field  |                Value                 | Usage Notes |
-|:-------|:------------------------------------:|------------:|
+| Field  |                      Value                      | Usage Notes |
+|:-------|:-----------------------------------------------:|------------:|
 | ItemId | The name of the NPC whose relationship changed. |             |
 <br>
 
 #### INPUT ITEM:
-| Field  |                Value                 | Usage Notes |
-|:-------|:------------------------------------:|------------:|
+| Field  |                      Value                      | Usage Notes |
+|:-------|:-----------------------------------------------:|------------:|
 | ItemId | The name of the NPC whose relationship changed. |             |
 <br>
 
 In this trigger, the `Trigger Item` that is given as the `Target` will contain the friendship data for the NPC _after_ the relationship changes have already occured. The `Trigger Item` that is given as the `Input` will contain the friendship data for the NPC as it was _before_ the relationship change occured. Please keep in mind which one you are using when you are checking the friendship data.
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                                |                                                        Value                                                         |                                                                                         Usage Notes |
-|:--------------------------------------------|:--------------------------------------------------------------------------------------------------------------------:|----------------------------------------------------------------------------------------------------:|
-| BETAS/RelationshipChanged/Status            | The relationship status. Possible values are `Friendly`, `Dating`, `Engaged`, `Married`, `Roommate`, and `Divorced`. |                                                                                                     |
-| BETAS/RelationshipChanged/Friendship        |                                          The friendship level for the NPC.                                           |                                                                                                     |
-| BETAS/RelationshipChanged/GiftsToday        |                                  The number of gifts the NPC has been given today.                                   |                                                                                                     |
-| BETAS/RelationshipChanged/GiftsThisWeek     |                                The number of gifts the NPC has been given this week.                                 |                                                                                                     |
-| BETAS/RelationshipChanged/DaysSinceLastGift |                        The number of days since the last time this NPC has been given a gift.                        |                                                                                                     |
-| BETAS/RelationshipChanged/WeddingSeason     |                           The name of the season the wedding with this NPC took place in.                            |                  This value will only exist if the player had or will have a wedding with this NPC. |
-| BETAS/RelationshipChanged/WeddingDate       |                          The day of the month that the wedding with this NPC took place on.                          |                  This value will only exist if the player had or will have a wedding with this NPC. |
-| BETAS/RelationshipChanged/WeddingYear       |                           The year number that the wedding with this place took place in.                            |                  This value will only exist if the player had or will have a wedding with this NPC. |
-| BETAS/RelationshipChanged/DaysMarried       |                         The number of days that the player has been married to this NPC for.                         |                  This value will only exist if the player had or will have a wedding with this NPC. |
-| BETAS/RelationshipChanged/WasTalkedToToday  |                                     Whether or not this NPC was talked to today.                                     |                                                                                                     |
-| BETAS/RelationshipChanged/IsRoommate        |                                  Whether or not this NPC is the player's roommate.                                   | `WasRoommate` will also work here, but remember this will be the _current_ status, not past status. |
-| BETAS/RelationshipChanged/WasMemoryWiped    |           Whether or not this relationship change was the result of the player wiping their ex's memories.           |                                                                                                     |
+| Mod Data Key                                |                                                             Value                                                             |                                                                                         Usage Notes |
+|:--------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------:|----------------------------------------------------------------------------------------------------:|
+| BETAS/RelationshipChanged/Status            |     The relationship status. Possible values are `Friendly`, `Dating`, `Engaged`, `Married`, `Roommate`, and `Divorced`.      |                                                                                                     |
+| BETAS/RelationshipChanged/Friendship        |                                               The friendship level for the NPC.                                               |                                                                                      Integer value. |
+| BETAS/RelationshipChanged/GiftsToday        |                                       The number of gifts the NPC has been given today.                                       |                                                                                      Integer value. |
+| BETAS/RelationshipChanged/GiftsThisWeek     |                                     The number of gifts the NPC has been given this week.                                     |                                                                                      Integer value. |
+| BETAS/RelationshipChanged/DaysSinceLastGift |                            The number of days since the last time this NPC has been given a gift.                             |                                                                                      Integer value. |
+| BETAS/RelationshipChanged/WeddingSeason     | The name of the season the wedding with this NPC took place in. Possible values are `Spring`, `Summer`, `Fall`, and `Winter`. |                  This value will only exist if the player had or will have a wedding with this NPC. |
+| BETAS/RelationshipChanged/WeddingDate       |                              The day of the month that the wedding with this NPC took place on.                               |   Integer value. This value will only exist if the player had or will have a wedding with this NPC. |
+| BETAS/RelationshipChanged/WeddingYear       |                                The year number that the wedding with this place took place in.                                |   Integer value. This value will only exist if the player had or will have a wedding with this NPC. |
+| BETAS/RelationshipChanged/DaysMarried       |                             The number of days that the player has been married to this NPC for.                              |   Integer value. This value will only exist if the player had or will have a wedding with this NPC. |
+| BETAS/RelationshipChanged/WasTalkedToToday  |                                         Whether or not this NPC was talked to today.                                          |                                                                                                     |
+| BETAS/RelationshipChanged/IsRoommate        |                                       Whether or not this NPC is the player's roommate.                                       | `WasRoommate` will also work here, but remember this will be the _current_ status, not past status. |
+| BETAS/RelationshipChanged/WasMemoryWiped    |               Whether or not this relationship change was the result of the player wiping their ex's memories.                |                                                                                                     |
 <br>
 
 #### INPUT ITEM MOD DATA:
