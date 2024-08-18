@@ -15,6 +15,11 @@ public static class NpcLocation
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
+
+        if (npcName.Equals("Any"))
+        {
+            return GameStateQuery.Helpers.AnyArgMatches(query, 2, (rawName) => Game1.getLocationFromName(rawName)?.characters.Count > 0);
+        }
         
         var npc = Game1.getCharacterFromName(npcName);
         if (npc == null)
