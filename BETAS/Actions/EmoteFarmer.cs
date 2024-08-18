@@ -16,7 +16,7 @@ public static class EmoteFarmer
     {
         if (!ArgUtility.TryGetInt(args, 1, out int emote, out error))
         {
-            error = "Usage: EmoteFarmer <Emote>";
+            error = "Usage: EmoteFarmer <EmoteId>";
             return false;
         }
         

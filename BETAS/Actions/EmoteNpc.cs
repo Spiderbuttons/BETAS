@@ -16,7 +16,7 @@ public static class EmoteNpc
     {
         if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) || !ArgUtility.TryGetInt(args, 2, out int emote, out error))
         {
-            error = "Usage: EmoteNpc <NPC Name> <Emote>";
+            error = "Usage: EmoteNpc <NPC Name> <EmoteId>";
             return false;
         }
         
