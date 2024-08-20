@@ -5,5 +5,5 @@
   "Description": "A whole bunch of triggers, actions, and game state queries for Content Patcher mod authors to utilize.",
   "UniqueID": "Spiderbuttons.BETAS",
   "EntryDll": "BETAS.dll",
-  "UpdateKeys": []
+  "UpdateKeys": [ "Nexus:27100" ]
 }
