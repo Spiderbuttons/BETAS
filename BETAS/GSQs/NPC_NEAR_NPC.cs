@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using BETAS.Helpers;
+﻿using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Delegates;
@@ -18,7 +16,7 @@ public static class NpcNearNpc
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
-        
+
         var npc = Game1.getCharacterFromName(npcName);
         if (npc == null)
         {

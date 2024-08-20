@@ -1,9 +1,8 @@
 ﻿using System;
-using HarmonyLib;
 using BETAS.Helpers;
+using HarmonyLib;
 using StardewValley;
 using StardewValley.GameData.Minecarts;
-using StardewValley.Locations;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -17,7 +16,8 @@ namespace BETAS.Triggers
         {
             try
             {
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MinecartUsed", location: Game1.RequireLocation(destination.TargetLocation));
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MinecartUsed",
+                    location: Game1.RequireLocation(destination.TargetLocation));
             }
             catch (Exception ex)
             {

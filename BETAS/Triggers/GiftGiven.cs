@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
-using StardewModdingAPI.Events;
+using HarmonyLib;
 using StardewValley;
-using StardewValley.Menus;
-using StardewValley.Tools;
 using StardewValley.Triggers;
 using Object = StardewValley.Object;
 
@@ -36,7 +29,8 @@ namespace BETAS.Triggers
                 };
                 npcItem.modData["BETAS/GiftGiven/Friendship"] =
                     giver.getFriendshipLevelForNPC(__instance.Name).ToString();
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_GiftGiven", targetItem: npcItem, inputItem: o, location: __instance.currentLocation, player: giver);
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_GiftGiven", targetItem: npcItem, inputItem: o,
+                    location: __instance.currentLocation, player: giver);
             }
             catch (Exception ex)
             {

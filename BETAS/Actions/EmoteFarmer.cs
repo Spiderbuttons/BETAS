@@ -1,11 +1,5 @@
-﻿using System;
-using System.Linq;
-using BETAS.Helpers;
-using Microsoft.Xna.Framework;
-using StardewValley;
-using StardewValley.BellsAndWhistles;
+﻿using StardewValley;
 using StardewValley.Delegates;
-using StardewValley.TokenizableStrings;
 
 namespace BETAS.Actions;
 
@@ -19,7 +13,7 @@ public static class EmoteFarmer
             error = "Usage: EmoteFarmer <EmoteId>";
             return false;
         }
-        
+
         Game1.player.doEmote(emote, 24);
         return true;
     }

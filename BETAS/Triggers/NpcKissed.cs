@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
+using HarmonyLib;
 using StardewValley;
-using StardewValley.Characters;
-using StardewValley.GameData.Characters;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -31,10 +28,13 @@ namespace BETAS.Triggers
                 _ => "Undefined"
             };
             npcItem.modData["BETAS/NpcKissed/Friendship"] = kisser.getFriendshipLevelForNPC(kissee.Name).ToString();
-            npcItem.modData["BETAS/NpcKissed/WasDatingFarmer"] = kisser.friendshipData.ContainsKey(kissee.Name) && kisser.friendshipData[kissee.Name].IsDating() ? "True" : "False";
+            npcItem.modData["BETAS/NpcKissed/WasDatingFarmer"] = kisser.friendshipData.ContainsKey(kissee.Name) &&
+                                                                 kisser.friendshipData[kissee.Name].IsDating()
+                ? "True"
+                : "False";
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_NpcKissed", targetItem: npcItem, location: location);
         }
-        
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(NPC), nameof(NPC.checkAction))]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)

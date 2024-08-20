@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
+using HarmonyLib;
 using StardewValley;
-using StardewValley.Tools;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -33,9 +28,15 @@ namespace BETAS.Triggers
                     Gender.Male => "Male",
                     _ => "Undefined"
                 };
-                npcItem.modData["BETAS/DialogueOpened/Friendship"] = Game1.player.getFriendshipLevelForNPC(speaker.Name).ToString();
-                npcItem.modData["BETAS/DialogueOpened/WasDatingFarmer"] = Game1.player.friendshipData.ContainsKey(speaker.Name) && Game1.player.friendshipData[speaker.Name].IsDating() ? "true" : "false";
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_DialogueOpened", targetItem: npcItem, location: speaker.currentLocation);
+                npcItem.modData["BETAS/DialogueOpened/Friendship"] =
+                    Game1.player.getFriendshipLevelForNPC(speaker.Name).ToString();
+                npcItem.modData["BETAS/DialogueOpened/WasDatingFarmer"] =
+                    Game1.player.friendshipData.ContainsKey(speaker.Name) &&
+                    Game1.player.friendshipData[speaker.Name].IsDating()
+                        ? "true"
+                        : "false";
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_DialogueOpened", targetItem: npcItem,
+                    location: speaker.currentLocation);
             }
             catch (Exception ex)
             {

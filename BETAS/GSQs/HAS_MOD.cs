@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using BETAS.Helpers;
-using StardewValley;
+﻿using StardewValley;
 using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
@@ -15,7 +12,7 @@ public static class HasMod
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
-        
+
         return GameStateQuery.Helpers.AnyArgMatches(query, 1, (modID) => BETAS.LoadedMods.Contains(modID));
     }
 }

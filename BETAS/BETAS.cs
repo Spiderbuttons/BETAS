@@ -1,5 +1,5 @@
 ﻿#nullable enable
-using System;
+
 using System.Collections.Generic;
 using BETAS.Actions;
 using BETAS.GSQs;
@@ -7,7 +7,6 @@ using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
-using BETAS.Helpers;
 using StardewValley.Triggers;
 
 namespace BETAS
@@ -24,7 +23,7 @@ namespace BETAS
             ModMonitor = Monitor;
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
-            
+
             RegisterQueries();
             RegisterTriggers();
             RegisterActions();
@@ -34,7 +33,7 @@ namespace BETAS
             helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
             Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
         }
-        
+
         private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
         {
             foreach (var mod in Helper.ModRegistry.GetAll())

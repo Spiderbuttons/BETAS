@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
+using HarmonyLib;
 using StardewValley;
 using StardewValley.Characters;
-using StardewValley.GameData.Characters;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -24,10 +22,11 @@ namespace BETAS.Triggers
             petItem.modData["BETAS/AnimalPetted/WasPet"] = "true";
             petItem.modData["BETAS/AnimalPetted/WasFarmAnimal"] = "false";
             petItem.modData["BETAS/AnimalPetted/WasBaby"] = "false";
-            
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: petItem, location: pet.currentLocation, player: petter);
+
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: petItem,
+                location: pet.currentLocation, player: petter);
         }
-        
+
         public static void Trigger(FarmAnimal animal, Farmer petter)
         {
             var animalItem = ItemRegistry.Create(animal.type.Value);
@@ -38,13 +37,15 @@ namespace BETAS.Triggers
             animalItem.modData["BETAS/AnimalPetted/WasPet"] = "false";
             animalItem.modData["BETAS/AnimalPetted/WasFarmAnimal"] = "true";
             animalItem.modData["BETAS/AnimalPetted/WasBaby"] = animal.isBaby() ? "true" : "false";
-            
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: animalItem, location: animal.currentLocation, player: petter);
+
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AnimalPetted", targetItem: animalItem,
+                location: animal.currentLocation, player: petter);
         }
-        
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(Pet), nameof(Pet.checkAction))]
-        public static IEnumerable<CodeInstruction> Transpiler_Pets(IEnumerable<CodeInstruction> instructions, ILGenerator il)
+        public static IEnumerable<CodeInstruction> Transpiler_Pets(IEnumerable<CodeInstruction> instructions,
+            ILGenerator il)
         {
             var code = instructions.ToList();
             try
@@ -58,7 +59,8 @@ namespace BETAS.Triggers
                     codeMatcher.Advance(1).Insert(
                         new CodeInstruction(OpCodes.Ldarg_0),
                         new CodeInstruction(OpCodes.Ldarg_1),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AnimalPetted), nameof(Trigger), [typeof(Pet), typeof(Farmer)])));
+                        new CodeInstruction(OpCodes.Call,
+                            AccessTools.Method(typeof(AnimalPetted), nameof(Trigger), [typeof(Pet), typeof(Farmer)])));
                 });
 
                 return matcher.InstructionEnumeration();
@@ -69,10 +71,11 @@ namespace BETAS.Triggers
                 return code;
             }
         }
-        
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(FarmAnimal), nameof(FarmAnimal.pet))]
-        public static IEnumerable<CodeInstruction> Transpiler_FarmAnimals(IEnumerable<CodeInstruction> instructions, ILGenerator il)
+        public static IEnumerable<CodeInstruction> Transpiler_FarmAnimals(IEnumerable<CodeInstruction> instructions,
+            ILGenerator il)
         {
             var code = instructions.ToList();
             try
@@ -86,7 +89,9 @@ namespace BETAS.Triggers
                     codeMatcher.Advance(1).Insert(
                         new CodeInstruction(OpCodes.Ldarg_0),
                         new CodeInstruction(OpCodes.Ldarg_1),
-                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(AnimalPetted), nameof(Trigger), [typeof(FarmAnimal), typeof(Farmer)])));
+                        new CodeInstruction(OpCodes.Call,
+                            AccessTools.Method(typeof(AnimalPetted), nameof(Trigger),
+                                [typeof(FarmAnimal), typeof(Farmer)])));
                 });
 
                 return matcher.InstructionEnumeration();

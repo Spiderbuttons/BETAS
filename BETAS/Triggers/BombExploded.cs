@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
+using HarmonyLib;
 using StardewValley;
-using StardewValley.GameData.FruitTrees;
-using StardewValley.TerrainFeatures;
-using StardewValley.Tools;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -26,8 +17,9 @@ namespace BETAS.Triggers
             {
                 var bombItem = ItemRegistry.Create("(O)287");
                 bombItem.modData["BETAS/BombExploded/Radius"] = radius.ToString();
-                
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_BombExploded", location: __instance, player: who);
+
+                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_BombExploded", location: __instance,
+                    player: who);
             }
             catch (Exception ex)
             {

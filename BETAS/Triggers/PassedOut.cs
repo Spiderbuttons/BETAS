@@ -1,6 +1,6 @@
 ﻿using System;
-using HarmonyLib;
 using BETAS.Helpers;
+using HarmonyLib;
 using StardewValley;
 using StardewValley.Locations;
 using StardewValley.Triggers;
@@ -15,12 +15,18 @@ namespace BETAS.Triggers
             var passoutItem = ItemRegistry.Create(location.Name);
             passoutItem.modData["BETAS/PassedOut/Time"] = Game1.timeOfDay.ToString();
             passoutItem.modData["BETAS/PassedOut/WasUpTooLate"] = Game1.timeOfDay >= 2600 ? "true" : "false";
-            if (who.stamina <= -15f && who.CurrentTool is not null) passoutItem.modData["BETAS/PassedOut/Tool"] = who.CurrentTool.QualifiedItemId;
+            if (who.stamina <= -15f && who.CurrentTool is not null)
+                passoutItem.modData["BETAS/PassedOut/Tool"] = who.CurrentTool.QualifiedItemId;
             passoutItem.modData["BETAS/PassedOut/WasExhausted"] = who.stamina <= -15f ? "true" : "false";
-            passoutItem.modData["BETAS/PassedOut/WasSafe"] = (location is FarmHouse) || (location is IslandFarmHouse) || (location is Cellar) || location.HasMapPropertyWithValue("PassOutSafe") ? "true" : "false";
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_PassedOut", targetItem: passoutItem, location: location, player: who);
+            passoutItem.modData["BETAS/PassedOut/WasSafe"] = (location is FarmHouse) || (location is IslandFarmHouse) ||
+                                                             (location is Cellar) ||
+                                                             location.HasMapPropertyWithValue("PassOutSafe")
+                ? "true"
+                : "false";
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_PassedOut", targetItem: passoutItem,
+                location: location, player: who);
         }
-        
+
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Farmer), nameof(Farmer.passOutFromTired))]
         public static void passOutFromTired_Postfix(Farmer who)

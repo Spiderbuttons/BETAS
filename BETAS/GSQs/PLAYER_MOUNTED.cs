@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using BETAS.Helpers;
-using StardewValley;
+﻿using StardewValley;
 using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
@@ -15,6 +12,7 @@ public static class PlayerMounted
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
+
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) => target.isRidingHorse());
     }
 }

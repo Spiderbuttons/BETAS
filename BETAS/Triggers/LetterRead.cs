@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
-using StardewModdingAPI.Events;
+using HarmonyLib;
 using StardewValley;
 using StardewValley.Menus;
-using StardewValley.Tools;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -25,13 +19,16 @@ namespace BETAS.Triggers
                 if (Game1.activeClickableMenu is LetterViewerMenu letter)
                 {
                     var letterItem = ItemRegistry.Create(letter.mailTitle);
-                    if (letter.moneyIncluded is not 0) letterItem.modData["BETAS/LetterRead/Money"] = $"{letter.moneyIncluded}";
+                    if (letter.moneyIncluded is not 0)
+                        letterItem.modData["BETAS/LetterRead/Money"] = $"{letter.moneyIncluded}";
                     letterItem.modData["BETAS/LetterRead/WasRecipe"] = $"{letter.learnedRecipe != ""}";
                     letterItem.modData["BETAS/LetterRead/WasQuestOrSpecialOrder"] = $"{letter.HasQuestOrSpecialOrder}";
                     letterItem.modData["BETAS/LetterRead/WasWithItem"] = $"{letter.itemsLeftToGrab()}";
                     if (letter.questID is not null) letterItem.modData["BETAS/LetterRead/Quest"] = $"{letter.questID}";
-                    else if (letter.specialOrderId is not null) letterItem.modData["BETAS/LetterRead/SpecialOrder"] = $"{letter.questID}";
-                    TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LetterRead", targetItem: letterItem, location: __instance);
+                    else if (letter.specialOrderId is not null)
+                        letterItem.modData["BETAS/LetterRead/SpecialOrder"] = $"{letter.questID}";
+                    TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_LetterRead", targetItem: letterItem,
+                        location: __instance);
                 }
             }
             catch (Exception ex)

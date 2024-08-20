@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-using HarmonyLib;
 using BETAS.Helpers;
-using StardewModdingAPI;
+using HarmonyLib;
 using StardewValley;
-using StardewValley.Characters;
 using StardewValley.Monsters;
 using StardewValley.Triggers;
 
@@ -18,13 +16,16 @@ namespace BETAS.Triggers
         public static void Trigger(Monster mon, GameLocation loc, List<Debris> drops, Farmer killer)
         {
             var monsterItem = ItemRegistry.Create(mon.Name, drops.Count);
-            if (drops.Count > 0) monsterItem.modData["BETAS/MonsterKilled/Drops"] = drops.Join(d => ItemRegistry.QualifyItemId(d.itemId.Value), ",");
+            if (drops.Count > 0)
+                monsterItem.modData["BETAS/MonsterKilled/Drops"] =
+                    drops.Join(d => ItemRegistry.QualifyItemId(d.itemId.Value), ",");
             monsterItem.modData["BETAS/MonsterKilled/MaxHealth"] = mon.MaxHealth.ToString();
             monsterItem.modData["BETAS/MonsterKilled/Damage"] = mon.DamageToFarmer.ToString();
             monsterItem.modData["BETAS/MonsterKilled/WasHardmodeMonster"] = mon.isHardModeMonster.Value.ToString();
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MonsterKilled", targetItem: monsterItem, location: loc, player: killer);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MonsterKilled", targetItem: monsterItem,
+                location: loc, player: killer);
         }
-        
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(GameLocation), nameof(GameLocation.monsterDrop))]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)

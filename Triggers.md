@@ -310,6 +310,7 @@ Raised whenever the local player rummages through a garbage can.
 | Field  |                 Value                 |                                                                                               Usage Notes |
 |:-------|:-------------------------------------|:----------------------------------------------------------------------------------------------------------|
 | ItemId | ID of the trash can that was checked. | Only if the player did not find an item in the trash. If they did, this will be the item ID of that item. |
+
 As said above, if the player found an item in the trash can, the `Target` item for this trigger will be the item that was found. Therefore, you can use ordinary item game state queries to check things like its item ID, quality, stack size, etc.
 
 <br>

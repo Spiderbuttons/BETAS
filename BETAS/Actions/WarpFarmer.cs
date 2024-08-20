@@ -1,10 +1,6 @@
-﻿using System;
-using System.Linq;
-using BETAS.Helpers;
-using Microsoft.Xna.Framework;
+﻿using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
-using StardewValley.TokenizableStrings;
 
 namespace BETAS.Actions;
 
@@ -13,7 +9,11 @@ public static class WarpFarmer
     // Warp the current player to a specific map and X/Y coordinate, with optional facing direction.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtilityExtensions.TryGetPossiblyRelativeLocationName(args, 1, out string locationName, out error, allowBlank: false) || !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 2, out int x, out error) || !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 3, out int y, out error) || !ArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2))
+        if (!ArgUtilityExtensions.TryGetPossiblyRelativeLocationName(args, 1, out string locationName, out error,
+                allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 2, out int x, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 3, out int y, out error) ||
+            !ArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2))
         {
             error = "Usage: WarpFarmer <Location Name> <X> <Y> [Facing Direction]";
             return false;

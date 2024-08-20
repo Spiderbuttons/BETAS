@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using StardewModdingAPI;
 using HarmonyLib;
+using StardewModdingAPI;
 
 namespace BETAS.Helpers;
 
@@ -34,7 +34,7 @@ public static class Log
             Debug($"{instruction.opcode} {instruction.operand}");
         }
     }
-    
+
     public static void ILCode(IEnumerable<CodeInstruction> newCode, IEnumerable<CodeInstruction> originalCode)
     {
         var originalEnumerator = 0;
@@ -46,11 +46,14 @@ public static class Log
                 Warn($"{instruction.opcode} {instruction.operand}");
                 continue;
             }
-            if (instruction.opcode != originalCode.ElementAt(originalEnumerator).opcode || instruction.operand != originalCode.ElementAt(originalEnumerator).operand)
+
+            if (instruction.opcode != originalCode.ElementAt(originalEnumerator).opcode ||
+                instruction.operand != originalCode.ElementAt(originalEnumerator).operand)
             {
                 Warn($"{instruction.opcode} {instruction.operand}");
                 continue;
             }
+
             Debug($"{instruction.opcode} {instruction.operand}");
             originalEnumerator++;
         }

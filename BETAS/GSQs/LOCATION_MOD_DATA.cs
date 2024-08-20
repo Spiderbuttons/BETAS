@@ -11,28 +11,36 @@ public static class LocationModData
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         GameLocation location = context.Location;
-        if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetOptional(query, 3, out var value, out error))
+        if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) ||
+            !ArgUtility.TryGet(query, 2, out var key, out error) ||
+            !ArgUtility.TryGetOptional(query, 3, out var value, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
+
         if (location == null)
         {
             return false;
         }
+
         bool ignoreValue = !ArgUtility.HasIndex(query, 3);
 
         return location.modData.TryGetValue(key, out var data) &&
                (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
     }
-    
+
     // GSQ for checking whether a location has a specific mod data key with a value within a specific range. Values are parsed as ints.
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
         GameLocation location = context.Location;
-        if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGetInt(query, 3, out var minRange, out error) || !ArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
+        if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) ||
+            !ArgUtility.TryGet(query, 2, out var key, out error) ||
+            !ArgUtility.TryGetInt(query, 3, out var minRange, out error) ||
+            !ArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
+
         if (location == null)
         {
             return false;
@@ -41,26 +49,30 @@ public static class LocationModData
         return location.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
                dataInt >= minRange && dataInt <= maxRange;
     }
-    
+
     // GSQ for checking whether a comma- or space-delimited list of values in item mod data contains a specific value.
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
         GameLocation location = context.Location;
-        if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) || !ArgUtility.TryGet(query, 2, out var key, out error) || !ArgUtility.TryGet(query, 3, out var value, out error, false))
+        if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) ||
+            !ArgUtility.TryGet(query, 2, out var key, out error) ||
+            !ArgUtility.TryGet(query, 3, out var value, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
+
         if (location == null)
         {
             return false;
         }
-            
+
         if (!location.modData.TryGetValue(key, out var data))
         {
             return false;
         }
 
         var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-        return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
+        return GameStateQuery.Helpers.AnyArgMatches(query, 3,
+            (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }
