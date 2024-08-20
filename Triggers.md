@@ -72,6 +72,10 @@ All Triggers, both vanilla or otherwise, can be used to perform the [new Actions
 }
 ```
 
+<br>
+
+* * *
+
 ## ANIMAL PETTED <a name="animalpetted"></a>
 
 Raised whenever the local player pets an animal, whether it is a farm animal or a pet.
@@ -85,21 +89,21 @@ Raised whenever the local player pets an animal, whether it is a farm animal or 
 
 #### TARGET ITEM:
 | Field  |                            Value                             |                                                Usage Notes |
-|:-------|:------------------------------------------------------------|-----------------------------------------------------------|
+|:-------|:------------------------------------------------------------|:-----------------------------------------------------------|
 | ItemId | The type of the animal that was petted (i.e. `Cat` or `Cow`) |                                                            |
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                                                                Value                                                                 | Type |                                                Usage Notes |
-|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|---------------|-----------------------------------------------------------|
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Name}}`$           |                                                       The name of the animal.                                                        | String        |                                                            |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Friendship}}`$     |                                   The friendship of the animal towards the player that petted it.                                    | Integer       |                                             |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Breed}}`$          |                                                    What breed of animal this is.                                                     | String        |         This value will only exist if the animal is a pet. |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Happiness}}`$      |                                                     The happiness of the animal.                                                     | Integer       | This value will only exist if the animal is a farm animal. |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/ProduceQuality}}`$ | The quality level of the produce this animal creates. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | Integer       | This value will only exist if the animal is a farm animal. |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasPet}}`$         |                                      Whether or not the animal was a pet and not a farm animal.                                      | Boolean       |                                                            |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasFarmAnimal}}`$  |                                      Whether or not the animal was a farm animal and not a pet.                                      | Boolean       |                                                            |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasBaby}}`$        |                                             Whether or not the animal was a baby or not.                                             | Boolean       |                       This value is always false for pets. |
+| Mod Data Key                      |                                                                Value                                                                 | Type           |                                                Usage Notes |
+|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|:---------------|:-----------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Name}}`$           |                                                       The name of the animal.                                                        | String         |                                                            |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Friendship}}`$     |                                   The friendship of the animal towards the player that petted it.                                    | Integer        |                                             |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Breed}}`$          |                                                    What breed of animal this is.                                                     | String         |         This value will only exist if the animal is a pet. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Happiness}}`$      |                                                     The happiness of the animal.                                                     | Integer        | This value will only exist if the animal is a farm animal. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/ProduceQuality}}`$ | The quality level of the produce this animal creates. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | Integer        | This value will only exist if the animal is a farm animal. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasPet}}`$         |                                      Whether or not the animal was a pet and not a farm animal.                                      | Boolean        |                                                            |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasFarmAnimal}}`$  |                                      Whether or not the animal was a farm animal and not a pet.                                      | Boolean        |                                                            |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasBaby}}`$        |                                             Whether or not the animal was a baby or not.                                             | Boolean        |                       This value is always false for pets. |
 <br>
 
 * * *
@@ -116,14 +120,14 @@ Raised whenever a bomb explodes, including when that bomb is a Hot Head.
 
 #### TARGET ITEM:
 | Field  | Value  | Usage Notes                                                                  |
-|:-------|:------|------------------------------------------------------------------------------|
+|:-------|:------|:------------------------------------------------------------------------------|
 | ItemId | `(O)287` | This value will always be the same regardless of what type of bomb exploded. |
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key              |            Value             | Type    |    Usage Notes |
-|:--------------------------|:----------------------------|---------|---------------|
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}BombExploded\color{Cerulean}/Radius}}`$ | The radius of the explosion. | Integer | |
+| Mod Data Key              |            Value             | Type     |    Usage Notes |
+|:--------------------------|:----------------------------|:---------|:---------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}BombExploded\color{Cerulean}/Radius}}`$ | The radius of the explosion. | Integer  | |
 <br>
 
 * * *
@@ -143,9 +147,9 @@ The `Target` item in this case is the crop that was dug up. Therefore, you can u
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                             |                          Value                           | Type    | Usage Notes |
-|:-----------------------------------------|:--------------------------------------------------------|---------|------------|
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}CropHarvested\color{JungleGreen}/WasHarvestedByJunimo}}`$ | Whether or not it was a Junimo that harvested this crop. | Boolean |             |
+| Mod Data Key                             |                          Value                           | Type     | Usage Notes |
+|:-----------------------------------------|:--------------------------------------------------------|:---------|:------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}CropHarvested\color{JungleGreen}/WasHarvestedByJunimo}}`$ | Whether or not it was a Junimo that harvested this crop. | Boolean  |             |
 <br>
 
 * * *
@@ -162,15 +166,15 @@ Raised whenever the local player takes damage.
 
 #### TARGET ITEM:
 | Field  |                    Value                     |                                                                        Usage Notes |
-|:-------|:--------------------------------------------|-----------------------------------------------------------------------------------|
+|:-------|:--------------------------------------------|:-----------------------------------------------------------------------------------|
 | ItemId | The name of the monster that did the damage. | If the damage came from a source other than a monster, the value will be `Unknown` |
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                                                                                  |                             Value                             | Type    |                                                                Usage Notes |
-|:----------------------------------------------------------------------------------------------|:-------------------------------------------------------------|---------|---------------------------------------------------------------------------|
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}DamageTaken\color{Cerulean}/Damage}}`$      | The amount of damage that the damage source tried to inflict. | Integer | This does not take defense or other modifiers into account. |
-| $`{\textsf{\color{White}BETAS/\color{RedOrange}DamageTaken\color{JungleGreen}/WasParried}}`$ |         Whether or not the player parried the damage.         | Boolean |                                                                            |
+| Mod Data Key                                                                                  | Value                                                         | Type     |                                                                Usage Notes |
+|:----------------------------------------------------------------------------------------------|:--------------------------------------------------------------|:---------|:---------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DamageTaken\color{Cerulean}/Damage}}`$      | The amount of damage that the damage source tried to inflict. | Integer  | This does not take defense or other modifiers into account. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DamageTaken\color{JungleGreen}/WasParried}}`$ | Whether or not the player parried the damage.                 | Boolean  |                                                                            |
 <br>
 
 * * *
@@ -187,14 +191,14 @@ Raised whenever the local player opens a dialogue box/starts a conversation with
 
 #### TARGET ITEM:
 | Field  |                       Value                        | Usage Notes |
-|:-------|:--------------------------------------------------|------------|
+|:-------|:--------------------------------------------------|:------------|
 | ItemId |    The name of the NPC that is being spoken to.    |             |
 | Stack  | How many lines of dialogue the speaker has to say. |             |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                         |                                            Value                                            | Type    |                                                                                                                               Usage Notes |
-|:-------------------------------------|:-------------------------------------------------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+|:-------------------------------------|:-------------------------------------------------------------------------------------------|:---------|:------------------------------------------------------------------------------------------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{Cerulean}/Age}}`$             |    The age of the NPC being spoken to. Possible values are `Adult`, `Teen`, or `Child`.     | String  |                                                                                                                                           |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{Cerulean}/Gender}}`$          | The gender of the NPC being spoken to. Possible values are `Female`, `Male`, or `Undefined` | String  |                                                                                                                                           |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{Cerulean}/Friendship}}`$      |                     The current friendship for the NPC being spoken to.                     | Integer |                                                                                                                             |
@@ -215,13 +219,13 @@ Raised whenever the local player gains experience in a skill.
 
 #### TARGET ITEM:
 | Field  |                                                              Value                                                               |                     Usage Notes |
-|:-------|:--------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
+|:-------|:--------------------------------------------------------------------------------------------------------------------------------|:--------------------------------|
 | ItemId | The name of the skill that the experience was for. Possible values are `Farming`, `Fishing`, `Foraging`, `Mining`, and `Combat`. | SpaceCore skills not supported. |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                      |                            Value                            | Type    |    Usage Notes |
-|:----------------------------------|:-----------------------------------------------------------|---------|---------------|
+|:----------------------------------|:-----------------------------------------------------------|:---------|:---------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}ExperienceGained\color{Cerulean}/Amount}}`$     |               How much experience was gained.               | Integer |  |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}ExperienceGained\color{JungleGreen}/WasLevelUp}}`$ | Whether or not this experience gain resulted in a level up. | Boolean |                |
 <br>
@@ -244,7 +248,7 @@ The `Target` item in this case is the fish that was caught. Therefore, you can u
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                     |                           Value                            | Type    |    Usage Notes |
-|:---------------------------------|:----------------------------------------------------------|---------|---------------|
+|:---------------------------------|:----------------------------------------------------------|:---------|:---------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{Cerulean}/Size}}`$            |           The size of the fish that was caught.            | Integer |  |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{Cerulean}/Difficulty}}`$      |     The difficulty value for the fish that was caught.     | Integer |  |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{JungleGreen}/WasPerfect}}`$      |       Whether or not this fish was caught perfectly.       | Boolean |                |
@@ -266,13 +270,13 @@ Raised whenever the local player shakes a tree or bush.
 
 #### TARGET ITEM:
 | Field  |                                              Value                                              |                                                                                                      Usage Notes |
-|:-------|:-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+|:-------|:-----------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------|
 | ItemId | If it's a tree, it will be the type or ID of the tree. If it's a bush, the value will be `Bush` |                                                         Fruit tree IDs are the ID of the seed used to grow them. |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                      |                                                             Value                                                              | Type           |                                                                                                                                                                                                                                      Usage Notes |
-|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------|:----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Stage}}`$           |                                     The current growth stage of the flora that was shaken.                                     | Integer (0-15) |                                                                                                                                                                             This value will not exist for bushes. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Seed}}`$            |                                        The item ID of the seed used to grow this flora.                                        | String         |                                                                                                                                                                                                            This value will not exist for bushes. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Quality}}`$         | The quality of the produce this flora produces. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | Integer        |                                                                                                                                                                                                      This value will only exist for fruit trees. |
@@ -304,7 +308,7 @@ Raised whenever the local player rummages through a garbage can.
 
 #### TARGET ITEM:
 | Field  |                 Value                 |                                                                                               Usage Notes |
-|:-------|:-------------------------------------|----------------------------------------------------------------------------------------------------------|
+|:-------|:-------------------------------------|:----------------------------------------------------------------------------------------------------------|
 | ItemId | ID of the trash can that was checked. | Only if the player did not find an item in the trash. If they did, this will be the item ID of that item. |
 As said above, if the player found an item in the trash can, the `Target` item for this trigger will be the item that was found. Therefore, you can use ordinary item game state queries to check things like its item ID, quality, stack size, etc.
 
@@ -312,7 +316,7 @@ As said above, if the player found an item in the trash can, the `Target` item f
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                              |                              Value                               | Type    |                                           Usage Notes |
-|:------------------------------------------|:----------------------------------------------------------------|---------|------------------------------------------------------|
+|:------------------------------------------|:----------------------------------------------------------------|:---------|:------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{Cerulean}/GarbageCanId}}`$         |           The ID of the garbage can that was checked.            | String  |                                                       |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{Cerulean}/Witnesses}}`$            | A list of NPCs that caught the player checking the garbage can.  | String  | If there are no witnesses, this value will not exist. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{JungleGreen}/WasMegaSuccess}}`$       |    Whether or not this garbage can check was a mega success.     | Boolean |                                                       |
@@ -334,7 +338,7 @@ Raised whenever the local player gives a gift to an NPC.
 
 #### TARGET ITEM:
 | Field  |                       Value                        | Usage Notes |
-|:-------|:--------------------------------------------------|------------|
+|:-------|:--------------------------------------------------|:------------|
 | ItemId |    The name of the NPC that was given the gift.    |             |
 
 #### INPUT ITEM:
@@ -344,7 +348,7 @@ The `Input` item in this case is the item that was given as a gift. Therefore, y
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                                                                                 |                                                             Value                                                              | Type    |                         Usage Notes |
-|:---------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------------|
+|:---------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------|:---------|:------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}GiftGiven\color{Cerulean}/Friendship}}`$   |                                    The friendship level of the NPC that was given the gift.                                    | Integer |                       |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}GiftGiven\color{Cerulean}/Taste}}`$        | The gift taste that the NPC had for the item. Possible values are `Love`, `Hate`, `Like`, `Dislike`, `Neutral`, and `Special`. | String  | `Special` is used for Stardrop Tea. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}GiftGiven\color{JungleGreen}/WasBirthday}}`$ |                               Whether or not it was the NPC's birthday when the gift was given.                                | Boolean |                                     |
@@ -365,13 +369,13 @@ Raised whenever the local player opens their mailbox to read a letter. This trig
 
 #### TARGET ITEM:
 | Field  |               Value                | Usage Notes |
-|:-------|:----------------------------------|------------|
+|:-------|:----------------------------------|:------------|
 | ItemId | The `Data/mail` key of the letter. |             |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                            |                                 Value                                  | Type    |                                                                   Usage Notes |
-|:----------------------------------------|:----------------------------------------------------------------------|---------|------------------------------------------------------------------------------|
+|:----------------------------------------|:----------------------------------------------------------------------|:---------|:------------------------------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{Cerulean}/Money}}`$                  |               How much money was included in the letter.               | Integer | This value will not exist if there was no money in the letter. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{Cerulean}/Quest}}`$                  |             The quest ID that was attached to the letter.              | String  |                This value will not exist if there was no quest in the letter. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{Cerulean}/SpecialOrder}}`$           |         The special order ID that was attached to the letter.          | String  |        This value will not exist if there was no special order in the letter. |
@@ -394,13 +398,13 @@ Raised whenever the player witnesses a lightning strike.
 
 #### TARGET ITEM:
 | Field  |       Value        | Usage Notes |
-|:-------|:------------------|------------|
+|:-------|:------------------|:------------|
 | ItemId | `Lightning Strike` |             |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                               |                                                      Value                                                      | Type    |                                                                  Usage Notes |
-|:-------------------------------------------|:---------------------------------------------------------------------------------------------------------------|---------|-----------------------------------------------------------------------------|
+|:-------------------------------------------|:---------------------------------------------------------------------------------------------------------------|:---------|:-----------------------------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/Size}}`$                 |                    The size of the lightning strike. Possible values are `Big` and `Small`.                     | String  |                                                                              |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/StruckTerrainFeature}}`$ | The type of terrain feature that was struck by lightning. Possible values are `FruitTree`, `Crop`, and `Grass`. | String  | This value will not exist if lightning did not strike one of these features. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/StruckCrop}}`$           |                        The item ID of the crop that was struck by this lightning strike.                        | String  |                This value will not exist if lightning did not strike a crop. |
@@ -438,14 +442,14 @@ Raised whenever the local player kills a monster.
 
 #### TARGET ITEM:
 | Field  |                  Value                   |                                                           Usage Notes |
-|:-------|:----------------------------------------|----------------------------------------------------------------------|
+|:-------|:----------------------------------------|:----------------------------------------------------------------------|
 | ItemId | The name of the monster that was killed. |                                                                       |
 | Stack  | The number of items the monster dropped. | This does not take into account extra drops like books, Qi gems, etc. |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                           |                                Value                                | Type    |    Usage Notes |
-|:---------------------------------------|:-------------------------------------------------------------------|---------|---------------|
+|:---------------------------------------|:-------------------------------------------------------------------|:---------|:---------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{Cerulean}/MaxHealth}}`$          |         The maximum health of the monster that was killed.          | Integer |  |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{Cerulean}/Damage}}`$             | How much damage the monster that was killed would do to the player. | Integer |  |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{Cerulean}/Drops}}`$              |   A list of item IDs that the monster dropped when it was killed.   | String  |                |
@@ -466,13 +470,13 @@ Raised whenever the local player kisses an NPC.
 
 #### TARGET ITEM:
 | Field  |                Value                 | Usage Notes |
-|:-------|:------------------------------------|------------|
+|:-------|:------------------------------------|:------------|
 | ItemId | The name of the NPC that was kissed. |             |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                    |                                             Value                                             | Type    |    Usage Notes |
-|:--------------------------------|:---------------------------------------------------------------------------------------------|---------|---------------|
+|:--------------------------------|:---------------------------------------------------------------------------------------------|:---------|:---------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{Cerulean}/Age}}`$             |     The age of the NPC that was kissed. Possible values are `Adult`, `Teen`, and `Child`.     | String  |                |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{Cerulean}/Gender}}`$          | The gender of the NPC that was kissed. Possible values are `Female`, `Male`, and `Undefined`. | String  |                |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{Cerulean}/Friendship}}`$      |                      The friendship value for the player with this NPC.                       | Integer |  |
@@ -493,13 +497,13 @@ Raised whenever the local player passes out either from exhaustion or from being
 
 #### TARGET ITEM:
 | Field  |                       Value                        | Usage Notes |
-|:-------|:--------------------------------------------------|------------|
+|:-------|:--------------------------------------------------|:------------|
 | ItemId | The name of the location the player passed out in. |             |
 <br>
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                 |                                          Value                                          | Type    |                                                                             Usage Notes |
-|:-----------------------------|:---------------------------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------|
+|:-----------------------------|:---------------------------------------------------------------------------------------|:---------|:----------------------------------------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{Cerulean}/Time}}`$         |                       The time of day when the player passed out.                       | Integer |                                                              Standard `0600–2600` form. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{Cerulean}/Tool}}`$         |           The item ID of the tool that the player exhausted themselves with.            | String  | This value will only exist if the player passed out from exhaustion through tool usage. |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{JungleGreen}/WasUpTooLate}}`$ |        Whether or not the player passed out because they stayed awake too late.         | Boolean |                                                                                         |
@@ -522,13 +526,13 @@ Raised whenever the local player's relationship status (_not_ friendship value) 
 
 #### TARGET ITEM:
 | Field  |                      Value                      | Usage Notes |
-|:-------|:-----------------------------------------------|------------|
+|:-------|:-----------------------------------------------|:------------|
 | ItemId | The name of the NPC whose relationship changed. |             |
 <br>
 
 #### INPUT ITEM:
 | Field  |                      Value                      | Usage Notes |
-|:-------|:-----------------------------------------------|------------|
+|:-------|:-----------------------------------------------|:------------|
 | ItemId | The name of the NPC whose relationship changed. |             |
 <br>
 
@@ -536,7 +540,7 @@ In this trigger, the `Trigger Item` that is given as the `Target` will contain t
 
 #### TARGET ITEM MOD DATA:
 | Mod Data Key                                                                                                |                                                             Value                                                             | Type    |                                                                                         Usage Notes |
-|:------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------------------|
+|:------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------|:---------|:----------------------------------------------------------------------------------------------------|
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/Status}}`$            |     The relationship status. Possible values are `Friendly`, `Dating`, `Engaged`, `Married`, `Roommate`, and `Divorced`.      | String  |                                                                                                     |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/Friendship}}`$        |                                               The friendship level for the NPC.                                               | Integer |                                                                                      |
 | $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/GiftsToday}}`$        |                                       The number of gifts the NPC has been given today.                                       | Integer |                                                                                       |
