@@ -22,6 +22,7 @@ Please keep in mind that these coordinates will still be calculated _regardless 
 
 ## RELATIVE LOCATIONS <a name="Locations"></a>
 
-| Format       | Effect                                                                                                         | Example                                                   |
-|:-------------|:---------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------|
-| $`{\textsf{\color{White}NPC:\color{Rhodamine}<Target>}}`$ | The location will be set to the location the `Target` is currently in. The `Target` value must be an NPC name. | $`{\textsf{\color{White}NPC:\color{Rhodamine}Abigail}}`$ |
+| Format                                                       | Effect                                                                                                                                            | Example                                                     |
+|:-------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------------|
+| $`{\textsf{\color{White}NPC:\color{Rhodamine}<Target>}}`$    | The location will be set to the location the `Target` is currently in. The `Target` value must be an NPC name.                                    | $`{\textsf{\color{White}NPC:\color{Rhodamine}Abigail}}`$    |
+| $`{\textsf{\color{White}Farmer:\color{Rhodamine}<Target>}}`$ | The location will be set to a specific location related to the Farmer. Currently, only `Current` is supported, for the Farmer's current location. | $`{\textsf{\color{White}Farmer:\color{Rhodamine}Current}}`$ |

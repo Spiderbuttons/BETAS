@@ -75,10 +75,19 @@ public static class ArgUtilityExtensions
         string[] split = array[index].Split(':');
         value = array[index];
 
-        if (split.Length == 2 && string.Equals(split[0], "NPC", StringComparison.OrdinalIgnoreCase) &&
-            Game1.getCharacterFromName(split[1]) != null)
+        if (split.Length == 2)
         {
-            value = Game1.getCharacterFromName(split[1]).currentLocation.Name;
+            if (string.Equals(split[0], "NPC", StringComparison.OrdinalIgnoreCase))
+            {
+                value = Game1.getCharacterFromName(split[1]).currentLocation.Name;
+            } else if (string.Equals(split[0], "Farmer", StringComparison.OrdinalIgnoreCase))
+            {
+                value = split[1].ToLower() switch
+                {
+                    "current" => Game1.player.currentLocation.Name,
+                    _ => Game1.player.currentLocation.Name
+                };
+            }
         }
 
         if (!allowBlank && string.IsNullOrWhiteSpace(value))
@@ -119,6 +128,17 @@ public static class ArgUtilityExtensions
             Game1.getCharacterFromName(split[1]) != null)
         {
             value = Game1.getCharacterFromName(split[1]).currentLocation.Name;
+            error = null;
+            return true;
+        }
+        
+        if (split.Length == 2 && string.Equals(split[0], "Farmer", StringComparison.OrdinalIgnoreCase))
+        {
+            value = split[1].ToLower() switch
+            {
+                "current" => Game1.player.currentLocation.Name,
+                _ => Game1.player.currentLocation.Name
+            };
             error = null;
             return true;
         }
