@@ -57,7 +57,6 @@ namespace BETAS
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOUNTED", PlayerMounted.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_QI_GEMS", PlayerQiGems.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPOUSE_GENDER", PlayerSpouseGender.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_STARDROPS_FOUND", PlayerStardropsFound.Query);
             GameStateQuery.Register($"{Manifest.UniqueID}_NPC_LOCATION", NpcLocation.Query);
