@@ -108,7 +108,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                return;
+                //
             }
         }
     }

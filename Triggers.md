@@ -31,6 +31,47 @@ All Triggers, both vanilla or otherwise, can be used to perform the [new Actions
 - [PassedOut](#passedout)
 - [RelationshipChanged](#relationshipchanged)
 
+<br>
+
+### Example Usage:
+```json
+{
+  "Format": "2.3.0",
+  "Changes": [
+    {
+      "Action": "EditData",
+      "Target": "Data/TriggerActions",
+      "Entries": {
+        "ExampleTrigger_One": {
+          "Id": "ExampleTrigger_One",
+          "Trigger": "Spiderbuttons.BETAS_CropHarvested",
+          "Condition": "ITEM_QUALITY Target 2, ITEM_CATEGORY Target -75 -79",
+          "Action": "Spiderbuttons.BETAS_MakeMachineReady -1 -1 IslandWest 4"
+        },
+        
+        "ExampleTrigger_Two": {
+          "Id": "ExampleTrigger_Two",
+          "Trigger": "Spiderbuttons.BETAS_MonsterKilled",
+          "Condition": "ITEM_ID Target \"Green Slime\", Spiderbuttons.BETAS_ITEM_MOD_DATA_CONTAINS Target BETAS/MonsterKilled/Drops (O)766",
+          "Action": "Spiderbuttons.BETAS_EmoteFarmer 32",
+          "MarkActionApplied": false
+        },
+        
+        "ExampleTrigger_Three": {
+          "Id": "ExampleTrigger_Three",
+          "Trigger": "Spiderbuttons.BETAS_LightningStruck",
+          "Condition": null,
+          "Actions": [
+            "Spiderbuttons.BETAS_SetNewDialogue Haley \"I hate lightning...\" false",
+            "Spiderbuttons.BETAS_WarpNpc Abigail NPC:Emily 25 24 2"
+          ]
+        }
+      }
+    }
+  ]
+}
+```
+
 ## ANIMAL PETTED <a name="animalpetted"></a>
 
 Raised whenever the local player pets an animal, whether it is a farm animal or a pet.
@@ -49,16 +90,16 @@ Raised whenever the local player pets an animal, whether it is a farm animal or 
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                                                                Value                                                                 |                                                Usage Notes |
-|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{Cerulean}/Name}}`$           |                                                       The name of the animal.                                                        |                                                            |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{Cerulean}/Friendship}}`$     |                                   The friendship of the animal towards the player that petted it.                                    |                                             Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{Cerulean}/Breed}}`$          |                                                    What breed of animal this is.                                                     |         This value will only exist if the animal is a pet. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{Cerulean}/Happiness}}`$      |                                                     The happiness of the animal.                                                     | This value will only exist if the animal is a farm animal. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{Cerulean}/ProduceQuality}}`$ | The quality level of the produce this animal creates. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | This value will only exist if the animal is a farm animal. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{OliveGreen}/WasPet}}`$         |                                      Whether or not the animal was a pet and not a farm animal.                                      |                                                            |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{OliveGreen}/WasFarmAnimal}}`$  |                                      Whether or not the animal was a farm animal and not a pet.                                      |                                                            |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}AnimalPetted\color{OliveGreen}/WasBaby}}`$        |                                             Whether or not the animal was a baby or not.                                             |                       This value is always false for pets. |
+| Mod Data Key                      |                                                                Value                                                                 | Type |                                                Usage Notes |
+|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------|---------------|-----------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Name}}`$           |                                                       The name of the animal.                                                        | String        |                                                            |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Friendship}}`$     |                                   The friendship of the animal towards the player that petted it.                                    | Integer       |                                             |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Breed}}`$          |                                                    What breed of animal this is.                                                     | String        |         This value will only exist if the animal is a pet. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/Happiness}}`$      |                                                     The happiness of the animal.                                                     | Integer       | This value will only exist if the animal is a farm animal. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{Cerulean}/ProduceQuality}}`$ | The quality level of the produce this animal creates. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | Integer       | This value will only exist if the animal is a farm animal. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasPet}}`$         |                                      Whether or not the animal was a pet and not a farm animal.                                      | Boolean       |                                                            |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasFarmAnimal}}`$  |                                      Whether or not the animal was a farm animal and not a pet.                                      | Boolean       |                                                            |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}AnimalPetted\color{JungleGreen}/WasBaby}}`$        |                                             Whether or not the animal was a baby or not.                                             | Boolean       |                       This value is always false for pets. |
 <br>
 
 * * *
@@ -74,15 +115,15 @@ Raised whenever a bomb explodes, including when that bomb is a Hot Head.
 <br>
 
 #### TARGET ITEM:
-| Field  | Value  | Usage Notes |
-|:-------|:------|------------|
-| ItemId | (O)287 |             |
+| Field  | Value  | Usage Notes                                                                  |
+|:-------|:------|------------------------------------------------------------------------------|
+| ItemId | `(O)287` | This value will always be the same regardless of what type of bomb exploded. |
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key              |            Value             |    Usage Notes |
-|:--------------------------|:----------------------------|---------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}BombExploded\color{Cerulean}/Radius}}`$ | The radius of the explosion. | Integer value. |
+| Mod Data Key              |            Value             | Type    |    Usage Notes |
+|:--------------------------|:----------------------------|---------|---------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}BombExploded\color{Cerulean}/Radius}}`$ | The radius of the explosion. | Integer | |
 <br>
 
 * * *
@@ -102,9 +143,9 @@ The `Target` item in this case is the crop that was dug up. Therefore, you can u
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                             |                          Value                           | Usage Notes |
-|:-----------------------------------------|:--------------------------------------------------------|------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}CropHarvested\color{OliveGreen}/WasHarvestedByJunimo}}`$ | Whether or not it was a Junimo that harvested this crop. |             |
+| Mod Data Key                             |                          Value                           | Type    | Usage Notes |
+|:-----------------------------------------|:--------------------------------------------------------|---------|------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}CropHarvested\color{JungleGreen}/WasHarvestedByJunimo}}`$ | Whether or not it was a Junimo that harvested this crop. | Boolean |             |
 <br>
 
 * * *
@@ -126,10 +167,10 @@ Raised whenever the local player takes damage.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                                                                                  |                             Value                             |                                                                Usage Notes |
-|:----------------------------------------------------------------------------------------------|:-------------------------------------------------------------|---------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}DamageTaken\color{Cerulean}/Damage}}`$      | The amount of damage that the damage source tried to inflict. | Integer value. This does not take defense or other modifiers into account. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}DamageTaken\color{OliveGreen}/WasParried}}`$ |         Whether or not the player parried the damage.         |                                                                            |
+| Mod Data Key                                                                                  |                             Value                             | Type    |                                                                Usage Notes |
+|:----------------------------------------------------------------------------------------------|:-------------------------------------------------------------|---------|---------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DamageTaken\color{Cerulean}/Damage}}`$      | The amount of damage that the damage source tried to inflict. | Integer | This does not take defense or other modifiers into account. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DamageTaken\color{JungleGreen}/WasParried}}`$ |         Whether or not the player parried the damage.         | Boolean |                                                                            |
 <br>
 
 * * *
@@ -152,12 +193,12 @@ Raised whenever the local player opens a dialogue box/starts a conversation with
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                         |                                            Value                                            |                                                                                                                               Usage Notes |
-|:-------------------------------------|:-------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}DialogueOpened\color{Cerulean}/Age}}`$             |    The age of the NPC being spoken to. Possible values are `Adult`, `Teen`, or `Child`.     |                                                                                                                                           |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}DialogueOpened\color{Cerulean}/Gender}}`$          | The gender of the NPC being spoken to. Possible values are `Female`, `Male`, or `Undefined` |                                                                                                                                           |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}DialogueOpened\color{Cerulean}/Friendship}}`$      |                     The current friendship for the NPC being spoken to.                     |                                                                                                                            Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}DialogueOpened\color{OliveGreen}/WasDatingFarmer}}`$ |       Whether or not the player was dating this NPC when the dialogue box was opened.       | This may not behave as expected when giving a relationship-changing item (e.g. bouquet). See [RelationshipChanged](#relationshipchanged). |
+| Mod Data Key                         |                                            Value                                            | Type    |                                                                                                                               Usage Notes |
+|:-------------------------------------|:-------------------------------------------------------------------------------------------|---------|------------------------------------------------------------------------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{Cerulean}/Age}}`$             |    The age of the NPC being spoken to. Possible values are `Adult`, `Teen`, or `Child`.     | String  |                                                                                                                                           |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{Cerulean}/Gender}}`$          | The gender of the NPC being spoken to. Possible values are `Female`, `Male`, or `Undefined` | String  |                                                                                                                                           |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{Cerulean}/Friendship}}`$      |                     The current friendship for the NPC being spoken to.                     | Integer |                                                                                                                             |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}DialogueOpened\color{JungleGreen}/WasDatingFarmer}}`$ |       Whether or not the player was dating this NPC when the dialogue box was opened.       | Boolean | This may not behave as expected when giving a relationship-changing item (e.g. bouquet). See [RelationshipChanged](#relationshipchanged). |
 <br>
 
 * * *
@@ -179,10 +220,10 @@ Raised whenever the local player gains experience in a skill.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                            Value                            |    Usage Notes |
-|:----------------------------------|:-----------------------------------------------------------|---------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}ExperienceGained\color{Cerulean}/Amount}}`$     |               How much experience was gained.               | Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}ExperienceGained\color{OliveGreen}/WasLevelUp}}`$ | Whether or not this experience gain resulted in a level up. |                |
+| Mod Data Key                      |                            Value                            | Type    |    Usage Notes |
+|:----------------------------------|:-----------------------------------------------------------|---------|---------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}ExperienceGained\color{Cerulean}/Amount}}`$     |               How much experience was gained.               | Integer |  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}ExperienceGained\color{JungleGreen}/WasLevelUp}}`$ | Whether or not this experience gain resulted in a level up. | Boolean |                |
 <br>
 
 * * *
@@ -202,13 +243,13 @@ The `Target` item in this case is the fish that was caught. Therefore, you can u
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                     |                           Value                            |    Usage Notes |
-|:---------------------------------|:----------------------------------------------------------|---------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FishCaught\color{Cerulean}/Size}}`$            |           The size of the fish that was caught.            | Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FishCaught\color{Cerulean}/Difficulty}}`$      |     The difficulty value for the fish that was caught.     | Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FishCaught\color{OliveGreen}/WasPerfect}}`$      |       Whether or not this fish was caught perfectly.       |                |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FishCaught\color{OliveGreen}/WasLegendary}}`$    |         Whether or not this was a legendary fish.          |                |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FishCaught\color{OliveGreen}/WasWithTreasure}}`$ | Whether or not the player also fished up a treasure chest. |                |
+| Mod Data Key                     |                           Value                            | Type    |    Usage Notes |
+|:---------------------------------|:----------------------------------------------------------|---------|---------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{Cerulean}/Size}}`$            |           The size of the fish that was caught.            | Integer |  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{Cerulean}/Difficulty}}`$      |     The difficulty value for the fish that was caught.     | Integer |  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{JungleGreen}/WasPerfect}}`$      |       Whether or not this fish was caught perfectly.       | Boolean |                |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{JungleGreen}/WasLegendary}}`$    |         Whether or not this was a legendary fish.          | Boolean |                |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FishCaught\color{JungleGreen}/WasWithTreasure}}`$ | Whether or not the player also fished up a treasure chest. | Boolean |                |
 <br>
 
 * * *
@@ -230,23 +271,23 @@ Raised whenever the local player shakes a tree or bush.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                      |                                                             Value                                                              |                                                                                                                                                                                                                                      Usage Notes |
-|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/Stage}}`$           |                                     The current growth stage of the flora that was shaken.                                     |                Integer value between 0 and 15.                                                                                                                                                             This value will not exist for bushes. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/Seed}}`$            |                                        The item ID of the seed used to grow this flora.                                        |                                                                                                                                                                                                            This value will not exist for bushes. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/Quality}}`$         | The quality of the produce this flora produces. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). |                                                                                                                                                                                                      This value will only exist for fruit trees. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/Produce}}`$         |                                A list of the produce that was on this flora when it was shaken.                                |                                                                                                                                                                                                   This value will not exist for non-fruit trees. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/ProduceCount}}`$    |                                The number of produce that was on this flora when it was shaken.                                | Integer value.                                                                                                                                                                                       This value will only exist for fruit trees. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/PossibleProduce}}`$ |                                  A list of produce that this flora can ever possibly produce.                                  |                                                                                                                                                                                                      This value will only exist for fruit trees. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{Cerulean}/Size}}`$            |                            The size of this flora. Possible values are `0`, `1`, `2`, `3`, and `4`.                            |                                                                 This value will only exist for bushes. Sizes `0`, `1`, and `2` are small, medium, and large bushes respectively. Size `3` is a green tea bush. Size `4` is a golden walnut bush. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasInSeason}}`$     |                                            Whether or not this flora is in season.                                             |                                              For non-fruit trees, this checks whether the tree can grow. For fruit trees, this checks whether or not the tree can currently produce fruit. For bushes, this checks whether the bush is in bloom. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasMossy}}`$        |                                              Whether or not this flora was mossy.                                              |                                                                                                                                                                                                                                                  |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasSeedy}}`$        |                                 Whether or not this flora had a seed that fell out (I think).                                  |                                                                                                                                                                                                                                                  |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasFertilized}}`$   |                                        Whether or not this flora was fertilized or not.                                        |                                                                                                                                                                                                                                                  |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasTapped}}`$       |                                         Whether or not this flora had a tapper on it.                                          |                                                                                                                                                                                                                                                  |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasTree}}`$         |                                             Whether or not this flora was a tree.                                              |                                                                                                                                                                                                                                                  |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasFruitTree}}`$    |                                          Whether or not this flora was a fruit tree.                                           |                                                                                                                                                                                                                                                  |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}FloraShaken\color{OliveGreen}/WasBush}}`$         |                                             Whether or not this flora was a bush.                                              |                                                                                                                                                                                                                                                  |
+| Mod Data Key                      |                                                             Value                                                              | Type           |                                                                                                                                                                                                                                      Usage Notes |
+|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Stage}}`$           |                                     The current growth stage of the flora that was shaken.                                     | Integer (0-15) |                                                                                                                                                                             This value will not exist for bushes. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Seed}}`$            |                                        The item ID of the seed used to grow this flora.                                        | String         |                                                                                                                                                                                                            This value will not exist for bushes. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Quality}}`$         | The quality of the produce this flora produces. Possible values are `0` (normal), `1` (silver), `2` (gold), and `4` (iridium). | Integer        |                                                                                                                                                                                                      This value will only exist for fruit trees. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Produce}}`$         |                                A list of the produce that was on this flora when it was shaken.                                | String         |                                                                                                                                                                                                   This value will not exist for non-fruit trees. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/ProduceCount}}`$    |                                The number of produce that was on this flora when it was shaken.                                | Integer        |                                                                                                                                                                                        This value will only exist for fruit trees. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/PossibleProduce}}`$ |                                  A list of produce that this flora can ever possibly produce.                                  | String         |                                                                                                                                                                                                      This value will only exist for fruit trees. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{Cerulean}/Size}}`$            |                            The size of this flora. Possible values are `0`, `1`, `2`, `3`, and `4`.                            | Integer        |                                                                 This value will only exist for bushes. Sizes `0`, `1`, and `2` are small, medium, and large bushes respectively. Size `3` is a green tea bush. Size `4` is a golden walnut bush. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasInSeason}}`$     |                                            Whether or not this flora is in season.                                             | Boolean        |                                              For non-fruit trees, this checks whether the tree can grow. For fruit trees, this checks whether or not the tree can currently produce fruit. For bushes, this checks whether the bush is in bloom. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasMossy}}`$        |                                              Whether or not this flora was mossy.                                              | Boolean        |                                                                                                                                                                                                                                                  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasSeedy}}`$        |                                 Whether or not this flora had a seed that fell out (I think).                                  | Boolean        |                                                                                                                                                                                                                                                  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasFertilized}}`$   |                                        Whether or not this flora was fertilized or not.                                        | Boolean        |                                                                                                                                                                                                                                                  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasTapped}}`$       |                                         Whether or not this flora had a tapper on it.                                          | Boolean        |                                                                                                                                                                                                                                                  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasTree}}`$         |                                             Whether or not this flora was a tree.                                              | Boolean        |                                                                                                                                                                                                                                                  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasFruitTree}}`$    |                                          Whether or not this flora was a fruit tree.                                           | Boolean        |                                                                                                                                                                                                                                                  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}FloraShaken\color{JungleGreen}/WasBush}}`$         |                                             Whether or not this flora was a bush.                                              | Boolean        |                                                                                                                                                                                                                                                  |
 <br>
 
 * * *
@@ -270,12 +311,12 @@ As said above, if the player found an item in the trash can, the `Target` item f
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                              |                              Value                               |                                           Usage Notes |
-|:------------------------------------------|:----------------------------------------------------------------|------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GarbageChecked\color{Cerulean}/GarbageCanId}}`$         |           The ID of the garbage can that was checked.            |                                                       |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GarbageChecked\color{Cerulean}/Witnesses}}`$            | A list of NPCs that caught the player checking the garbage can.  | If there are no witnesses, this value will not exist. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GarbageChecked\color{OliveGreen}/WasMegaSuccess}}`$       |    Whether or not this garbage can check was a mega success.     |                                                       |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GarbageChecked\color{OliveGreen}/WasDoubleMegaSuccess}}`$ | Whether or not this garbage can check was a double mega success. |                                                       |
+| Mod Data Key                              |                              Value                               | Type    |                                           Usage Notes |
+|:------------------------------------------|:----------------------------------------------------------------|---------|------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{Cerulean}/GarbageCanId}}`$         |           The ID of the garbage can that was checked.            | String  |                                                       |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{Cerulean}/Witnesses}}`$            | A list of NPCs that caught the player checking the garbage can.  | String  | If there are no witnesses, this value will not exist. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{JungleGreen}/WasMegaSuccess}}`$       |    Whether or not this garbage can check was a mega success.     | Boolean |                                                       |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GarbageChecked\color{JungleGreen}/WasDoubleMegaSuccess}}`$ | Whether or not this garbage can check was a double mega success. | Boolean |                                                       |
 <br>
 
 * * *
@@ -302,11 +343,11 @@ The `Input` item in this case is the item that was given as a gift. Therefore, y
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                                                                                 |                                                             Value                                                              |                         Usage Notes |
-|:---------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GiftGiven\color{Cerulean}/Friendship}}`$   |                                    The friendship level of the NPC that was given the gift.                                    |                      Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GiftGiven\color{Cerulean}/Taste}}`$        | The gift taste that the NPC had for the item. Possible values are `Love`, `Hate`, `Like`, `Dislike`, `Neutral`, and `Special`. | `Special` is used for Stardrop Tea. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}GiftGiven\color{OliveGreen}/WasBirthday}}`$ |                               Whether or not it was the NPC's birthday when the gift was given.                                |                                     |
+| Mod Data Key                                                                                 |                                                             Value                                                              | Type    |                         Usage Notes |
+|:---------------------------------------------------------------------------------------------|:------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GiftGiven\color{Cerulean}/Friendship}}`$   |                                    The friendship level of the NPC that was given the gift.                                    | Integer |                       |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GiftGiven\color{Cerulean}/Taste}}`$        | The gift taste that the NPC had for the item. Possible values are `Love`, `Hate`, `Like`, `Dislike`, `Neutral`, and `Special`. | String  | `Special` is used for Stardrop Tea. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}GiftGiven\color{JungleGreen}/WasBirthday}}`$ |                               Whether or not it was the NPC's birthday when the gift was given.                                | Boolean |                                     |
 <br>
 
 * * *
@@ -329,14 +370,14 @@ Raised whenever the local player opens their mailbox to read a letter. This trig
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                            |                                 Value                                  |                                                                   Usage Notes |
-|:----------------------------------------|:----------------------------------------------------------------------|------------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LetterRead\color{Cerulean}/Money}}`$                  |               How much money was included in the letter.               | Integer value. This value will not exist if there was no money in the letter. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LetterRead\color{Cerulean}/Quest}}`$                  |             The quest ID that was attached to the letter.              |                This value will not exist if there was no quest in the letter. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LetterRead\color{Cerulean}/SpecialOrder}}`$           |         The special order ID that was attached to the letter.          |        This value will not exist if there was no special order in the letter. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LetterRead\color{OliveGreen}/WasRecipe}}`$              |   Whether or not the letter contained a cooking or crafting recipe.    |                                                                               |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LetterRead\color{OliveGreen}/WasQuestOrSpecialOrder}}`$ | Whether or not the letter contained either a quest or a special order. |                                                                               |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LetterRead\color{OliveGreen}/WasWithItem}}`$            |           Whether or not the letter had an attached item(s).           |                                                                               |
+| Mod Data Key                            |                                 Value                                  | Type    |                                                                   Usage Notes |
+|:----------------------------------------|:----------------------------------------------------------------------|---------|------------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{Cerulean}/Money}}`$                  |               How much money was included in the letter.               | Integer | This value will not exist if there was no money in the letter. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{Cerulean}/Quest}}`$                  |             The quest ID that was attached to the letter.              | String  |                This value will not exist if there was no quest in the letter. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{Cerulean}/SpecialOrder}}`$           |         The special order ID that was attached to the letter.          | String  |        This value will not exist if there was no special order in the letter. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{JungleGreen}/WasRecipe}}`$              |   Whether or not the letter contained a cooking or crafting recipe.    | Boolean |                                                                               |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{JungleGreen}/WasQuestOrSpecialOrder}}`$ | Whether or not the letter contained either a quest or a special order. | Boolean |                                                                               |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LetterRead\color{JungleGreen}/WasWithItem}}`$            |           Whether or not the letter had an attached item(s).           | Boolean |                                                                               |
 <br>
 
 * * *
@@ -358,13 +399,13 @@ Raised whenever the player witnesses a lightning strike.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                               |                                                      Value                                                      |                                                                  Usage Notes |
-|:-------------------------------------------|:---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LightningStruck\color{Cerulean}/Size}}`$                 |                    The size of the lightning strike. Possible values are `Big` and `Small`.                     |                                                                              |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LightningStruck\color{Cerulean}/StruckTerrainFeature}}`$ | The type of terrain feature that was struck by lightning. Possible values are `FruitTree`, `Crop`, and `Grass`. | This value will not exist if lightning did not strike one of these features. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LightningStruck\color{Cerulean}/StruckCrop}}`$           |                        The item ID of the crop that was struck by this lightning strike.                        |                This value will not exist if lightning did not strike a crop. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LightningStruck\color{Cerulean}/StruckTree}}`$           |                     The tree ID of the fruit tree that was struck by this lightning strike.                     |          This value will not exist if lightning did not strike a fruit tree. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}LightningStruck\color{OliveGreen}/WasLightningRod}}`$      |                          Whether or not this lightning strike struck a lightning rod.                           |                                                                              |
+| Mod Data Key                               |                                                      Value                                                      | Type    |                                                                  Usage Notes |
+|:-------------------------------------------|:---------------------------------------------------------------------------------------------------------------|---------|-----------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/Size}}`$                 |                    The size of the lightning strike. Possible values are `Big` and `Small`.                     | String  |                                                                              |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/StruckTerrainFeature}}`$ | The type of terrain feature that was struck by lightning. Possible values are `FruitTree`, `Crop`, and `Grass`. | String  | This value will not exist if lightning did not strike one of these features. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/StruckCrop}}`$           |                        The item ID of the crop that was struck by this lightning strike.                        | String  |                This value will not exist if lightning did not strike a crop. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{Cerulean}/StruckTree}}`$           |                     The tree ID of the fruit tree that was struck by this lightning strike.                     | String  |          This value will not exist if lightning did not strike a fruit tree. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}LightningStruck\color{JungleGreen}/WasLightningRod}}`$      |                          Whether or not this lightning strike struck a lightning rod.                           | Boolean |                                                                              |
 <br>
 
 * * *
@@ -403,12 +444,12 @@ Raised whenever the local player kills a monster.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                           |                                Value                                |    Usage Notes |
-|:---------------------------------------|:-------------------------------------------------------------------|---------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}MonsterKilled\color{Cerulean}/MaxHealth}}`$          |         The maximum health of the monster that was killed.          | Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}MonsterKilled\color{Cerulean}/Damage}}`$             | How much damage the monster that was killed would do to the player. | Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}MonsterKilled\color{Cerulean}/Drops}}`$              |   A list of item IDs that the monster dropped when it was killed.   |                |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}MonsterKilled\color{OliveGreen}/WasHardmodeMonster}}`$ |             Whether or not this was a hardmode monster.             |                |
+| Mod Data Key                           |                                Value                                | Type    |    Usage Notes |
+|:---------------------------------------|:-------------------------------------------------------------------|---------|---------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{Cerulean}/MaxHealth}}`$          |         The maximum health of the monster that was killed.          | Integer |  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{Cerulean}/Damage}}`$             | How much damage the monster that was killed would do to the player. | Integer |  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{Cerulean}/Drops}}`$              |   A list of item IDs that the monster dropped when it was killed.   | String  |                |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}MonsterKilled\color{JungleGreen}/WasHardmodeMonster}}`$ |             Whether or not this was a hardmode monster.             | Boolean |                |
 <br>
 
 * * *
@@ -430,12 +471,12 @@ Raised whenever the local player kisses an NPC.
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                    |                                             Value                                             |    Usage Notes |
-|:--------------------------------|:---------------------------------------------------------------------------------------------|---------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}NpcKissed\color{Cerulean}/Age}}`$             |     The age of the NPC that was kissed. Possible values are `Adult`, `Teen`, and `Child`.     |                |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}NpcKissed\color{Cerulean}/Gender}}`$          | The gender of the NPC that was kissed. Possible values are `Female`, `Male`, and `Undefined`. |                |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}NpcKissed\color{Cerulean}/Friendship}}`$      |                      The friendship value for the player with this NPC.                       | Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}NpcKissed\color{OliveGreen}/WasDatingFarmer}}`$ |              Whether or not the NPC was dating the farmer when they were kissed.              |                |
+| Mod Data Key                    |                                             Value                                             | Type    |    Usage Notes |
+|:--------------------------------|:---------------------------------------------------------------------------------------------|---------|---------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{Cerulean}/Age}}`$             |     The age of the NPC that was kissed. Possible values are `Adult`, `Teen`, and `Child`.     | String  |                |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{Cerulean}/Gender}}`$          | The gender of the NPC that was kissed. Possible values are `Female`, `Male`, and `Undefined`. | String  |                |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{Cerulean}/Friendship}}`$      |                      The friendship value for the player with this NPC.                       | Integer |  |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}NpcKissed\color{JungleGreen}/WasDatingFarmer}}`$ |              Whether or not the NPC was dating the farmer when they were kissed.              | Boolean |                |
 <br>
 
 * * *
@@ -457,13 +498,13 @@ Raised whenever the local player passes out either from exhaustion or from being
 <br>
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                 |                                          Value                                          |                                                                             Usage Notes |
-|:-----------------------------|:---------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}PassedOut\color{Cerulean}/Time}}`$         |                       The time of day when the player passed out.                       |                                                              Standard `0600–2600` form. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}PassedOut\color{Cerulean}/Tool}}`$         |           The item ID of the tool that the player exhausted themselves with.            | This value will only exist if the player passed out from exhaustion through tool usage. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}PassedOut\color{OliveGreen}/WasUpTooLate}}`$ |        Whether or not the player passed out because they stayed awake too late.         |                                                                                         |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}PassedOut\color{OliveGreen}/WasExhausted}}`$ |         Whether or not the player passed out because they exhausted themselves.         |                                                                                         |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}PassedOut\color{OliveGreen}/WasSafe}}`$      | Whether or not the player passed out in a safe location (e.g. FarmHouse or IslandWest). |                                                                                         |
+| Mod Data Key                 |                                          Value                                          | Type    |                                                                             Usage Notes |
+|:-----------------------------|:---------------------------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{Cerulean}/Time}}`$         |                       The time of day when the player passed out.                       | Integer |                                                              Standard `0600–2600` form. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{Cerulean}/Tool}}`$         |           The item ID of the tool that the player exhausted themselves with.            | String  | This value will only exist if the player passed out from exhaustion through tool usage. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{JungleGreen}/WasUpTooLate}}`$ |        Whether or not the player passed out because they stayed awake too late.         | Boolean |                                                                                         |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{JungleGreen}/WasExhausted}}`$ |         Whether or not the player passed out because they exhausted themselves.         | Boolean |                                                                                         |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}PassedOut\color{JungleGreen}/WasSafe}}`$      | Whether or not the player passed out in a safe location (e.g. FarmHouse or IslandWest). | Boolean |                                                                                         |
 <br>
 
 * * *
@@ -494,20 +535,20 @@ Raised whenever the local player's relationship status (_not_ friendship value) 
 In this trigger, the `Trigger Item` that is given as the `Target` will contain the friendship data for the NPC _after_ the relationship changes have already occured. The `Trigger Item` that is given as the `Input` will contain the friendship data for the NPC as it was _before_ the relationship change occured. Please keep in mind which one you are using when you are checking the friendship data.
 
 #### TARGET ITEM MOD DATA:
-| Mod Data Key                                                                                                |                                                             Value                                                             |                                                                                         Usage Notes |
-|:------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/Status}}`$            |     The relationship status. Possible values are `Friendly`, `Dating`, `Engaged`, `Married`, `Roommate`, and `Divorced`.      |                                                                                                     |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/Friendship}}`$        |                                               The friendship level for the NPC.                                               |                                                                                      Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/GiftsToday}}`$        |                                       The number of gifts the NPC has been given today.                                       |                                                                                      Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/GiftsThisWeek}}`$     |                                     The number of gifts the NPC has been given this week.                                     |                                                                                      Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/DaysSinceLastGift}}`$ |                            The number of days since the last time this NPC has been given a gift.                             |                                                                                      Integer value. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/WeddingSeason}}`$     | The name of the season the wedding with this NPC took place in. Possible values are `Spring`, `Summer`, `Fall`, and `Winter`. |                  This value will only exist if the player had or will have a wedding with this NPC. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/WeddingDate}}`$       |                              The day of the month that the wedding with this NPC took place on.                               |   Integer value. This value will only exist if the player had or will have a wedding with this NPC. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/WeddingYear}}`$       |                                The year number that the wedding with this place took place in.                                |   Integer value. This value will only exist if the player had or will have a wedding with this NPC. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{Cerulean}/DaysMarried}}`$       |                             The number of days that the player has been married to this NPC for.                              |   Integer value. This value will only exist if the player had or will have a wedding with this NPC. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{OliveGreen}/WasTalkedToToday}}`$ |                                         Whether or not this NPC was talked to today.                                          |                                                                                                     |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{OliveGreen}/IsRoommate}}`$       |                                       Whether or not this NPC is the player's roommate.                                       | `WasRoommate` will also work here, but remember this will be the _current_ status, not past status. |
-| $`{\textsf{\color{Orchid}BETAS/\color{Bittersweet}RelationshipChanged\color{OliveGreen}/WasMemoryWiped}}`$   |               Whether or not this relationship change was the result of the player wiping their ex's memories.                |                                                                                                     |
+| Mod Data Key                                                                                                |                                                             Value                                                             | Type    |                                                                                         Usage Notes |
+|:------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------|---------|----------------------------------------------------------------------------------------------------|
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/Status}}`$            |     The relationship status. Possible values are `Friendly`, `Dating`, `Engaged`, `Married`, `Roommate`, and `Divorced`.      | String  |                                                                                                     |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/Friendship}}`$        |                                               The friendship level for the NPC.                                               | Integer |                                                                                      |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/GiftsToday}}`$        |                                       The number of gifts the NPC has been given today.                                       | Integer |                                                                                       |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/GiftsThisWeek}}`$     |                                     The number of gifts the NPC has been given this week.                                     | Integer |                                                                                      |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/DaysSinceLastGift}}`$ |                            The number of days since the last time this NPC has been given a gift.                             | Integer |                                                                                       |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/WeddingSeason}}`$     | The name of the season the wedding with this NPC took place in. Possible values are `Spring`, `Summer`, `Fall`, and `Winter`. | String  |                  This value will only exist if the player had or will have a wedding with this NPC. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/WeddingDate}}`$       |                              The day of the month that the wedding with this NPC took place on.                               | Integer |   This value will only exist if the player had or will have a wedding with this NPC. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/WeddingYear}}`$       |                                The year number that the wedding with this place took place in.                                | Integer |   This value will only exist if the player had or will have a wedding with this NPC. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{Cerulean}/DaysMarried}}`$       |                             The number of days that the player has been married to this NPC for.                              | Integer |   This value will only exist if the player had or will have a wedding with this NPC. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{JungleGreen}/WasTalkedToToday}}`$ |                                         Whether or not this NPC was talked to today.                                          | Boolean |                                                                                                     |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{JungleGreen}/IsRoommate}}`$       |                                       Whether or not this NPC is the player's roommate.                                       | Boolean | `WasRoommate` will also work here, but remember this will be the _current_ status, not past status. |
+| $`{\textsf{\color{White}BETAS/\color{RedOrange}RelationshipChanged\color{JungleGreen}/WasMemoryWiped}}`$   |               Whether or not this relationship change was the result of the player wiping their ex's memories.                | Boolean |                                                                                                     |
 <br>
 
 #### INPUT ITEM MOD DATA:
