@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using BETAS.Helpers;
 using Microsoft.Xna.Framework;
+using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -23,18 +26,53 @@ public static class NpcNearNpc
             return GameStateQuery.Helpers.ErrorResult(query, "no NPC found with name '" + npcName + "'");
         }
 
-        var npcPosition = Utility.Vector2ToPoint(npc.Position);
-        Rectangle rect = new Rectangle(npcPosition.X - radius * 64, npcPosition.Y - radius * 64,
-            (radius * 2 + 1) * 64, (radius * 2 + 1) * 64);
-        if (!ArgUtility.HasIndex(query, 3))
+        Point npcPosition;
+        string npcLocation;
+
+        if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+            !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cacheNpc)))
         {
-            return npc.currentLocation.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
+            npcPosition = Utility.Vector2ToPoint(npc.Position);
+            npcLocation = npc.currentLocation.Name;
+        }
+        else
+        {
+            npcPosition = Utility.Vector2ToPoint(cacheNpc.Position);
+            npcLocation = cacheNpc.LocationName;
         }
 
+        Rectangle rect = new Rectangle(npcPosition.X - radius * 64, npcPosition.Y - radius * 64,
+            (radius * 2 + 1) * 64, (radius * 2 + 1) * 64);
+        
+        if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+            BETAS.Cache is null || !BETAS.Cache.L1Cache.Any())
+        {
+            if (!ArgUtility.HasIndex(query, 3))
+            {
+                return npc.currentLocation.characters.Any(i => i.Name != npc.Name && rect.Contains(Utility.Vector2ToPoint(i.Position)));
+            }
+            
+            return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawName) =>
+            {
+                return npc.currentLocation.characters.Any(i =>
+                    i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
+            });
+        }
+        
+        Dictionary<string, Vector2> npcPositionsFromCache = [];
+        foreach (var cachedNpc in BETAS.Cache.L1Cache.Values.Where(cachedNpc => cachedNpc.LocationName == npcLocation))
+        {
+            npcPositionsFromCache.Add(cachedNpc.NpcName, cachedNpc.Position);
+        }
+        
+        if (!ArgUtility.HasIndex(query, 3))
+        {
+            return npcPositionsFromCache.Any(i => i.Key != npc.Name && rect.Contains(Utility.Vector2ToPoint(i.Value)));
+        }
+        
         return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawName) =>
         {
-            return npc.currentLocation.characters.Any(i =>
-                i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
+            return npcPositionsFromCache.Any(i => i.Key.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Value)));
         });
     }
 }

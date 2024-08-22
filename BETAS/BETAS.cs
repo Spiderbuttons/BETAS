@@ -1,8 +1,10 @@
 ﻿#nullable enable
 
 using System.Collections.Generic;
+using System.Linq;
 using BETAS.Actions;
 using BETAS.GSQs;
+using BETAS.Helpers;
 using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -18,6 +20,8 @@ namespace BETAS
         internal static IManifest Manifest { get; set; } = null!;
         internal static HashSet<string> LoadedMods { get; set; } = [];
 
+        internal static MultiplayerNpcCache? Cache { get; set; }
+
         public override void Entry(IModHelper helper)
         {
             ModMonitor = Monitor;
@@ -31,7 +35,12 @@ namespace BETAS
             Harmony.PatchAll();
 
             helper.Events.GameLoop.GameLaunched += this.OnGameLaunched;
-            Helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+            helper.Events.Input.ButtonPressed += this.OnButtonPressed;
+            helper.Events.GameLoop.DayStarted += this.OnDayStarted;
+            helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
+            helper.Events.Multiplayer.ModMessageReceived += this.OnModMessageReceived;
+            helper.Events.Multiplayer.PeerConnected += this.OnPeerConnected;
+            helper.Events.GameLoop.SaveLoaded += this.OnSaveLoaded;
         }
 
         private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
@@ -39,6 +48,80 @@ namespace BETAS
             foreach (var mod in Helper.ModRegistry.GetAll())
             {
                 if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID)) LoadedMods.Add(mod.Manifest.UniqueID);
+            }
+        }
+        
+        private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
+        {
+            if (!Context.IsMainPlayer) Helper.Multiplayer.SendMessage("PeerConnected", "BETAS.NpcCacheRequest");
+        }
+
+        private void OnDayStarted(object? sender, DayStartedEventArgs e)
+        {
+            if (!Context.IsMainPlayer || !Context.IsMultiplayer) return;
+            Cache ??= new MultiplayerNpcCache();
+            Cache.UpdateCharacterList();
+        }
+        
+        private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
+        {
+            if (!Context.IsWorldReady || Cache is null || !Context.IsMainPlayer || !Context.HasRemotePlayers)
+                return;
+
+            List<MultiplayerNpcCache.NpcCacheData> npcChanges = [];
+            
+            if (e.IsMultipleOf(60))
+            {
+                npcChanges.AddRange(Cache.CheckL1Cache());
+            }
+            
+            if (e.IsMultipleOf(180))
+            {
+                npcChanges.AddRange(Cache.CheckL2Cache());
+            }
+            
+            if (e.IsMultipleOf(600))
+            {
+                npcChanges.AddRange(Cache.CheckL3Cache());
+            }
+
+            if (npcChanges.Count > 0)
+            {
+                Helper.Multiplayer.SendMessage(npcChanges, "BETAS.NpcCache");
+            }
+        }
+        
+        private void OnPeerConnected(object? sender, PeerConnectedEventArgs e)
+        {
+            Cache ??= new MultiplayerNpcCache();
+            Cache.CheckL1Cache();
+            Cache.CheckL2Cache();
+            Cache.CheckL3Cache();
+        }
+        
+        private void OnModMessageReceived(object? sender, ModMessageReceivedEventArgs e)
+        {
+            switch (e.Type)
+            {
+                case "BETAS.NpcCache" when !Context.IsMainPlayer:
+                {
+                    Cache ??= new MultiplayerNpcCache();
+
+                    foreach (var npcData in e.ReadAs<List<MultiplayerNpcCache.NpcCacheData>>()
+                                 .Where(npcData => !Cache.L1Cache.TryAdd(npcData.NpcName, npcData)))
+                    {
+                        Cache.L1Cache[npcData.NpcName].CopyFrom(npcData);
+                    }
+
+                    break;
+                }
+                case "BETAS.NpcCacheRequest" when Context.IsMainPlayer && Cache is not null:
+                    Log.Trace($"Received Npc Cache request from {e.FromPlayerID}");
+                    List<MultiplayerNpcCache.NpcCacheData> npcCache = Cache.L1Cache.Values.ToList();
+                    npcCache.AddRange(Cache.L2Cache.Values);
+                    npcCache.AddRange(Cache.L3Cache.Values);
+                    Helper.Multiplayer.SendMessage(npcCache, "BETAS.NpcCache");
+                    break;
             }
         }
 

@@ -26,6 +26,10 @@ public static class Log
     public static void Trace<T>(T message) => BETAS.ModMonitor.Log(
         $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
         LogLevel.Trace);
+    
+    public static void Alert<T>(T message) => BETAS.ModMonitor.Log(
+        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        LogLevel.Alert);
 
     public static void ILCode(IEnumerable<CodeInstruction> code)
     {
@@ -38,7 +42,6 @@ public static class Log
     public static void ILCode(IEnumerable<CodeInstruction> newCode, IEnumerable<CodeInstruction> originalCode)
     {
         var originalEnumerator = 0;
-        // print each line of newCode. if the current line of newCode is not the same as the current line of originalCode, log it with Warn instead and don't update the originalCode enumerator until they match again
         foreach (var instruction in newCode)
         {
             if (originalEnumerator >= originalCode.Count())

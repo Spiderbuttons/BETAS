@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -20,10 +22,22 @@ public static class LocationHasNpc
         {
             return GameStateQuery.Helpers.ErrorResult(query, "no location found with name '" + locationName + "'");
         }
+        
+        if (location.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+            BETAS.Cache is null || !BETAS.Cache.L1Cache.Any())
+        {
+            return query.Length == 2
+                ? location.characters.Any()
+                : GameStateQuery.Helpers.AnyArgMatches(query, 2,
+                    (rawName) => string.Equals(location.Name, Game1.getCharacterFromName(rawName)?.currentLocation?.Name));
+        }
+
+        List<string> npcInLocationFromCache = [];
+        npcInLocationFromCache.AddRange(BETAS.Cache.L1Cache.Values.Where(npc => npc.LocationName == location.Name).Select(npc => npc.NpcName.ToLower()));
 
         return query.Length == 2
-            ? location.characters.Any()
+            ? npcInLocationFromCache.Any()
             : GameStateQuery.Helpers.AnyArgMatches(query, 2,
-                (rawName) => string.Equals(location.Name, Game1.getCharacterFromName(rawName)?.currentLocation?.Name));
+                (rawName) => npcInLocationFromCache.Contains(rawName.ToLower()));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using StardewModdingAPI;
 using StardewValley;
 
 namespace BETAS.Helpers;
@@ -79,7 +80,19 @@ public static class ArgUtilityExtensions
         {
             if (string.Equals(split[0], "NPC", StringComparison.OrdinalIgnoreCase))
             {
-                value = Game1.getCharacterFromName(split[1]).currentLocation.Name;
+                var npc = Game1.getCharacterFromName(split[1]);
+                if (npc != null)
+                {
+                    if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+                        !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
+                    {
+                        value = npc.currentLocation.Name;
+                    }
+                    else
+                    {
+                        value = cache.LocationName;
+                    }
+                }
             } else if (string.Equals(split[0], "Farmer", StringComparison.OrdinalIgnoreCase))
             {
                 value = split[1].ToLower() switch
@@ -124,12 +137,23 @@ public static class ArgUtilityExtensions
             return true;
         }
 
-        if (split.Length == 2 && string.Equals(split[0], "NPC", StringComparison.OrdinalIgnoreCase) &&
-            Game1.getCharacterFromName(split[1]) != null)
+        if (split.Length == 2 && string.Equals(split[0], "NPC", StringComparison.OrdinalIgnoreCase))
         {
-            value = Game1.getCharacterFromName(split[1]).currentLocation.Name;
-            error = null;
-            return true;
+            var npc = Game1.getCharacterFromName(split[1]);
+            if (npc != null)
+            {
+                if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+                    !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
+                {
+                    value = npc.currentLocation.Name;
+                }
+                else
+                {
+                    value = cache.LocationName;
+                }
+                error = null;
+                return true;
+            }
         }
         
         if (split.Length == 2 && string.Equals(split[0], "Farmer", StringComparison.OrdinalIgnoreCase))
@@ -175,15 +199,32 @@ public static class ArgUtilityExtensions
             return false;
         }
 
-        if (Game1.getCharacterFromName(split[1]) != null)
+        var npc = Game1.getCharacterFromName(split[1]);
+        if (npc != null)
         {
             if (string.Equals(split[0], "RelativeX", StringComparison.OrdinalIgnoreCase))
             {
-                value += Game1.getCharacterFromName(split[1]).TilePoint.X;
+                if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+                    !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
+                {
+                    value += npc.TilePoint.X;
+                }
+                else
+                {
+                    value += cache.TilePoint.X;
+                } 
             }
             else if (string.Equals(split[0], "RelativeY", StringComparison.OrdinalIgnoreCase))
             {
-                value += Game1.getCharacterFromName(split[1]).TilePoint.Y;
+                if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
+                    !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
+                {
+                    value += npc.TilePoint.Y;
+                }
+                else
+                {
+                    value += cache.TilePoint.Y;
+                }
             }
 
             error = null;
