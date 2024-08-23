@@ -9,51 +9,17 @@ public static class ArgUtilityExtensions
 {
     private static string GetValueParseError(string[] array, int index, bool required, string typeSummary)
     {
-        DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(47, 4);
-        defaultInterpolatedStringHandler.AppendFormatted(required ? "required" : "optional");
-        defaultInterpolatedStringHandler.AppendLiteral(" index ");
-        defaultInterpolatedStringHandler.AppendFormatted(index);
-        defaultInterpolatedStringHandler.AppendLiteral(" has value '");
-        defaultInterpolatedStringHandler.AppendFormatted(array[index]);
-        defaultInterpolatedStringHandler.AppendLiteral("', which can't be parsed as ");
-        defaultInterpolatedStringHandler.AppendFormatted(typeSummary);
-        return defaultInterpolatedStringHandler.ToStringAndClear();
+        return $"{(required ? "required" : "optional")} index {index} has value '{array[index]}', which can't be parsed as {typeSummary}";
     }
 
     private static string GetMissingRequiredIndexError(string[] array, int index)
     {
-        switch (array.Length)
+        return array.Length switch
         {
-            case 0:
-            {
-                DefaultInterpolatedStringHandler defaultInterpolatedStringHandler =
-                    new DefaultInterpolatedStringHandler(41, 1);
-                defaultInterpolatedStringHandler.AppendLiteral("required index ");
-                defaultInterpolatedStringHandler.AppendFormatted(index);
-                defaultInterpolatedStringHandler.AppendLiteral(" not found (list is empty)");
-                return defaultInterpolatedStringHandler.ToStringAndClear();
-            }
-            case 1:
-            {
-                DefaultInterpolatedStringHandler defaultInterpolatedStringHandler =
-                    new DefaultInterpolatedStringHandler(62, 1);
-                defaultInterpolatedStringHandler.AppendLiteral("required index ");
-                defaultInterpolatedStringHandler.AppendFormatted(index);
-                defaultInterpolatedStringHandler.AppendLiteral(" not found (list has a single value at index 0)");
-                return defaultInterpolatedStringHandler.ToStringAndClear();
-            }
-            default:
-            {
-                DefaultInterpolatedStringHandler defaultInterpolatedStringHandler =
-                    new DefaultInterpolatedStringHandler(55, 2);
-                defaultInterpolatedStringHandler.AppendLiteral("required index ");
-                defaultInterpolatedStringHandler.AppendFormatted(index);
-                defaultInterpolatedStringHandler.AppendLiteral(" not found (list has indexes 0 through ");
-                defaultInterpolatedStringHandler.AppendFormatted(array.Length - 1);
-                defaultInterpolatedStringHandler.AppendLiteral(")");
-                return defaultInterpolatedStringHandler.ToStringAndClear();
-            }
-        }
+            0 => $"required index {index} not found (list is empty)",
+            1 => $"required index {index} not found (list has a single value at index 0)",
+            _ => $"required index {index} not found (list has indexes 0 through {array.Length - 1})"
+        };
     }
 
     public static bool TryGetPossiblyRelativeLocationName(string[] array, int index, out string value, out string error,
