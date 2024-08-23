@@ -5,12 +5,15 @@ using System.Linq;
 using BETAS.Actions;
 using BETAS.GSQs;
 using BETAS.Helpers;
+using BETAS.TokenizableStrings;
 using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.GameData.Characters;
+using StardewValley.TokenizableStrings;
 using StardewValley.Triggers;
+using NpcLocation = BETAS.GSQs.NpcLocation;
 
 namespace BETAS
 {
@@ -32,6 +35,7 @@ namespace BETAS
             RegisterQueries();
             RegisterTriggers();
             RegisterActions();
+            RegisterTokenizableStrings();
 
             Harmony.PatchAll();
 
@@ -184,6 +188,12 @@ namespace BETAS
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_UpdateAppearance", UpdateAppearance.Action);
         }
 
+        private static void RegisterTokenizableStrings()
+        {
+            TokenParser.RegisterParser($"{Manifest.UniqueID}_CharacterLocation", TKCharacterLocation.Parse);
+            TokenParser.RegisterParser($"{Manifest.UniqueID}_CharacterCoordinate", TKCharacterCoordinate.Parse);
+        }
+
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
         {
             if (!Context.IsWorldReady)
@@ -191,7 +201,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                //
+                RegisterTokenizableStrings();
             }
         }
     }
