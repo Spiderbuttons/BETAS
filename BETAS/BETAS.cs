@@ -9,6 +9,7 @@ using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.GameData.Characters;
 using StardewValley.Triggers;
 
 namespace BETAS
@@ -151,23 +152,23 @@ namespace BETAS
 
         private static void RegisterTriggers()
         {
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_NpcKissed"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_AnimalPetted"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DialogueOpened"); // Done!
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DamageTaken"); // Done!
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_NpcKissed");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_AnimalPetted");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DialogueOpened");
+            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DamageTaken");
         }
 
         private static void RegisterActions()
@@ -180,6 +181,7 @@ namespace BETAS
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteNpc", EmoteNpc.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteFarmer", EmoteFarmer.Action);
             TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_Lightning", Lightning.Action);
+            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_UpdateAppearance", UpdateAppearance.Action);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
