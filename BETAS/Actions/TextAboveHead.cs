@@ -9,15 +9,18 @@ public static class TextAboveHead
     // Show a speech bubble of text above the head of an NPC.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtility.TryGet(args, 2, out string dialogue, out error, allowBlank: false) ||
-            !ArgUtility.TryGetOptionalInt(args, 3, out int duration, out error, 3000) ||
-            !ArgUtility.TryGetOptionalInt(args, 4, out int delay, out error, 0) ||
-            !ArgUtility.TryGetOptional(args, 5, out string colour, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int duration, out error, 3000) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int delay, out error, 0) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 5, out string colour, out error))
         {
+            Log.Alert(error);
             error = "Usage: TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Colour]";
             return false;
         }
+        
+        Log.Alert($"npcName: {npcName}, dialogue: {dialogue}, duration: {duration}, delay: {delay}, colour: {colour}");
 
         if (!ArgUtility.HasIndex(args, 5)) colour = null;
 
@@ -28,14 +31,14 @@ public static class TextAboveHead
             return false;
         }
 
-        try
-        {
-            dialogue = Game1.content.LoadString(dialogue);
-        }
-        catch
-        {
-            Log.Trace("BETAS.Actions.TextAboveHead: Argument is not a translation key.");
-        }
+        // try
+        // {
+        //     dialogue = Game1.content.LoadString(dialogue);
+        // }
+        // catch
+        // {
+        //     Log.Trace("BETAS.Actions.TextAboveHead: Argument is not a translation key.");
+        // }
 
         npc.showTextAboveHead(dialogue, Utility.StringToColor(colour), 2, duration, delay);
         return true;

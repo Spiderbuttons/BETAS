@@ -13,9 +13,9 @@ public static class NpcNearNpc
     // Check whether a given NPC is currently within a specific radius of another Npc
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtility.TryGet(query, 1, out var npcName, out var error) ||
-            !ArgUtility.TryGetInt(query, 2, out var radius, out error) ||
-            !ArgUtility.TryGetOptional(query, 3, out var _, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var npcName, out var error) ||
+            !ArgUtilityExtensions.TryGetTokenizableInt(query, 2, out var radius, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 3, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

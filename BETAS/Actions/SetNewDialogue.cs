@@ -11,9 +11,9 @@ public static class SetNewDialogue
     // Add a new line of dialogue to an NPC, optionally adding on to their current dialogue instead of replacing it entirely.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtility.TryGet(args, 2, out string dialogue, out error, allowBlank: false) ||
-            !ArgUtility.TryGetOptionalBool(args, 3, out bool append, out error, false))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool append, out error, false))
         {
             error = "Usage: SetNewDialogue <NPC Name> <Dialogue> [Append]";
             return false;

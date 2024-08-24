@@ -1,4 +1,5 @@
-﻿using StardewValley;
+﻿using BETAS.Helpers;
+using StardewValley;
 using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
@@ -8,9 +9,9 @@ public static class PlayerSpeed
     // GSQ for checking whether a players speed is between a minimum and optional maximum value.
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !ArgUtility.TryGetFloat(query, 2, out var minSpeed, out error) ||
-            !ArgUtility.TryGetOptionalFloat(query, 3, out var maxSpeed, out error, float.MaxValue))
+        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !ArgUtilityExtensions.TryGetTokenizableFloat(query, 2, out var minSpeed, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableFloat(query, 3, out var maxSpeed, out error, float.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

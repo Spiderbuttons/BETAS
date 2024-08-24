@@ -10,11 +10,11 @@ public static class MakeMachineReady
     // Make a number of machines instantly ready their output in a given location.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGetOptional(args, 1, out string machineID, out error, defaultValue: "-1") ||
-            !ArgUtility.TryGetOptional(args, 2, out string outputID, out error, defaultValue: "-1") ||
-            !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeLocationName(args, 3, out string locationName,
-                out error, defaultValue: "-1") ||
-            !ArgUtility.TryGetOptionalInt(args, 4, out int count, out error, defaultValue: -1))
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string machineID, out error, defaultValue: "Any") ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string outputID, out error, defaultValue: "Any") ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out string locationName,
+                out error, defaultValue: "All") ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int count, out error, defaultValue: -1))
         {
             error = "Usage: MakeMachineReady [Machine ID] [Output ID] [Location Name] [Count]";
             return false;
@@ -22,7 +22,7 @@ public static class MakeMachineReady
 
         Utility.ForEachLocation(delegate(GameLocation location)
         {
-            if (locationName != "-1" && !string.Equals(location.Name, locationName, StringComparison.OrdinalIgnoreCase))
+            if (locationName != "All" && !string.Equals(location.Name, locationName, StringComparison.OrdinalIgnoreCase))
                 return false;
 
             foreach (var building in location.buildings)
@@ -35,11 +35,11 @@ public static class MakeMachineReady
                     if (count == 0)
                         break;
 
-                    if (machineID != "-1" && machine.QualifiedItemId != machineID)
+                    if (machineID != "Any" && machine.QualifiedItemId != machineID)
                         continue;
 
                     if (machine.heldObject.Value == null ||
-                        (outputID != "-1" && machine.heldObject.Value.QualifiedItemId != outputID))
+                        (outputID != "Any" && machine.heldObject.Value.QualifiedItemId != outputID))
                         continue;
 
                     machine.MinutesUntilReady = 10;
@@ -56,11 +56,11 @@ public static class MakeMachineReady
                 if (count == 0)
                     break;
 
-                if (machineID != "-1" && machine.QualifiedItemId != machineID)
+                if (machineID != "Any" && machine.QualifiedItemId != machineID)
                     continue;
 
                 if (machine.heldObject.Value == null ||
-                    (outputID != "-1" && machine.heldObject.Value.QualifiedItemId != outputID))
+                    (outputID != "Any" && machine.heldObject.Value.QualifiedItemId != outputID))
                     continue;
 
                 machine.MinutesUntilReady = 10;

@@ -10,14 +10,14 @@ public static class WarpNpc
     // Warp an NPC to a specific map and X/Y coordinate, with optional facing direction.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetPossiblyRelativeLocationName(args, 2, out string locationName, out error,
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string locationName, out error,
                 allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 3, out int x, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 4, out int y, out error) ||
-            !ArgUtility.TryGetOptionalInt(args, 5, out int facingDirection, out error, 2))
+            !ArgUtilityExtensions.TryGetTokenizableInt(args, 3, out int x, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizableInt(args, 4, out int y, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 5, out int facingDirection, out error, 2))
         {
-            error = "Usage: WarpCharacter <NPC Name> <Location Name> <X> <Y> [Facing Direction]";
+            error = "Usage: WarpNpc <NPC Name> <Location Name> <X> <Y> [Facing Direction]";
             return false;
         }
 

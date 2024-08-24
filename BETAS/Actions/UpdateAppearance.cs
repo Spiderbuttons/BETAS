@@ -43,8 +43,8 @@ public static class UpdateAppearance
     // Force an update to an NPC's appearance, optionally specifying which appearance to force the change to.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtility.TryGetOptional(args, 2, out var appearanceId, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var appearanceId, out error))
         {
             error = "Usage: UpdateAppearance <NPC> [AppearanceId]";
             return false;

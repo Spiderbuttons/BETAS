@@ -10,9 +10,9 @@ public static class Lightning
     // Make lightning strike at the specified coordinates, or on the current farmer if no coordinates are specified.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 1, out int x, out error,
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out int x, out error,
                 defaultValue: Game1.player.TilePoint.X) ||
-            !ArgUtilityExtensions.TryGetOptionalPossiblyRelativeCoordinate(args, 2, out int y, out error,
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int y, out error,
                 defaultValue: Game1.player.TilePoint.Y))
         {
             error = "Usage: Lightning <X> <Y>";

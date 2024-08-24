@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BETAS.Helpers;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Delegates;
@@ -11,8 +12,8 @@ public static class NpcLocation
     // Check whether a given NPC is currently in a specific map.
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtility.TryGet(query, 1, out var npcName, out var error) ||
-            !ArgUtility.TryGet(query, 2, out var _, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var npcName, out var error) ||
+            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

@@ -1,4 +1,5 @@
-﻿using StardewValley;
+﻿using BETAS.Helpers;
+using StardewValley;
 using StardewValley.Delegates;
 
 namespace BETAS.Actions;
@@ -8,8 +9,8 @@ public static class EmoteNpc
     // Make an NPC perform an emote.
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtility.TryGet(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtility.TryGetInt(args, 2, out int emote, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out int emote, out error))
         {
             error = "Usage: EmoteNpc <NPC Name> <EmoteId>";
             return false;

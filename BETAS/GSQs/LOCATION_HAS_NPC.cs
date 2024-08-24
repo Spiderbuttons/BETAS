@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BETAS.Helpers;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Delegates;
@@ -11,8 +12,8 @@ public static class LocationHasNpc
     // Check whether a given location has any of the given NPCs inside of it.
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtility.TryGet(query, 1, out var locationName, out var error) ||
-            !ArgUtility.TryGetOptional(query, 2, out var _, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var locationName, out var error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

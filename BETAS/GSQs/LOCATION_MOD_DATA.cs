@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -12,8 +13,8 @@ public static class LocationModData
     {
         GameLocation location = context.Location;
         if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) ||
-            !ArgUtility.TryGet(query, 2, out var key, out error) ||
-            !ArgUtility.TryGetOptional(query, 3, out var value, out error))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 3, out var value, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -34,9 +35,9 @@ public static class LocationModData
     {
         GameLocation location = context.Location;
         if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) ||
-            !ArgUtility.TryGet(query, 2, out var key, out error) ||
-            !ArgUtility.TryGetInt(query, 3, out var minRange, out error) ||
-            !ArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizableInt(query, 3, out var minRange, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 4, out var maxRange, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -55,8 +56,8 @@ public static class LocationModData
     {
         GameLocation location = context.Location;
         if (!GameStateQuery.Helpers.TryGetLocationArg(query, 1, ref location, out var error) ||
-            !ArgUtility.TryGet(query, 2, out var key, out error) ||
-            !ArgUtility.TryGet(query, 3, out var value, out error, false))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out var value, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
+using StardewValley.TokenizableStrings;
 
 namespace BETAS.Helpers;
 
@@ -78,6 +81,242 @@ public static class ArgUtilityExtensions
         }
         
         return cache.TilePoint;
+    }
+
+    private static string[] CombineTokenizableIndices(string[] array)
+    {
+        if (array == null) return null;
+        
+        Log.Warn($"array: {string.Join("•", array)}");
+
+        List<string> newArray = [];
+        int open = 0;
+        foreach (var item in array)
+        {
+            if (open > 0) newArray[^1] += $" {item}";
+            else newArray.Add(item);
+            if (item.StartsWith('[')) open++;
+            if (item.EndsWith(']')) open--;
+        }
+        
+        Log.Warn($"newArray: {string.Join("•", newArray)}");
+        
+        return newArray.ToArray();
+    }
+
+    public static bool TryGetTokenizable(string[] array, int index, out string value, out string error,
+        bool allowBlank = true)
+    {
+        if (array == null)
+        {
+            value = null;
+            error = "argument list is null";
+            return false;
+        }
+        
+        array = CombineTokenizableIndices(array);
+        
+        Log.Info($"array: {string.Join("•", array)}");
+        
+        if (index < 0 || index >= array.Length)
+        {
+            value = null;
+            error = GetMissingRequiredIndexError(array, index);
+            return false;
+        }
+
+        value = TokenParser.ParseText(array[index]);
+        Log.Error(array[index]);
+        if (!allowBlank && string.IsNullOrWhiteSpace(value))
+        {
+            value = null;
+            error = $"required index {index} has a blank value";
+            return false;
+        }
+
+        error = null;
+        return true;
+    }
+
+    public static bool TryGetOptionalTokenizable(string[] array, int index, out string value,
+        out string error, string defaultValue = null, bool allowBlank = true)
+    {
+        if (array == null)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        array = CombineTokenizableIndices(array);
+        
+        if (index < 0 || index >= array.Length || (!allowBlank && array[index] == string.Empty))
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+
+        value = TokenParser.ParseText(array[index]);
+        if (!allowBlank && string.IsNullOrWhiteSpace(value))
+        {
+            value = null;
+            error = $"optional index {index} can't have a blank value";
+            return false;
+        }
+
+        error = null;
+        return true;
+    }
+
+    public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string error,
+        bool allowBlank = true)
+    {
+        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        {
+            value = 0;
+            return false;
+        }
+        
+        if (!int.TryParse(raw, out value))
+        {
+            value = 0;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, "an integer");
+            return false;
+        }
+
+        error = null;
+        return true;
+    }
+    
+    public static bool TryGetOptionalTokenizableInt(string[] array, int index, out int value, out string error,
+        int defaultValue = 0)
+    {
+        if (array == null)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        array = CombineTokenizableIndices(array);
+        
+        if (index < 0 || index >= array.Length || array[index] == string.Empty)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        if (!int.TryParse(TokenParser.ParseText(array[index]), out value))
+        {
+            value = defaultValue;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, "an integer");
+            return false;
+        }
+        
+        error = null;
+        return true;
+    }
+    
+    public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string error,
+        bool allowBlank = true)
+    {
+        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        {
+            value = 0f;
+            return false;
+        }
+        
+        if (!float.TryParse(raw, out value))
+        {
+            value = 0f;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, "a float");
+            return false;
+        }
+
+        error = null;
+        return true;
+    }
+    
+    public static bool TryGetOptionalTokenizableFloat(string[] array, int index, out float value, out string error,
+        float defaultValue = 0f)
+    {
+        if (array == null)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        array = CombineTokenizableIndices(array);
+        
+        if (index < 0 || index >= array.Length || array[index] == string.Empty)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        if (!float.TryParse(TokenParser.ParseText(array[index]), out value))
+        {
+            value = defaultValue;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, "a float");
+            return false;
+        }
+        
+        error = null;
+        return true;
+    }
+    
+    public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string error,
+        bool allowBlank = true)
+    {
+        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        {
+            value = false;
+            return false;
+        }
+        
+        if (!bool.TryParse(raw, out value))
+        {
+            value = false;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, "a boolean");
+            return false;
+        }
+
+        error = null;
+        return true;
+    }
+    
+    public static bool TryGetOptionalTokenizableBool(string[] array, int index, out bool value, out string error,
+        bool defaultValue = false)
+    {
+        if (array == null)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        array = CombineTokenizableIndices(array);
+        
+        if (index < 0 || index >= array.Length || array[index] == string.Empty)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        if (!bool.TryParse(TokenParser.ParseText(array[index]), out value))
+        {
+            value = defaultValue;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, "a boolean");
+            return false;
+        }
+        
+        error = null;
+        return true;
     }
 
     public static bool TryGetPossiblyRelativeLocationName(string[] array, int index, out string value, out string error,

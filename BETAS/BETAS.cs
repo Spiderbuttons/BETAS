@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using BETAS.Actions;
@@ -202,7 +203,8 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                TokenParser.RegisterParser($"{Manifest.UniqueID}_NumberOffset", TKNumberOffset.Parse);
+                var action = "Spiderbuttons.BETAS_WarpFarmer [Spiderbuttons.BETAS_CharacterLocation Haley] 14 [Spiderbuttons.BETAS_NumberOffset [Spiderbuttons.BETAS_CharacterCoordinate Haley Y] 1]";
+                TriggerActionManager.TryRunAction(action, out string error, out Exception ex);
             }
         }
     }
