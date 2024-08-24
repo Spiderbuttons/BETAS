@@ -6,8 +6,9 @@ Button's Extra Trigger Action Stuff (BETAS for short) adds a bunch of new trigge
 
 If you are unfamiliar with Trigger Actions, [please see this page on the Stardew Wiki](https://stardewvalleywiki.com/Modding:Trigger_actions).
 
-Due to the number of things added by BETAS, the documentation has been split into three categories: Triggers, Actions, and Game State Queries. Please click on their respective links below to view detailed documentation for each feature added:
+Due to the number of things added by BETAS, the documentation has been split into four categories: Triggers, Actions, Game State Queries, and Tokenizable Strings. Please click on their respective links below to view detailed documentation for each feature added:
 
 - [Triggers](Triggers.md)
 - [Actions](Actions.md)
 - [Game State Queries](GameStateQueries.md)
+- [Tokenizable Strings](TokenizableStrings.md)
