@@ -86,8 +86,6 @@ public static class ArgUtilityExtensions
     private static string[] CombineTokenizableIndices(string[] array)
     {
         if (array == null) return null;
-        
-        Log.Warn($"array: {string.Join("•", array)}");
 
         List<string> newArray = [];
         int open = 0;
@@ -98,8 +96,6 @@ public static class ArgUtilityExtensions
             if (item.StartsWith('[')) open++;
             if (item.EndsWith(']')) open--;
         }
-        
-        Log.Warn($"newArray: {string.Join("•", newArray)}");
         
         return newArray.ToArray();
     }
@@ -116,8 +112,6 @@ public static class ArgUtilityExtensions
         
         array = CombineTokenizableIndices(array);
         
-        Log.Info($"array: {string.Join("•", array)}");
-        
         if (index < 0 || index >= array.Length)
         {
             value = null;
@@ -126,7 +120,6 @@ public static class ArgUtilityExtensions
         }
 
         value = TokenParser.ParseText(array[index]);
-        Log.Error(array[index]);
         if (!allowBlank && string.IsNullOrWhiteSpace(value))
         {
             value = null;

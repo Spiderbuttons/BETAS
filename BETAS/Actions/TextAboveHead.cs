@@ -15,12 +15,9 @@ public static class TextAboveHead
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int delay, out error, 0) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 5, out string colour, out error))
         {
-            Log.Alert(error);
             error = "Usage: TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Colour]";
             return false;
         }
-        
-        Log.Alert($"npcName: {npcName}, dialogue: {dialogue}, duration: {duration}, delay: {delay}, colour: {colour}");
 
         if (!ArgUtility.HasIndex(args, 5)) colour = null;
 
