@@ -18,8 +18,6 @@ public static class TKCharacterLocation
             return TokenParser.LogTokenError(query, error, out replacement);
         }
         
-        Log.Warn("Test");
-        
         if (characterName.Equals("Farmer", StringComparison.OrdinalIgnoreCase))
         {
             replacement = displayName ? Game1.player.currentLocation.DisplayName : Game1.player.currentLocation.Name;

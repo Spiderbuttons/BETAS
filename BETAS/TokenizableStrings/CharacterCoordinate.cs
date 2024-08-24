@@ -18,8 +18,6 @@ public static class TKCharacterCoordinate
             return TokenParser.LogTokenError(query, error, out replacement);
         }
         
-        Log.Warn("Test");
-        
         if (characterName.Equals("Farmer", StringComparison.OrdinalIgnoreCase))
         {
             if (axis.Equals("X", StringComparison.OrdinalIgnoreCase))

@@ -192,6 +192,7 @@ namespace BETAS
         {
             TokenParser.RegisterParser($"{Manifest.UniqueID}_CharacterLocation", TKCharacterLocation.Parse);
             TokenParser.RegisterParser($"{Manifest.UniqueID}_CharacterCoordinate", TKCharacterCoordinate.Parse);
+            TokenParser.RegisterParser($"{Manifest.UniqueID}_NumberOffset", TKNumberOffset.Parse);
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)
@@ -201,7 +202,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                RegisterTokenizableStrings();
+                TokenParser.RegisterParser($"{Manifest.UniqueID}_NumberOffset", TKNumberOffset.Parse);
             }
         }
     }
