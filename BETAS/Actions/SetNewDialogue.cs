@@ -26,14 +26,14 @@ public static class SetNewDialogue
             return false;
         }
 
-        try
-        {
-            dialogue = Game1.content.LoadString(dialogue);
-        }
-        catch
-        {
-            Log.Trace("BETAS.Actions.SetNewDialogue: Argument is not a translation key.");
-        }
+        // try
+        // {
+        //     dialogue = Game1.content.LoadString(dialogue);
+        // }
+        // catch
+        // {
+        //     Log.Trace("BETAS.Actions.SetNewDialogue: Argument is not a translation key.");
+        // }
 
         if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is DialogueBox dialogueBox &&
             dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
