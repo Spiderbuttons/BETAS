@@ -2,7 +2,7 @@
   "Name": "Button's Extra Trigger Action Stuff",
   "Author": "Spiderbuttons",
   "Version": "2.0.0",
-  "Description": "A whole bunch of triggers, actions, and game state queries for Content Patcher mod authors to utilize.",
+  "Description": "A whole bunch of triggers, actions, game state queries, and tokenizable strings for Content Patcher mod authors to utilize.",
   "UniqueID": "Spiderbuttons.BETAS",
   "EntryDll": "BETAS.dll",
   "UpdateKeys": [ "Nexus:27100" ]
