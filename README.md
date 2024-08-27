@@ -1,4 +1,6 @@
-﻿# Button's Extra Trigger Action Stuff
+﻿> # This documentation is outdated and not going to be updated. Please use the correct documentation [here](https://stardew.button.gay/docs/betas).
+
+# Button's Extra Trigger Action Stuff
 
 First off, if you are a mod user and not a mod author, you've made a wrong turn. This page isn't for you. Begone, user!
 

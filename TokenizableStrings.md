@@ -1,4 +1,6 @@
-﻿# TOKENIZABLE STRINGS
+﻿> # This documentation is outdated and not going to be updated. Please use the correct documentation [here](https://stardew.button.gay/docs/betas).
+
+# TOKENIZABLE STRINGS
 
 BETAS also adds some new [Tokenizable Strings](https://stardewvalleywiki.com/Modding:Tokenizable_strings) to the game as well. However, unlike vanilla tokenizable strings, the strings added by BETAS can be used within the new [Game State Queries](GameStateQueries.md) and [Actions](Actions.md) that BETAS introduces and not just in dialogue. This aims to give you more flexible control with them. If a value is wrapped in `< >` then it is a _required_ value. If the value is wrapped in `[ ]` then it is optional.
 

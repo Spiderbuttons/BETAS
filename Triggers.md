@@ -1,4 +1,6 @@
-﻿# TRIGGERS
+﻿> # This documentation is outdated and not going to be updated. Please use the correct documentation [here](https://stardew.button.gay/docs/betas).
+
+# TRIGGERS
 
 Triggers are `Raised` whenever a specific event occurs in the game. Unmodded Stardew Valley includes three triggers: DayStarted, DayEnding, and LocationChanged. BETAS adds 17 new Triggers to the game that your mod can react to.
 

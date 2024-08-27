@@ -1,4 +1,6 @@
-﻿# GAME STATE QUERIES
+﻿> # This documentation is outdated and not going to be updated. Please use the correct documentation [here](https://stardew.button.gay/docs/betas).
+
+# GAME STATE QUERIES
 
 BETAS adds 20 new Game State Queries for you to use. Some were made with the intent to use them alongside the [new triggers](Triggers.md) or [new actions](Actions.md) added by BETAS, but they can all be used in whatever `Condition` fields you see fit. If a parameter is wrapped in `< >` then it is a _required_ parameter. If the parameter is wrapped in `[ ]` then it is optional. If the parameter has a `+` after it, it means you can provide multiple of that parameter separated by spaces.
 
