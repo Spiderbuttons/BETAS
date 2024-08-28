@@ -1,4 +1,4 @@
-﻿> # This documentation is outdated and not going to be updated. Please use the correct documentation [here](https://stardew.button.gay/docs/betas).
+﻿> # This documentation is outdated and not going to be updated, but Nexus won't let me link directly to the new documentation. Please use the correct documentation [here](https://stardew.button.gay/docs/betas).
 
 # Button's Extra Trigger Action Stuff
 
