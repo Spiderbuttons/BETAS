@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
@@ -10,7 +11,8 @@ namespace BETAS.GSQs;
 
 public static class NpcNearNpc
 {
-    // Check whether a given NPC is currently within a specific radius of another Npc
+    // Check whether a given NPC is currently within a specific radius of another NPC
+    [GSQ("NPC_NEAR_NPC")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var npcName, out var error) ||

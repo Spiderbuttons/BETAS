@@ -1,20 +1,18 @@
 ﻿#nullable enable
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BETAS.Actions;
-using BETAS.GSQs;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using BETAS.Attributes;
 using BETAS.Helpers;
-using BETAS.TokenizableStrings;
 using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
-using StardewValley.GameData.Characters;
+using StardewValley.Delegates;
 using StardewValley.TokenizableStrings;
 using StardewValley.Triggers;
-using NpcLocation = BETAS.GSQs.NpcLocation;
 
 namespace BETAS
 {
@@ -32,11 +30,15 @@ namespace BETAS
             ModMonitor = Monitor;
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
-
-            RegisterQueries();
-            RegisterTriggers();
-            RegisterActions();
-            RegisterTokenizableStrings();
+            
+            var types = Assembly.GetExecutingAssembly().GetTypes();
+            var methods = types.SelectMany(t => t.GetMethods())
+                .Where(m => !m.IsDefined(typeof(CompilerGeneratedAttribute), false));
+            
+            RegisterTriggers(ref types);
+            RegisterActions(ref methods);
+            RegisterQueries(ref methods);
+            RegisterTokenizableStrings(ref methods);
 
             Harmony.PatchAll();
 
@@ -131,69 +133,51 @@ namespace BETAS
             }
         }
 
-        private static void RegisterQueries()
+        private static void RegisterQueries(ref IEnumerable<MethodInfo> methods)
         {
-            GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA", ItemModData.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_RANGE", ItemModData.Query_Range);
-            GameStateQuery.Register($"{Manifest.UniqueID}_ITEM_MOD_DATA_CONTAINS", ItemModData.Query_Contains);
-            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA", LocationModData.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_RANGE", LocationModData.Query_Range);
-            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_MOD_DATA_CONTAINS", LocationModData.Query_Contains);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA", PlayerModData.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_RANGE", PlayerModData.Query_Range);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOD_DATA_CONTAINS", PlayerModData.Query_Contains);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_DAYS_MARRIED", PlayerDaysMarried.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPEED", PlayerSpeed.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_MOUNTED", PlayerMounted.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_SPOUSE_GENDER", PlayerSpouseGender.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_PLAYER_STARDROPS_FOUND", PlayerStardropsFound.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_LOCATION", NpcLocation.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_LOCATION_HAS_NPC", LocationHasNpc.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_PLAYER", NpcNearPlayer.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_NPC", NpcNearNpc.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_NPC_NEAR_AREA", NpcNearArea.Query);
-            GameStateQuery.Register($"{Manifest.UniqueID}_HAS_MOD", HasMod.Query);
+            foreach (var method in methods)
+            {
+                if (!method.IsDefined(typeof(GSQAttribute), false)) continue;
+                var name = method.GetCustomAttribute<GSQAttribute>()?.Name;
+                if (name is null) continue;
+                Log.Trace($"Registering BETAS Game State Query: {name}");
+                GameStateQuery.Register($"{Manifest.UniqueID}_{name}", method.CreateDelegate<GameStateQueryDelegate>());
+            }
         }
 
-        private static void RegisterTriggers()
+        private static void RegisterTriggers(ref Type[] types)
         {
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_ExperienceGained");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FishCaught");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LetterRead");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_CropHarvested");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MonsterKilled");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_NpcKissed");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GiftGiven");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_AnimalPetted");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_GarbageChecked");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_PassedOut");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_MinecartUsed");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_RelationshipChanged");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_FloraShaken");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_BombExploded");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_LightningStruck");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DialogueOpened");
-            TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_DamageTaken");
+            foreach (var type in types)
+            {
+                if (!type.IsDefined(typeof(TriggerAttribute), false)) continue;
+                var name = type.Name;
+                Log.Trace($"Registering BETAS Trigger: {name}");
+                TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_{name}");
+            }
         }
 
-        private static void RegisterActions()
+        private static void RegisterActions(ref IEnumerable<MethodInfo> methods)
         {
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_SetNewDialogue", SetNewDialogue.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpNpc", WarpNpc.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_WarpFarmer", WarpFarmer.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_MakeMachineReady", MakeMachineReady.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_TextAboveHead", TextAboveHead.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteNpc", EmoteNpc.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_EmoteFarmer", EmoteFarmer.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_Lightning", Lightning.Action);
-            TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_UpdateAppearance", UpdateAppearance.Action);
+            foreach (var method in methods)
+            {
+                if (!method.IsDefined(typeof(ActionAttribute), false)) continue;
+                var name = method.GetCustomAttribute<ActionAttribute>()?.Name;
+                if (name is null) continue;
+                Log.Trace($"Registering BETAS Action: {name}");
+                TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_{name}", method.CreateDelegate<TriggerActionDelegate>());
+            }
         }
 
-        private static void RegisterTokenizableStrings()
+        private static void RegisterTokenizableStrings(ref IEnumerable<MethodInfo> methods)
         {
-            TokenParser.RegisterParser($"{Manifest.UniqueID}_CharacterLocation", TKCharacterLocation.Parse);
-            TokenParser.RegisterParser($"{Manifest.UniqueID}_CharacterCoordinate", TKCharacterCoordinate.Parse);
-            TokenParser.RegisterParser($"{Manifest.UniqueID}_NumberOffset", TKNumberOffset.Parse);
+            foreach (var method in methods)
+            {
+                if (!method.IsDefined(typeof(TKStringAttribute), false)) continue;
+                var name = method.GetCustomAttribute<TKStringAttribute>()?.Name;
+                if (name is null) continue;
+                Log.Alert($"Registering BETAS Tokenizable String: {name}");
+                TokenParser.RegisterParser($"{Manifest.UniqueID}_{name}", method.CreateDelegate<TokenParserDelegate>());
+            }
         }
 
         private void OnButtonPressed(object? sender, ButtonPressedEventArgs e)

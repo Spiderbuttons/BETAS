@@ -1,0 +1,23 @@
+﻿using BETAS.Attributes;
+using BETAS.Helpers;
+using StardewValley;
+using StardewValley.Delegates;
+
+namespace BETAS.Actions;
+
+public static class ChangeMusicTrack
+{
+    // Change the current music to the requested music track.
+    [Action("ChangeMusicTrack")]
+    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    {
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var track, out error))
+        {
+            error = "Usage: ChangeMusicTrack <Track>";
+            return false;
+        }
+
+        Game1.changeMusicTrack(track);
+        return true;
+    }
+}

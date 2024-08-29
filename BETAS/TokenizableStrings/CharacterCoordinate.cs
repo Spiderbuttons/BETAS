@@ -1,4 +1,5 @@
 ﻿using System;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewValley;
@@ -11,6 +12,7 @@ public static class TKCharacterCoordinate
 {
     /// <summary>The X or Y coordinate of an NPC, given their internal name.</summary>
     /// <inheritdoc cref="T:StardewValley.TokenizableStrings.TokenParserDelegate" />
+    [TKString("CharacterCoordinate")]
     public static bool Parse(string[] query, out string replacement, Random random, Farmer player)
     {
         if (!ArgUtility.TryGet(query, 1, out var characterName, out var error) || !ArgUtility.TryGet(query, 2, out var axis, out error))

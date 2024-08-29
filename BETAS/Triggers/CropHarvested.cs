@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Emit;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
 using StardewValley;
@@ -10,6 +12,7 @@ using StardewValley.Triggers;
 
 namespace BETAS.Triggers
 {
+    [Trigger]
     [HarmonyPatch]
     static class CropHarvested
     {

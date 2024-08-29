@@ -1,4 +1,5 @@
 ﻿using System;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
@@ -8,6 +9,7 @@ namespace BETAS.Actions;
 public static class MakeMachineReady
 {
     // Make a number of machines instantly ready their output in a given location.
+    [Action("MakeMachineReady")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string machineID, out error, defaultValue: "Any") ||

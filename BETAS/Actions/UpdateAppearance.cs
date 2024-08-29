@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
@@ -41,6 +42,7 @@ public static class UpdateAppearance
     }
     
     // Force an update to an NPC's appearance, optionally specifying which appearance to force the change to.
+    [Action("UpdateAppearance")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||

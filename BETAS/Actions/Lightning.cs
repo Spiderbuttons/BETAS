@@ -1,4 +1,5 @@
-﻿using BETAS.Helpers;
+﻿using BETAS.Attributes;
+using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Delegates;
@@ -8,6 +9,7 @@ namespace BETAS.Actions;
 public static class Lightning
 {
     // Make lightning strike at the specified coordinates, or on the current farmer if no coordinates are specified.
+    [Action("Lightning")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out int x, out error,

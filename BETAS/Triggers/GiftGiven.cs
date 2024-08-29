@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
 using StardewValley;
@@ -7,6 +9,7 @@ using Object = StardewValley.Object;
 
 namespace BETAS.Triggers
 {
+    [Trigger]
     [HarmonyPatch]
     static class GiftGiven
     {

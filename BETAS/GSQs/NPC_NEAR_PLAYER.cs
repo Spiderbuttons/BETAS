@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewValley;
@@ -9,6 +10,7 @@ namespace BETAS.GSQs;
 public static class NpcNearPlayer
 {
     // Check whether a given NPC is currently within a specific radius of the player.
+    [GSQ("NPC_NEAR_PLAYER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||

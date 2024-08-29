@@ -1,4 +1,5 @@
 ﻿using System;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
@@ -9,6 +10,7 @@ namespace BETAS.Actions;
 public static class SetNewDialogue
 {
     // Add a new line of dialogue to an NPC, optionally adding on to their current dialogue instead of replacing it entirely.
+    [Action("SetNewDialogue")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||

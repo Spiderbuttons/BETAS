@@ -1,4 +1,5 @@
-﻿using BETAS.Helpers;
+﻿using BETAS.Attributes;
+using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -7,6 +8,7 @@ namespace BETAS.GSQs;
 public static class PlayerDaysMarried
 {
     // GSQ for checking how long a Target Player has been married for, or 0 if they have no spouse in the first place.
+    [GSQ("PLAYER_DAYS_MARRIED")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||

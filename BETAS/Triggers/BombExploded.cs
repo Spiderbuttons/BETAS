@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
 using StardewValley;
@@ -6,6 +8,7 @@ using StardewValley.Triggers;
 
 namespace BETAS.Triggers
 {
+    [Trigger]
     [HarmonyPatch]
     static class BombExploded
     {

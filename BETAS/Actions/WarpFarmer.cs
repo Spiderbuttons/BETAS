@@ -1,4 +1,5 @@
-﻿using BETAS.Helpers;
+﻿using BETAS.Attributes;
+using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -7,6 +8,7 @@ namespace BETAS.Actions;
 public static class WarpFarmer
 {
     // Warp the current player to a specific map and X/Y coordinate, with optional facing direction.
+    [Action("WarpFarmer")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string locationName, out error,

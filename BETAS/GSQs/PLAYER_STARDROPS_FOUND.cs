@@ -1,4 +1,5 @@
-﻿using BETAS.Helpers;
+﻿using BETAS.Attributes;
+using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -7,6 +8,7 @@ namespace BETAS.GSQs;
 public static class PlayerStardropsFound
 {
     // Checks how many stardrops a player has found. May or may not catch stardrops added through mods if the mod does not patch numStardropsFound.
+    [GSQ("PLAYER_STARDROPS_FOUND")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||

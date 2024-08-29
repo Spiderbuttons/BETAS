@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewModdingAPI;
 using StardewValley;
@@ -10,6 +11,7 @@ namespace BETAS.GSQs;
 public static class LocationHasNpc
 {
     // Check whether a given location has any of the given NPCs inside of it.
+    [GSQ("LOCATION_HAS_NPC")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var locationName, out var error) ||

@@ -1,4 +1,5 @@
-﻿using BETAS.Helpers;
+﻿using BETAS.Attributes;
+using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -7,6 +8,7 @@ namespace BETAS.Actions;
 public static class TextAboveHead
 {
     // Show a speech bubble of text above the head of an NPC.
+    [Action("TextAboveHead")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
