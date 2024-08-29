@@ -18,6 +18,7 @@ namespace BETAS
 {
     internal sealed class BETAS : Mod
     {
+        internal static IModHelper ModHelper { get; set; } = null!;
         internal static IMonitor ModMonitor { get; set; } = null!;
         internal static Harmony Harmony { get; set; } = null!;
         internal static IManifest Manifest { get; set; } = null!;
@@ -27,6 +28,7 @@ namespace BETAS
 
         public override void Entry(IModHelper helper)
         {
+            ModHelper = helper;
             ModMonitor = Monitor;
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
@@ -175,7 +177,7 @@ namespace BETAS
                 if (!method.IsDefined(typeof(TKStringAttribute), false)) continue;
                 var name = method.GetCustomAttribute<TKStringAttribute>()?.Name;
                 if (name is null) continue;
-                Log.Alert($"Registering BETAS Tokenizable String: {name}");
+                Log.Trace($"Registering BETAS Tokenizable String: {name}");
                 TokenParser.RegisterParser($"{Manifest.UniqueID}_{name}", method.CreateDelegate<TokenParserDelegate>());
             }
         }

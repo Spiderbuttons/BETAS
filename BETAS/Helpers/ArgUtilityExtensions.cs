@@ -45,6 +45,14 @@ public static class ArgUtilityExtensions
         return Game1.getLocationFromName(cache.LocationName);
     }
     
+    public static void ForEachArg(string[] args, int startIndex, Action<string> action)
+    {
+        for (var i = startIndex; i < args.Length; i++)
+        {
+            action(args[i]);
+        }
+    }
+    
     public static Vector2? GetCharacterPositionFromNameOrCache(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
