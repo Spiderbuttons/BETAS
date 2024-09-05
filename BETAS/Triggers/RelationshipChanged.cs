@@ -331,6 +331,7 @@ namespace BETAS.Triggers
             try
             {
                 var matcher = new CodeMatcher(code, il);
+                var oldData = il.DeclareLocal(typeof(Friendship));
 
                 matcher.MatchStartForward(
                     new CodeMatch(OpCodes.Ldloc_1),
@@ -344,7 +345,8 @@ namespace BETAS.Triggers
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
                     new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner)))
+                        AccessTools.Method(typeof(RelationshipChanged), nameof(FriendlyCloner))),
+                    new CodeInstruction(OpCodes.Stloc_S, oldData)
                 );
 
                 matcher.MatchEndForward(
@@ -357,8 +359,9 @@ namespace BETAS.Triggers
                 matcher.Advance(1);
 
                 matcher.Insert(
-                    new CodeInstruction(OpCodes.Ldloc_0),
+                    new CodeInstruction(OpCodes.Ldloc_S, oldData),
                     new CodeInstruction(OpCodes.Ldloc_1),
+                    new CodeInstruction(OpCodes.Ldloc_0),
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(RelationshipChanged), nameof(Trigger),
                         [typeof(Friendship), typeof(Friendship), typeof(NPC), typeof(Farmer)]))
