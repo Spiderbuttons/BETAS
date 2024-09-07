@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using BETAS.Attributes;
 using BETAS.Helpers;
+using BETAS.Models;
 using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
@@ -36,8 +37,10 @@ namespace BETAS
             var types = Assembly.GetExecutingAssembly().GetTypes();
             var methods = types.SelectMany(t => t.GetMethods())
                 .Where(m => !m.IsDefined(typeof(CompilerGeneratedAttribute), false));
-            
-            RegisterTriggers(ref types);
+
+            int tester = 4;
+            bool whether = false;
+            RegisterTriggers(ref types, ref tester, ref whether);
             RegisterActions(ref methods);
             RegisterQueries(ref methods);
             RegisterTokenizableStrings(ref methods);
@@ -48,6 +51,8 @@ namespace BETAS
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             helper.Events.GameLoop.DayStarted += this.OnDayStarted;
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
+            helper.Events.Content.AssetRequested += this.OnAssetRequested;
+            helper.Events.GameLoop.UpdateTicked += this.InitializePatcher;
             helper.Events.Multiplayer.ModMessageReceived += this.OnModMessageReceived;
             helper.Events.Multiplayer.PeerConnected += this.OnPeerConnected;
             helper.Events.GameLoop.SaveLoaded += this.OnSaveLoaded;
@@ -71,6 +76,22 @@ namespace BETAS
             if (!Context.IsMainPlayer || !Context.IsMultiplayer) return;
             Cache ??= new MultiplayerNpcCache();
             Cache.UpdateCharacterList();
+        }
+        
+        private void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
+        {
+            if (e.NameWithoutLocale.IsEquivalentTo("Spiderbuttons.BETAS/HarmonyPatches"))
+            {
+                e.LoadFrom(() => new List<DynamicPatch>(), AssetLoadPriority.Medium);
+            }
+        }
+
+        private void InitializePatcher(object? sender, UpdateTickedEventArgs e)
+        {
+            if (e.Ticks < 4 || DynamicPatcher.IsInitialized) return;
+            Log.Warn("Initializing patcher...");
+            DynamicPatcher.Initialize(ModManifest);
+            Helper.Events.GameLoop.UpdateTicked -= InitializePatcher;
         }
         
         private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
@@ -147,7 +168,7 @@ namespace BETAS
             }
         }
 
-        private static void RegisterTriggers(ref Type[] types)
+        private static void RegisterTriggers(ref Type[] types, ref int test, ref bool whether)
         {
             foreach (var type in types)
             {
@@ -189,7 +210,7 @@ namespace BETAS
 
             if (e.Button == SButton.F5)
             {
-                //
+                Log.Warn(Game1.player.hasMagnifyingGlass);
             }
         }
     }
