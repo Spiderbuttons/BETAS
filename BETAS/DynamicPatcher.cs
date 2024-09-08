@@ -34,7 +34,7 @@ public class DynamicPatcher
 
         if (AllPatches.Count == 0)
         {
-            Log.Debug("No patches found.");
+            Log.Trace("No patches found.");
             return;
         }
 
@@ -96,7 +96,7 @@ public class DynamicPatcher
         Postfixes.Clear();
         DynamicHarmony.UnpatchAll(DynamicHarmony.Id);
 
-        Log.Debug("DynamicPatcher has been reset.");
+        Log.Trace("DynamicPatcher has been reset.");
 
         Initialize(manifest);
     }
@@ -144,9 +144,7 @@ public class DynamicPatcher
 
         foreach (var patchInfo in patches.Value)
         {
-            Log.Warn($"Adding {patchInfo.PatchType} dynamic patch '{patchInfo.Id}' to method '{info?.Name}'");
-            il.Emit(OpCodes.Ldstr, "Beginning of patch.");
-            il.Emit(OpCodes.Call, AccessTools.Method(typeof(Log), nameof(Log.Debug), null, new Type[] { typeof(string) }));
+            Log.Trace($"Adding {patchInfo.PatchType} dynamic patch '{patchInfo.Id}' to method '{info?.Name}'");
             var skipBecauseConditionsLabel = il.DefineLabel();
             var endOfResultChangeLabel = il.DefineLabel();
             il.Emit(OpCodes.Ldstr, patchInfo.Condition ?? "true");
@@ -234,9 +232,7 @@ public class DynamicPatcher
                         AccessTools.Method(typeof(DynamicPatcher), nameof(TryRunSimplePatchAction)));
                 }
             }
-
-            il.Emit(OpCodes.Ldstr, "End of patch.");
-            il.Emit(OpCodes.Call, AccessTools.Method(typeof(Log), nameof(Log.Debug), null, new Type[] { typeof(string) }));
+            
             il.Emit(OpCodes.Nop);
             il.MarkLabel(skipBecauseConditionsLabel);
         }
