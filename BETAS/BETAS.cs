@@ -38,9 +38,10 @@ namespace BETAS
             var methods = types.SelectMany(t => t.GetMethods())
                 .Where(m => !m.IsDefined(typeof(CompilerGeneratedAttribute), false));
 
-            int tester = 4;
+            double tester = 4;
             bool whether = false;
-            RegisterTriggers(ref types, ref tester, ref whether);
+            string msg = "www";
+            RegisterTriggers(ref types, ref tester, ref whether, ref msg);
             RegisterActions(ref methods);
             RegisterQueries(ref methods);
             RegisterTokenizableStrings(ref methods);
@@ -168,8 +169,11 @@ namespace BETAS
             }
         }
 
-        private static void RegisterTriggers(ref Type[] types, ref int test, ref bool whether)
+        private static void RegisterTriggers(ref Type[] types, ref double test, ref bool whether, ref string msg)
         {
+            test += 0.5;
+            whether = false;
+            msg += "yeeeee";
             foreach (var type in types)
             {
                 if (!type.IsDefined(typeof(TriggerAttribute), false)) continue;
@@ -208,9 +212,14 @@ namespace BETAS
             if (!Context.IsWorldReady)
                 return;
 
+            if (e.Button == SButton.F6)
+            {
+                Log.Warn(Game1.player.DailyLuck);
+            }
+
             if (e.Button == SButton.F5)
             {
-                Log.Warn(Game1.player.hasMagnifyingGlass);
+                Harmony.UnpatchAll(ModManifest.UniqueID + "_DynamicPatcher");
             }
         }
     }

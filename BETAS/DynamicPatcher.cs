@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.InteropServices;
 using HarmonyLib;
 using BETAS.Helpers;
 using BETAS.Models;
@@ -38,7 +39,7 @@ public class DynamicPatcher
         }
 
         foreach (var patch in AllPatches.Where(p =>
-                     p.Action is not null || p.Actions is not null || p.ResultOperation is not null))
+                     p.Action is not null || p.Actions is not null || p.ChangeResult is not null))
         {
             var fullName =
                 $"{patch.Target.Type}.{(patch.Target.IsGetter ? "get_" : patch.Target.IsSetter ? "set_" : "")}{patch.Target.Method}, {patch.Target.Assembly}";
@@ -145,28 +146,71 @@ public class DynamicPatcher
                 }));
             il.Emit(OpCodes.Brfalse, skipBecauseConditionsLabel);
 
-            if (patchInfo.ResultOperation is not null && returnType != typeof(void))
+            if (patchInfo.ChangeResult is not null && returnType != typeof(void))
             {
-                // if ResultOperation.Operation is "Set" then set the first parameter, __result, to the value of ResultOperation.Value after running it through the parseMethod
-                
                 var opCode = returnType switch
                 {
                     { IsPrimitive: true } => returnType switch
                     {
                         { IsValueType: true } => returnType switch
                         {
-                            { IsEnum: true } => OpCodes.Stind_Ref,
-                            _ => OpCodes.Stind_I4
+                            { IsEnum: true } => "Ref",
+                            _ => Marshal.SizeOf(returnType) switch
+                            {
+                                1 => "I1",
+                                2 => "I2",
+                                4 => "I4",
+                                8 => "I8",
+                                _ => "Ref"
+                            }
                         },
-                        _ => OpCodes.Stind_Ref
+                        _ => "Ref"
                     },
-                    _ => OpCodes.Stind_Ref
+                    _ => "Ref"
                 };
-
-                il.Emit(info.IsStatic ? OpCodes.Ldarg_1 : OpCodes.Ldarg_0);
-                il.Emit(OpCodes.Ldstr, patchInfo.ResultOperation.Value);
+                
+                Log.Warn(opCode);
+                
+                il.Emit(OpCodes.Ldarg_0);
+                if (!patchInfo.ChangeResult.Operation.Equals("Set", StringComparison.OrdinalIgnoreCase))
+                {
+                    il.Emit(OpCodes.Ldarg_0);
+                    il.Emit(opCode switch
+                    {
+                        "Ref" => OpCodes.Ldind_Ref,
+                        "I1" => OpCodes.Ldind_I1,
+                        "I2" => OpCodes.Ldind_I2,
+                        "I4" => OpCodes.Ldind_I4,
+                        "I8" => OpCodes.Ldind_I8,
+                        _ => OpCodes.Ldind_Ref
+                    });
+                }
+                il.Emit(OpCodes.Ldstr, patchInfo.ChangeResult.Value);
                 il.Emit(OpCodes.Call, parseMethod);
-                il.Emit(opCode);
+                if (!patchInfo.ChangeResult.Operation.Equals("Set", StringComparison.OrdinalIgnoreCase))
+                {
+                    il.Emit(patchInfo.ChangeResult.Operation switch 
+                    {
+                        "Add" => OpCodes.Add,
+                        "Subtract" => OpCodes.Sub,
+                        "Multiply" => OpCodes.Mul,
+                        "Divide" => OpCodes.Div,
+                        _ => OpCodes.Add
+                    });
+                    il.Emit(OpCodes.Ldstr, $"{patchInfo.Id} {patchInfo.ChangeResult.Operation} {patchInfo.ChangeResult.Value}");
+                    il.Emit(OpCodes.Call,
+                        AccessTools.Method(typeof(Log), nameof(Log.Debug), null, new Type[] { typeof(string) }));
+                    Log.Alert($"Operation: {patchInfo.ChangeResult.Operation}");
+                }
+                il.Emit(opCode switch
+                {
+                    "Ref" => OpCodes.Stind_Ref,
+                    "I1" => OpCodes.Stind_I1,
+                    "I2" => OpCodes.Stind_I2,
+                    "I4" => OpCodes.Stind_I4,
+                    "I8" => OpCodes.Stind_I8,
+                    _ => OpCodes.Stind_Ref
+                });
             }
 
             if (patchInfo.Action is not null)

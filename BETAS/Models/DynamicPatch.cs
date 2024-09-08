@@ -17,7 +17,7 @@ public class DynamicPatch
     public string Condition = null;
 
     [ContentSerializer(Optional = true)]
-    public ResultOp ResultOperation = null;
+    public ResultOp ChangeResult = null;
     
     [ContentSerializer(Optional = true)]
     public string Action = null;
