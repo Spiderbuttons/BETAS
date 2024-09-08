@@ -53,6 +53,7 @@ namespace BETAS
             helper.Events.GameLoop.DayStarted += this.OnDayStarted;
             helper.Events.GameLoop.UpdateTicked += this.OnUpdateTicked;
             helper.Events.Content.AssetRequested += this.OnAssetRequested;
+            helper.Events.Content.AssetsInvalidated += this.OnAssetsInvalidated;
             helper.Events.GameLoop.UpdateTicked += this.InitializePatcher;
             helper.Events.Multiplayer.ModMessageReceived += this.OnModMessageReceived;
             helper.Events.Multiplayer.PeerConnected += this.OnPeerConnected;
@@ -84,6 +85,14 @@ namespace BETAS
             if (e.NameWithoutLocale.IsEquivalentTo("Spiderbuttons.BETAS/HarmonyPatches"))
             {
                 e.LoadFrom(() => new List<DynamicPatch>(), AssetLoadPriority.Medium);
+            }
+        }
+
+        private void OnAssetsInvalidated(object? sender, AssetsInvalidatedEventArgs e)
+        {
+            if (e.NamesWithoutLocale.Any(asset => asset.IsEquivalentTo("Spiderbuttons.BETAS/HarmonyPatches")))
+            {
+                DynamicPatcher.Reset(ModManifest);
             }
         }
 
@@ -214,7 +223,10 @@ namespace BETAS
 
             if (e.Button == SButton.F6)
             {
-                Log.Warn(Game1.player.DailyLuck);
+                Log.Warn($"Location Display Name: {Game1.player.currentLocation.DisplayName}");
+                Log.Warn($"Player Display Name: {Game1.player.displayName}");
+                Log.Warn($"Magnifying Glass: {Game1.player.hasMagnifyingGlass}");
+                Log.Warn($"Cobmat Level: {Game1.player.CombatLevel}");
             }
 
             if (e.Button == SButton.F5)

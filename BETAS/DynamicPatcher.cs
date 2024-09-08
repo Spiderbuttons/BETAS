@@ -89,6 +89,18 @@ public class DynamicPatcher
         IsInitialized = true;
     }
 
+    public static void Reset(IManifest manifest)
+    {
+        IsInitialized = false;
+        Prefixes.Clear();
+        Postfixes.Clear();
+        DynamicHarmony.UnpatchAll(DynamicHarmony.Id);
+
+        Log.Debug("DynamicPatcher has been reset.");
+
+        Initialize(manifest);
+    }
+
     public static DynamicMethod DynamicFactory(MethodBase method)
     {
         if (method is not MethodInfo info)
@@ -96,6 +108,7 @@ public class DynamicPatcher
             Log.Warn("DynamicFactory was called with a non-MethodInfo object");
             return null;
         }
+
         var methodFullName = $"{info?.DeclaringType}.{info?.Name}, {info?.DeclaringType?.Assembly.GetName().Name}";
         if (!Prefixes.TryGetValue(methodFullName, out var patches))
         {
@@ -111,18 +124,20 @@ public class DynamicPatcher
         {
             return null;
         }
-        
+
         var paramTypes = parameterList.Select(p => p.ParameterType).ToArray();
         // add returnType to beginning of list if not void
         if (returnType != typeof(void)) paramTypes = new[] { returnType.MakeByRefType() }.Concat(paramTypes).ToArray();
 
         DynamicMethod dynamicMethod =
-            new DynamicMethod($"SPU_{info?.Name}_{patches.Value.First().PatchType}", typeof(void), paramTypes, declaringType);
+            new DynamicMethod($"SPU_{info?.Name}_{patches.Value.First().PatchType}", typeof(void), paramTypes,
+                declaringType);
 
         if (returnType != typeof(void)) dynamicMethod.DefineParameter(1, ParameterAttributes.None, "__result");
         foreach (var param in parameterList)
         {
-            dynamicMethod.DefineParameter(param.Position + (returnType != typeof(void) ? 2 : 1), param.Attributes, param.ToString().Split(" ")[1]);
+            dynamicMethod.DefineParameter(param.Position + (returnType != typeof(void) ? 2 : 1), param.Attributes,
+                param.ToString().Split(" ")[1]);
         }
 
         ILGenerator il = dynamicMethod.GetILGenerator();
@@ -130,7 +145,10 @@ public class DynamicPatcher
         foreach (var patchInfo in patches.Value)
         {
             Log.Warn($"Adding {patchInfo.PatchType} dynamic patch '{patchInfo.Id}' to method '{info?.Name}'");
+            il.Emit(OpCodes.Ldstr, "Beginning of patch.");
+            il.Emit(OpCodes.Call, AccessTools.Method(typeof(Log), nameof(Log.Debug), null, new Type[] { typeof(string) }));
             var skipBecauseConditionsLabel = il.DefineLabel();
+            var endOfResultChangeLabel = il.DefineLabel();
             il.Emit(OpCodes.Ldstr, patchInfo.Condition ?? "true");
             il.Emit(OpCodes.Ldnull);
             il.Emit(OpCodes.Ldnull);
@@ -146,71 +164,57 @@ public class DynamicPatcher
                 }));
             il.Emit(OpCodes.Brfalse, skipBecauseConditionsLabel);
 
-            if (patchInfo.ChangeResult is not null && returnType != typeof(void))
+            if (patchInfo.ChangeResult is not null && returnType != typeof(void) &&
+                patchInfo.PatchType.Equals("Postfix", StringComparison.OrdinalIgnoreCase))
             {
-                var opCode = returnType switch
+                OpCode[] ops = returnType.Name.ToUpper() switch
                 {
-                    { IsPrimitive: true } => returnType switch
-                    {
-                        { IsValueType: true } => returnType switch
-                        {
-                            { IsEnum: true } => "Ref",
-                            _ => Marshal.SizeOf(returnType) switch
-                            {
-                                1 => "I1",
-                                2 => "I2",
-                                4 => "I4",
-                                8 => "I8",
-                                _ => "Ref"
-                            }
-                        },
-                        _ => "Ref"
-                    },
-                    _ => "Ref"
+                    "SBYTE" => [OpCodes.Ldind_I1, OpCodes.Stind_I1],
+                    "BYTE" => [OpCodes.Ldind_I1, OpCodes.Stind_I1],
+                    "BOOLEAN" => [OpCodes.Ldind_I1, OpCodes.Stind_I1],
+                    "INT16" => [OpCodes.Ldind_I2, OpCodes.Stind_I2],
+                    "UINT16" => [OpCodes.Ldind_I2, OpCodes.Stind_I2],
+                    "INT32" => [OpCodes.Ldind_I4, OpCodes.Stind_I4],
+                    "UINT32" => [OpCodes.Ldind_I4, OpCodes.Stind_I4],
+                    "INT64" => [OpCodes.Ldind_I8, OpCodes.Stind_I8],
+                    "UINT64" => [OpCodes.Ldind_I8, OpCodes.Stind_I8],
+                    "SINGLE" => [OpCodes.Ldind_R4, OpCodes.Stind_R4],
+                    "DOUBLE" => [OpCodes.Ldind_R8, OpCodes.Stind_R8],
+                    _ => [OpCodes.Ldind_Ref, OpCodes.Stind_Ref]
                 };
-                
-                Log.Warn(opCode);
-                
+
                 il.Emit(OpCodes.Ldarg_0);
-                if (!patchInfo.ChangeResult.Operation.Equals("Set", StringComparison.OrdinalIgnoreCase))
+                if (!patchInfo.ChangeResult.Operation.Equals("ASSIGN", StringComparison.OrdinalIgnoreCase))
                 {
                     il.Emit(OpCodes.Ldarg_0);
-                    il.Emit(opCode switch
+                    il.Emit(ops[0]);
+                    il.Emit(OpCodes.Ldstr, patchInfo.ChangeResult.Value);
+
+                    if (returnType != typeof(string))
                     {
-                        "Ref" => OpCodes.Ldind_Ref,
-                        "I1" => OpCodes.Ldind_I1,
-                        "I2" => OpCodes.Ldind_I2,
-                        "I4" => OpCodes.Ldind_I4,
-                        "I8" => OpCodes.Ldind_I8,
-                        _ => OpCodes.Ldind_Ref
-                    });
-                }
-                il.Emit(OpCodes.Ldstr, patchInfo.ChangeResult.Value);
-                il.Emit(OpCodes.Call, parseMethod);
-                if (!patchInfo.ChangeResult.Operation.Equals("Set", StringComparison.OrdinalIgnoreCase))
-                {
-                    il.Emit(patchInfo.ChangeResult.Operation switch 
+                        il.Emit(OpCodes.Call, parseMethod);
+                        il.Emit(patchInfo.ChangeResult.Operation.ToUpper() switch
+                        {
+                            "ADD" => OpCodes.Add,
+                            "SUBTRACT" => OpCodes.Sub,
+                            "MULTIPLY" => OpCodes.Mul,
+                            "DIVIDE" => OpCodes.Div,
+                            _ => OpCodes.Add
+                        });
+                    }
+                    else
                     {
-                        "Add" => OpCodes.Add,
-                        "Subtract" => OpCodes.Sub,
-                        "Multiply" => OpCodes.Mul,
-                        "Divide" => OpCodes.Div,
-                        _ => OpCodes.Add
-                    });
-                    il.Emit(OpCodes.Ldstr, $"{patchInfo.Id} {patchInfo.ChangeResult.Operation} {patchInfo.ChangeResult.Value}");
-                    il.Emit(OpCodes.Call,
-                        AccessTools.Method(typeof(Log), nameof(Log.Debug), null, new Type[] { typeof(string) }));
-                    Log.Alert($"Operation: {patchInfo.ChangeResult.Operation}");
+                        il.Emit(OpCodes.Call, AccessTools.Method(typeof(string), nameof(string.Concat),
+                            new Type[] { typeof(string), typeof(string) }));
+                    }
                 }
-                il.Emit(opCode switch
+                else
                 {
-                    "Ref" => OpCodes.Stind_Ref,
-                    "I1" => OpCodes.Stind_I1,
-                    "I2" => OpCodes.Stind_I2,
-                    "I4" => OpCodes.Stind_I4,
-                    "I8" => OpCodes.Stind_I8,
-                    _ => OpCodes.Stind_Ref
-                });
+                    il.Emit(OpCodes.Ldstr, patchInfo.ChangeResult.Value);
+                    if (returnType != typeof(string)) il.Emit(OpCodes.Call, parseMethod);
+                }
+
+                il.Emit(ops[1]);
             }
 
             if (patchInfo.Action is not null)
@@ -231,6 +235,9 @@ public class DynamicPatcher
                 }
             }
 
+            il.Emit(OpCodes.Ldstr, "End of patch.");
+            il.Emit(OpCodes.Call, AccessTools.Method(typeof(Log), nameof(Log.Debug), null, new Type[] { typeof(string) }));
+            il.Emit(OpCodes.Nop);
             il.MarkLabel(skipBecauseConditionsLabel);
         }
 
@@ -304,8 +311,10 @@ public class DynamicPatcher
 
         error = paramTypes.Length switch
         {
-            0 => $"could not find method '{target.Method}' with no parameters on type '{target.Type}' in assembly '{target.Assembly}'",
-            _ => $"could not find method '{target.Method}' with the specified parameters ({string.Join(", ", target.Parameters)}) on type '{target.Type}' in assembly '{target.Assembly}'"
+            0 =>
+                $"could not find method '{target.Method}' with no parameters on type '{target.Type}' in assembly '{target.Assembly}'",
+            _ =>
+                $"could not find method '{target.Method}' with the specified parameters ({string.Join(", ", target.Parameters)}) on type '{target.Type}' in assembly '{target.Assembly}'"
         };
         return null;
     }
