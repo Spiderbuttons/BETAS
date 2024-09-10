@@ -222,7 +222,8 @@ public class DynamicPatcher
                 il.Emit(OpCodes.Call,
                     AccessTools.Method(typeof(DynamicPatcher), nameof(TryRunSimplePatchAction)));
             }
-            else if (patchInfo.Actions is not null)
+            
+            if (patchInfo.Actions is not null)
             {
                 foreach (var action in patchInfo.Actions)
                 {

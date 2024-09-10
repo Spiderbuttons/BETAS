@@ -96,7 +96,7 @@ namespace BETAS
         private void InitializePatcher(object? sender, UpdateTickedEventArgs e)
         {
             if (e.Ticks < 4 || DynamicPatcher.IsInitialized) return;
-            Log.Warn("Initializing patcher...");
+            Log.Trace("Initializing patcher...");
             DynamicPatcher.Initialize(ModManifest);
             Helper.Events.GameLoop.UpdateTicked -= InitializePatcher;
         }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework.Content;
 
 namespace BETAS.Models;
 
@@ -14,14 +15,14 @@ public class DynamicPatch
     public string PatchType;
 
     [ContentSerializer(Optional = true)]
-    public string Condition = null;
+    public string Condition;
 
     [ContentSerializer(Optional = true)]
     public ResultOp ChangeResult = null;
     
     [ContentSerializer(Optional = true)]
-    public string Action = null;
+    public string Action;
 
     [ContentSerializer(Optional = true)]
-    public string[] Actions = null;
+    public List<string> Actions;
 }
