@@ -180,6 +180,10 @@ namespace BETAS
             foreach (var type in types)
             {
                 if (!type.IsDefined(typeof(TriggerAttribute), false)) continue;
+                
+                var initializeMethod = type.GetMethod("Initialize", BindingFlags.Public | BindingFlags.Static);
+                initializeMethod?.Invoke(null, null);
+                
                 var name = type.Name;
                 Log.Trace($"Registering BETAS Trigger: {name}");
                 TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_{name}");
