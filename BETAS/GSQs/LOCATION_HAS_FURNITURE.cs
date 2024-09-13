@@ -10,7 +10,7 @@ namespace BETAS.GSQs;
 
 public static class LocationHasFurniture
 {
-    // Check whether a given location has any of the given NPCs inside of it.
+    // Check whether a given location has any of the given furnitures placed inside of it.
     [GSQ("LOCATION_HAS_FURNITURE")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
