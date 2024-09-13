@@ -7,7 +7,7 @@ public class TargetMethod
     [ContentSerializer(Optional = false)]
     public string Type;
 
-    [ContentSerializer(Optional = false)]
+    [ContentSerializer(Optional = true)]
     public string Method;
 
     [ContentSerializer(Optional = true)]

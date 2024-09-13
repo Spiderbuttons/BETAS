@@ -41,8 +41,11 @@ public class DynamicPatcher
         foreach (var patch in AllPatches.Where(p =>
                      p.Action is not null || p.Actions is not null || p.ChangeResult is not null))
         {
-            var fullName =
-                $"{patch.Target.Type}.{(patch.Target.IsGetter ? "get_" : patch.Target.IsSetter ? "set_" : "")}{patch.Target.Method}, {patch.Target.Assembly}";
+            var fullName = $"{patch.Target.Type}";
+            if (patch.Target.Method is not null) fullName +=
+                $".{(patch.Target.IsGetter ? "get_" : patch.Target.IsSetter ? "set_" : "")}{patch.Target.Method}, {patch.Target.Assembly}";
+            else fullName += $"..ctor, {patch.Target.Assembly}";
+            
             var patchType = patch.PatchType.Equals("Prefix", StringComparison.OrdinalIgnoreCase) ? Prefixes : Postfixes;
             if (patchType.ContainsKey(fullName))
             {
@@ -103,13 +106,7 @@ public class DynamicPatcher
 
     public static DynamicMethod DynamicFactory(MethodBase method)
     {
-        if (method is not MethodInfo info)
-        {
-            Log.Warn("DynamicFactory was called with a non-MethodInfo object");
-            return null;
-        }
-
-        var methodFullName = $"{info?.DeclaringType}.{info?.Name}, {info?.DeclaringType?.Assembly.GetName().Name}";
+        var methodFullName = $"{method?.DeclaringType}.{method?.Name}, {method?.DeclaringType?.Assembly.GetName().Name}";
         if (!Prefixes.TryGetValue(methodFullName, out var patches))
         {
             if (!Postfixes.TryGetValue(methodFullName, out patches))
@@ -122,15 +119,15 @@ public class DynamicPatcher
         if (!TryGetMethodInfo(method, out var returnType, out var declaringType, out var parameterList,
                 out var parseMethod))
         {
+            Log.Error($"Failed to get method info for dynamic patch '{patches.Value.First().Id}'");
             return null;
         }
 
         var paramTypes = parameterList.Select(p => p.ParameterType).ToArray();
-        // add returnType to beginning of list if not void
         if (returnType != typeof(void)) paramTypes = new[] { returnType.MakeByRefType() }.Concat(paramTypes).ToArray();
 
         DynamicMethod dynamicMethod =
-            new DynamicMethod($"SPU_{info?.Name}_{patches.Value.First().PatchType}", typeof(void), paramTypes,
+            new DynamicMethod($"SPU_{method?.Name}_{patches.Value.First().PatchType}", typeof(void), paramTypes,
                 declaringType);
 
         if (returnType != typeof(void)) dynamicMethod.DefineParameter(1, ParameterAttributes.None, "__result");
@@ -144,7 +141,7 @@ public class DynamicPatcher
 
         foreach (var patchInfo in patches.Value)
         {
-            Log.Trace($"Adding {patchInfo.PatchType} dynamic patch '{patchInfo.Id}' to method '{info?.Name}'");
+            Log.Trace($"Adding {patchInfo.PatchType} dynamic patch '{patchInfo.Id}' to method '{method?.Name}'");
             var skipBecauseConditionsLabel = il.DefineLabel();
             var endOfResultChangeLabel = il.DefineLabel();
             il.Emit(OpCodes.Ldstr, patchInfo.Condition ?? "true");
@@ -252,7 +249,7 @@ public class DynamicPatcher
     public static bool TryGetMethodInfo(MethodBase method, out Type returnType, out Type declaringType,
         out ParameterInfo[] parameterList, out MethodInfo parseMethod)
     {
-        if (method is not MethodInfo info)
+        if (method is null)
         {
             returnType = typeof(void);
             declaringType = null;
@@ -261,9 +258,9 @@ public class DynamicPatcher
             return false;
         }
 
-        returnType = info.ReturnType;
-        declaringType = info.DeclaringType;
-        parameterList = info.GetParameters();
+        returnType = method is MethodInfo info ? info.ReturnType : typeof(void);
+        declaringType = method.DeclaringType;
+        parameterList = method.GetParameters();
         parseMethod = returnType != typeof(void)
             ? returnType.GetMethod("Parse", new Type[] { typeof(string) })
             : null;
@@ -271,25 +268,60 @@ public class DynamicPatcher
         return true;
     }
 
-    public static MethodInfo GetMethodFromString(TargetMethod target, out string error)
+    public static Type GetTypeFromString(string typeName)
+    {
+        return typeName.ToLower() switch
+        {
+            "int" => typeof(int),
+            "float" => typeof(float),
+            "double" => typeof(double),
+            "string" => typeof(string),
+            "bool" => typeof(bool),
+            "byte" => typeof(byte),
+            "sbyte" => typeof(sbyte),
+            "short" => typeof(short),
+            "ushort" => typeof(ushort),
+            "uint" => typeof(uint),
+            "long" => typeof(long),
+            "ulong" => typeof(ulong),
+            "char" => typeof(char),
+            _ => AccessTools.TypeByName(typeName)
+        };
+    }
+
+    public static MethodBase GetMethodFromString(TargetMethod target, out string error)
     {
         if (string.IsNullOrWhiteSpace(target.Type))
         {
             error = "the type name can't be empty";
             return null;
         }
-
+        
+        var paramTypes = target.Parameters.Select(GetTypeFromString).ToArray();
+        
         if (string.IsNullOrWhiteSpace(target.Method))
         {
-            error = "the method name can't be empty";
-            return null;
+            var type = AccessTools.TypeByName(target.Type);
+            if (type is null)
+            {
+                error = $"could not find type '{target.Type}' in assembly '{target.Assembly}'";
+                return null;
+            }
+            
+            var ctor = AccessTools.Constructor(type, paramTypes);
+            if (ctor is not null)
+            {
+                error = null;
+                return ctor;
+            }
+            
+            error = $"could not find constructor for type '{target.Type}' with the specified parameters ({string.Join(", ", target.Parameters)}) in assembly '{target.Assembly}'";
         }
 
         var methodName = $"{target.Type}:{target.Method}";
-        var paramTypes = target.Parameters.Select(AccessTools.TypeByName).ToArray();
         if (paramTypes.Any(t => t is null))
         {
-            error = $"could not find one or more parameter types for method '{methodName}'";
+            error = $"could not find one or more parameter types for method '{methodName}' in assembly '{target.Assembly}'";
             return null;
         }
 
