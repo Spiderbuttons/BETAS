@@ -35,15 +35,15 @@ namespace BETAS.Triggers
             }
             
             var questItem = ItemRegistry.Create(newValue.id.Value);
-            questItem.modData["BETAS/QuestChanged/Title"] = newValue.questTitle;
-            questItem.modData["BETAS/QuestChanged/Description"] = newValue.questDescription;
-            questItem.modData["BETAS/QuestChanged/Type"] = questType;
-            questItem.modData["BETAS/QuestChanged/NextQuests"] = string.Join(",", newValue.nextQuests);
-            if (newValue.GetDaysLeft() > 0) questItem.modData["BETAS/QuestChanged/DaysLeft"] = newValue.GetDaysLeft().ToString();
-            if (newValue.moneyReward.Value > 0) questItem.modData["BETAS/QuestChanged/MoneyReward"] = newValue.moneyReward.Value.ToString();
-            questItem.modData["BETAS/QuestChanged/WasDailyQuest"] = newValue.dailyQuest.Value.ToString();
-            questItem.modData["BETAS/QuestChanged/WasSecretQuest"] = newValue.isSecretQuest().ToString();
-            questItem.modData["BETAS/QuestChanged/WasTimedQuest"] = newValue.IsTimedQuest().ToString();
+            questItem.modData["BETAS/QuestAdded/Title"] = newValue.questTitle;
+            questItem.modData["BETAS/QuestAdded/Description"] = newValue.questDescription;
+            questItem.modData["BETAS/QuestAdded/Type"] = questType;
+            questItem.modData["BETAS/QuestAdded/NextQuests"] = string.Join(",", newValue.nextQuests);
+            if (newValue.GetDaysLeft() > 0) questItem.modData["BETAS/QuestAdded/DaysLeft"] = newValue.GetDaysLeft().ToString();
+            if (newValue.moneyReward.Value > 0) questItem.modData["BETAS/QuestAdded/MoneyReward"] = newValue.moneyReward.Value.ToString();
+            questItem.modData["BETAS/QuestAdded/WasDailyQuest"] = newValue.dailyQuest.Value.ToString();
+            questItem.modData["BETAS/QuestAdded/WasSecretQuest"] = newValue.isSecretQuest().ToString();
+            questItem.modData["BETAS/QuestAdded/WasTimedQuest"] = newValue.IsTimedQuest().ToString();
             
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_QuestAdded", targetItem: questItem);
         }
