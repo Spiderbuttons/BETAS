@@ -2,7 +2,6 @@
 using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
-using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Pathfinding;
@@ -26,7 +25,6 @@ namespace BETAS.Triggers
                 var npcItem = ItemRegistry.Create(___character.Name);
                 npcItem.modData["BETAS/NpcArrived/X"] = $"{___character.TilePoint.X}";
                 npcItem.modData["BETAS/NpcArrived/Y"] = $"{___character.TilePoint.Y}";
-                //Log.Debug($"NpcArrived: {___character.Name} at {___character.TilePoint.X}, {___character.TilePoint.Y}");
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_NpcArrived", targetItem: npcItem,
                     location: ___character.currentLocation);
                 
