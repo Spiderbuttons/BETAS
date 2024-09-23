@@ -53,6 +53,7 @@ namespace BETAS
             helper.Events.Content.AssetsInvalidated += this.OnAssetsInvalidated;
             helper.Events.GameLoop.UpdateTicked += this.InitializePatcher;
             helper.Events.Multiplayer.ModMessageReceived += this.OnModMessageReceived;
+            helper.Events.Multiplayer.ModMessageReceived += MultiplayerSupport.ReceiveTrigger;
             helper.Events.Multiplayer.PeerConnected += this.OnPeerConnected;
             helper.Events.GameLoop.SaveLoaded += this.OnSaveLoaded;
         }
