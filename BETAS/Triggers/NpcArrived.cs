@@ -29,6 +29,9 @@ namespace BETAS.Triggers
                 //Log.Debug($"NpcArrived: {___character.Name} at {___character.TilePoint.X}, {___character.TilePoint.Y}");
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_NpcArrived", targetItem: npcItem,
                     location: ___character.currentLocation);
+                
+                MultiplayerSupport.BroadcastTrigger(new MultiplayerSupport.TriggerPackage(
+                    $"{BETAS.Manifest.UniqueID}_NpcArrived", npcItem, null, ___character.currentLocation.NameOrUniqueName, Game1.player.UniqueMultiplayerID));
             }
             catch (Exception ex)
             {
