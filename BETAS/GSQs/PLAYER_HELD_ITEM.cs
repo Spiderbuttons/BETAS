@@ -7,7 +7,7 @@ namespace BETAS.GSQs;
 
 public static class PlayerHeldItem
 {
-    // Checks how many stardrops a player has found. May or may not catch stardrops added through mods if the mod does not patch numStardropsFound.
+    // Checks if the item or tool a player is holding matches any given item ID.
     [GSQ("PLAYER_HELD_ITEM")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
