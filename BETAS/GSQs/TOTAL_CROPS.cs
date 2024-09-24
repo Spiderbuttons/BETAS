@@ -27,6 +27,7 @@ public static class TotalCrops
         {
             if (Game1.getAllFarmers().All(farmer => !farmer.locationsVisited.Contains(crop.currentLocation.Name)))
             {
+                // If we don't do this it will count the ginger on the island from the very beginning of the game, which you probably don't want to do.
                 return true;
             }
             var harvestable = crop.currentPhase.Value >= crop.phaseDays.Count - 1 && (!crop.fullyGrown.Value || crop.dayOfCurrentPhase.Value <= 0);
