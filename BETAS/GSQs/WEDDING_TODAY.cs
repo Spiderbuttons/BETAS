@@ -10,7 +10,7 @@ namespace BETAS.GSQs;
 
 public static class WeddingToday
 {
-    // Check whether the volume of a specific category is set between a min and max value. Volume is a float between 0 and 1.
+    // Check whether or not there is a wedding scheduled today and optionally check which player is getting married.
     [GSQ("WEDDING_TODAY")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
