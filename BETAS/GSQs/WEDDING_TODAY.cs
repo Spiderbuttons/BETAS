@@ -21,8 +21,6 @@ public static class WeddingToday
 
         if (!ArgUtility.HasIndex(query, 1)) return Game1.weddingToday;
         
-        foreach (var wedding in Game1.weddingsToday) Log.Alert(wedding);
-        
         return Game1.weddingToday && GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) => target?.getSpouse() != null && target.GetSpouseFriendship().WeddingDate.Equals(Game1.Date));
     }
 }
