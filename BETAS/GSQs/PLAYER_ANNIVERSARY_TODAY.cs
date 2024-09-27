@@ -8,13 +8,13 @@ using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
 
-public static class AnniversaryToday
+public static class PlayerAnniversaryToday
 {
     // Check whether a player has a wedding anniversary today.
-    [GSQ("ANNIVERSARY_TODAY")]
+    [GSQ("PLAYER_ANNIVERSARY_TODAY")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) || !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var type, out error, defaultValue: "year") || !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 3, out var interval, out error, defaultValue: 1))
+        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
