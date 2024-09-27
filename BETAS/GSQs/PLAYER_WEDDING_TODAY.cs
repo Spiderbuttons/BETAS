@@ -8,10 +8,10 @@ using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
 
-public static class WeddingToday
+public static class PlayerWeddingToday
 {
     // Check whether there is a wedding scheduled today and optionally check which player is getting married.
-    [GSQ("WEDDING_TODAY")]
+    [GSQ("PLAYER_WEDDING_TODAY")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error))
