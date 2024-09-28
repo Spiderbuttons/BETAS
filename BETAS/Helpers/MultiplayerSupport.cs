@@ -64,7 +64,6 @@ public class MultiplayerSupport
 
         Item? targetItem = triggerPackage.TargetItemID != null ? ItemRegistry.Create(triggerPackage.TargetItemID) : null;
         Item? inputItem = triggerPackage.InputItemID != null ? ItemRegistry.Create(triggerPackage.InputItemID) : null;
-        Log.Debug("Got here");
         GameLocation location = Game1.getLocationFromName(triggerPackage.Location) ?? Game1.currentLocation;
         Farmer player = triggerPackage.PlayerID != 0 ? Game1.getFarmer(triggerPackage.PlayerID) : Game1.player;
         
