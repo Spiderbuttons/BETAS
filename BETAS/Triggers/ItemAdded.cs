@@ -17,6 +17,7 @@ namespace BETAS.Triggers
         [HarmonyPatch(typeof(Farmer), nameof(Farmer.OnItemReceived))]
         public static void OnItemReceived_Postfix(Farmer __instance, Item item, Item mergedIntoStack, int countAdded)
         {
+            return;
             try
             {
                 if (!__instance.IsLocalPlayer) return;
