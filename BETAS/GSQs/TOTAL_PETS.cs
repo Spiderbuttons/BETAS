@@ -53,8 +53,6 @@ public static class TotalPets
             }
         }
         
-        Log.Alert(petCount);
-        
         return petCount >= min && petCount <= max;
     }
 }

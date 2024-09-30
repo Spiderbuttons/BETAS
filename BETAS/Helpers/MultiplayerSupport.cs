@@ -82,8 +82,7 @@ public class MultiplayerSupport
                 inputItem.modData[data.Key] = data.Value;
             }
         }
-
-        Log.Alert($"Received Trigger: {triggerPackage.TriggerName}");
+        
         TriggerActionManager.Raise(triggerPackage.TriggerName, targetItem: targetItem, inputItem: inputItem, location: location, player: player);
     }
 }
