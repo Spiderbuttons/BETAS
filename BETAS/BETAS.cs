@@ -219,11 +219,6 @@ namespace BETAS
         {
             if (!Context.IsWorldReady)
                 return;
-
-            if (e.Button == SButton.F5)
-            {
-                //
-            }
         }
     }
 }
