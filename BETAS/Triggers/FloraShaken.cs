@@ -25,7 +25,7 @@ namespace BETAS.Triggers
 
                 var treeItem = ItemRegistry.Create(__instance.treeType.Value);
                 treeItem.modData["BETAS/FloraShaken/Stage"] = $"{__instance.growthStage.Value}";
-                treeItem.modData["BETAS/FloraShaken/Seed"] = $"{__instance.GetData().SeedItemId}";
+                treeItem.modData["BETAS/FloraShaken/Seed"] = $"{__instance.GetData()?.SeedItemId ?? "Unknown"}";
                 treeItem.modData["BETAS/FloraShaken/WasInSeason"] = $"{__instance.IsInSeason()}";
                 treeItem.modData["BETAS/FloraShaken/WasMossy"] = $"{__instance.hasMoss.Value}";
                 treeItem.modData["BETAS/FloraShaken/WasSeedy"] = $"{__instance.hasSeed.Value}";
