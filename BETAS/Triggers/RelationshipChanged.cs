@@ -96,6 +96,7 @@ namespace BETAS.Triggers
 
         public static Friendship FriendlyCloner(Friendship data)
         {
+            if (data is null) return null;
             return new Friendship()
             {
                 Points = data.Points,
