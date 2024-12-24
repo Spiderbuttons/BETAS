@@ -5,5 +5,11 @@
   "Description": "A whole bunch of triggers, actions, game state queries, and tokenizable strings for Content Patcher mod authors to utilize.",
   "UniqueID": "Spiderbuttons.BETAS",
   "EntryDll": "BETAS.dll",
-  "UpdateKeys": [ "Nexus:27100" ]
+  "UpdateKeys": [ "Nexus:27100" ],
+  "Dependencies": [
+    {
+      "UniqueID": "Pathoschild.ContentPatcher",
+      "IsRequired": false
+    }
+  ]
 }

@@ -10,6 +10,7 @@ using BETAS.Models;
 using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
+using StardewModdingAPI.Framework;
 using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.TokenizableStrings;
@@ -24,6 +25,7 @@ namespace BETAS
         internal static Harmony Harmony { get; set; } = null!;
         internal static IManifest Manifest { get; set; } = null!;
         internal static HashSet<string> LoadedMods { get; set; } = [];
+        internal static ModRegistry ModRegistry { get; set; } = null!;
 
         internal static MultiplayerNpcCache? Cache { get; set; }
 
@@ -33,6 +35,8 @@ namespace BETAS
             ModMonitor = Monitor;
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
+            
+            ModRegistry = SCore.Instance.ModRegistry;
             
             var types = Assembly.GetExecutingAssembly().GetTypes();
             var methods = types.SelectMany(t => t.GetMethods())
