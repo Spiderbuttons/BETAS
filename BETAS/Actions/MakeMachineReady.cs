@@ -45,7 +45,7 @@ public static class MakeMachineReady
                         continue;
 
                     machine.MinutesUntilReady = 10;
-                    DelayedAction.functionAfterDelay(delegate { machine.minutesElapsed(10); }, 50);
+                    StardewValley.DelayedAction.functionAfterDelay(delegate { machine.minutesElapsed(10); }, 50);
                     count--;
                 }
             }
@@ -66,7 +66,7 @@ public static class MakeMachineReady
                     continue;
 
                 machine.MinutesUntilReady = 10;
-                DelayedAction.functionAfterDelay(delegate { machine.minutesElapsed(10); }, 50);
+                StardewValley.DelayedAction.functionAfterDelay(delegate { machine.minutesElapsed(10); }, 50);
                 count--;
             }
 
