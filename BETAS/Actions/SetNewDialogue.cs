@@ -17,7 +17,7 @@ public static class SetNewDialogue
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool append, out error, false))
         {
-            error = "Usage: SetNewDialogue <NPC Name> <Dialogue> [Append]";
+            error = "Usage: SetNewDialogue <NPC Name> <Dialogue> [Add?]";
             return false;
         }
 
@@ -27,15 +27,31 @@ public static class SetNewDialogue
             error = "no NPC found with name '" + npcName + "'";
             return false;
         }
-
-        if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox &&
-            dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
+        
+        try
         {
-            dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues);
+            var dialogueText = Game1.content.LoadString(dialogue);
+            if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox &&
+                dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
+            {
+                dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, dialogue, dialogueText).dialogues);
+            }
+            else
+            {
+                npc.setNewDialogue(new Dialogue(npc, dialogue, dialogueText), append);
+            }
         }
-        else
+        catch (Exception)
         {
-            npc.setNewDialogue(new Dialogue(npc, null, dialogue), append);
+            if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox2 &&
+                dialogueBox2.characterDialogue.speaker.Name.Equals(npcName))
+            {
+                dialogueBox2.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues);
+            }
+            else
+            {
+                npc.setNewDialogue(new Dialogue(npc, null, dialogue), append);
+            }
         }
 
         return true;
