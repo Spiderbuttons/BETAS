@@ -8,18 +8,28 @@ namespace BETAS.Actions;
 
 public static class Message
 {
-    // Make the current farmer perform an emote.
+    // Makes a message box appear on the screen to display some text.
     [Action("Message")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var message, out error, allowBlank: true))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var message, out error, allowBlank: false))
         {
-            Log.Error(error);
+            error = "Usage: Message <Text>";
             return false;
         }
+        
         if (!string.IsNullOrWhiteSpace(message))
         {
-            Game1.drawDialogueNoTyping(message);
+            try
+            {
+                var msg = Game1.content.LoadString(message);
+                Game1.drawDialogueNoTyping(msg);
+            }
+            catch (Exception)
+            {
+                Game1.drawDialogueNoTyping(message);
+            }
+
             return true;
         }
 
