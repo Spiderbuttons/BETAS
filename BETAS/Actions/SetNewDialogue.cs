@@ -28,7 +28,7 @@ public static class SetNewDialogue
             return false;
         }
 
-        if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is DialogueBox dialogueBox &&
+        if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox &&
             dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
         {
             dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues);
