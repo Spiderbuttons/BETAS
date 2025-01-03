@@ -7,15 +7,15 @@ using StardewValley.Tools;
 
 namespace BETAS.Actions;
 
-public static class WeatherTomorrow
+public static class WeatherForTomorrow
 {
     // Set the weather for a location context for the next day.
-    [Action("WeatherTomorrow")]
+    [Action("WeatherForTomorrow")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var locationContext, out error) || !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var weather, out error))
         {
-            error = "Usage: Spiderbuttons.BETAS_WeatherTomorrow <Context ID> <Weather>";
+            error = "Usage: Spiderbuttons.BETAS_WeatherForTomorrow <Context ID> <Weather>";
             return false;
         }
         
