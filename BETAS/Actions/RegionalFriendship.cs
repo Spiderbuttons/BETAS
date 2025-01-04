@@ -34,7 +34,7 @@ public static class RegionalFriendship
                     Game1.player.friendshipData.TryGetValue(current.Name, out var friendship))
                 {
                     if (set) friendship.Points = amount;
-                    else friendship.Points += amount;
+                    else Game1.player.changeFriendship(amount, current);
                 }
             }
             return true;
