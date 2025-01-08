@@ -15,13 +15,13 @@ public static class TextAboveHead
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int duration, out error, 3000) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int delay, out error, 0) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 5, out string colour, out error))
+            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 5, out bool jitter, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 6, out string colour, out error, defaultValue: null)
+            )
         {
-            error = "Usage: TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Colour]";
+            error = "Usage: TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Jitter?] [Colour]";
             return false;
         }
-
-        if (!ArgUtility.HasIndex(args, 5)) colour = null;
 
         var npc = Game1.getCharacterFromName(npcName);
         if (npc == null)
@@ -39,7 +39,7 @@ public static class TextAboveHead
         //     Log.Trace("BETAS.Actions.TextAboveHead: Argument is not a translation key.");
         // }
 
-        npc.showTextAboveHead(dialogue, Utility.StringToColor(colour), 2, duration, delay);
+        npc.showTextAboveHead(dialogue, Utility.StringToColor(colour), jitter ? 0 : 2, duration, delay);
         return true;
     }
 }
