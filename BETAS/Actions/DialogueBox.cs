@@ -5,6 +5,7 @@ using BETAS.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Delegates;
+using StardewValley.Extensions;
 
 namespace BETAS.Actions;
 
@@ -25,7 +26,7 @@ public static class DialogueBox
         var NPC = Game1.getCharacterFromName(name);
         Texture2D portraitTexture = null;
 
-        if (ArgUtility.HasIndex(args, 3))
+        if (ArgUtility.HasIndex(args, 3) && !portrait.EqualsIgnoreCase("null"))
         {
             if (!Game1.content.DoesAssetExist<Texture2D>(portrait))
             {
@@ -41,7 +42,7 @@ public static class DialogueBox
         {
             if (NPC is not null)
             {
-                NPC = new NPC(NPC.Sprite, Microsoft.Xna.Framework.Vector2.Zero, "", 0, NPC.Name, portraitTexture ?? NPC.Portrait,
+                NPC = new NPC(NPC.Sprite, Microsoft.Xna.Framework.Vector2.Zero, "", 0, NPC.Name, portrait.EqualsIgnoreCase("null") ? null : portraitTexture ?? NPC.Portrait,
                     eventActor: false);
                 NPC.displayName = name ?? NPC.displayName;
             }
