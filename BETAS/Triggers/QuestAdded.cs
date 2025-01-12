@@ -31,6 +31,29 @@ namespace BETAS.Triggers
             if (!ArgUtility.TryGet(rawQuest, 0, out var questType, out var error, allowBlank: false))
             {
                 Log.Trace($"Could not get raw quest type from quest id {newValue.id.Value}. It's probably a daily quest. Error: {error}");
+                questType = newValue.questType.Value switch
+                {
+                    1 => "Basic",
+                    2 => "Crafting",
+                    3 => "ItemDelivery",
+                    4 => "Monster",
+                    5 => "Social",
+                    6 => "Location",
+                    7 => "Fishing",
+                    8 => "Building",
+                    9 => "ItemHarvest",
+                    _ => "Unknown",
+                };
+            }
+
+            if (newValue is LostItemQuest)
+            {
+                questType = "LostItem";
+            }
+
+            if (newValue is SecretLostItemQuest)
+            {
+                questType = "SecretLostItem";
             }
             
             var questItem = ItemRegistry.Create(newValue.id.Value ?? newValue.questTitle);
