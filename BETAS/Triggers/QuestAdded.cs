@@ -30,14 +30,13 @@ namespace BETAS.Triggers
             var rawQuest = Quest.GetRawQuestFields(newValue.id.Value);
             if (!ArgUtility.TryGet(rawQuest, 0, out var questType, out var error, allowBlank: false))
             {
-                Log.Warn($"Could not get raw quest type from quest id {newValue.id.Value}: {error}");
-                return;
+                Log.Trace($"Could not get raw quest type from quest id {newValue.id.Value}. It's probably a daily quest. Error: {error}");
             }
             
-            var questItem = ItemRegistry.Create(newValue.id.Value);
+            var questItem = ItemRegistry.Create(newValue.id.Value ?? newValue.questTitle);
             questItem.modData["BETAS/QuestAdded/Title"] = newValue.questTitle;
             questItem.modData["BETAS/QuestAdded/Description"] = newValue.questDescription;
-            questItem.modData["BETAS/QuestAdded/Type"] = questType;
+            questItem.modData["BETAS/QuestAdded/Type"] = questType ?? newValue.questType.Value.ToString();
             questItem.modData["BETAS/QuestAdded/NextQuests"] = string.Join(",", newValue.nextQuests);
             if (newValue.GetDaysLeft() > 0) questItem.modData["BETAS/QuestAdded/DaysLeft"] = newValue.GetDaysLeft().ToString();
             if (newValue.moneyReward.Value > 0) questItem.modData["BETAS/QuestAdded/MoneyReward"] = newValue.moneyReward.Value.ToString();
