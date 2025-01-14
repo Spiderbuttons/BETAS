@@ -18,18 +18,18 @@ public static class ClearObjects
     [Action("ClearObjects")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var location, out error) ||
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out var location, out error, defaultValue: "Here") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var type, out error, defaultValue: "All") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out var topLeftX, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out var topLeftY, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 5, out var bottomRightX, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 6, out var bottomRightY, out error))
         {
-            error = "Usage: ClearObjects <Location> [Type] [TopLeftX] [TopLeftY] [BottomRightX] [BottomRightY]";
+            error = "Usage: ClearObjects [Location] [Type] [TopLeftX] [TopLeftY] [BottomRightX] [BottomRightY]";
             return false;
         }
 
-        var loc = Game1.RequireLocation(location);
+        var loc = location.EqualsIgnoreCase("Here") ? Game1.player.currentLocation : Game1.RequireLocation(location);
         
         if (type.EqualsIgnoreCase("!All")) return false;
         var negate = type.StartsWith("!");
