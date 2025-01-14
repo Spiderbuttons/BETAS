@@ -20,8 +20,11 @@ namespace BETAS.Triggers
         {
             try
             {
-                TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_BookRead",
-                    location: location, targetItem: ItemRegistry.Create(__instance.QualifiedItemId));
+                DelayedAction.functionAfterDelay(() =>
+                {
+                    TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_BookRead",
+                        location: location, targetItem: ItemRegistry.Create(__instance.QualifiedItemId));
+                }, 1000);
             }
             catch (Exception ex)
             {
