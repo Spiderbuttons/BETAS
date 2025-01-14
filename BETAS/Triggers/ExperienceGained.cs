@@ -26,6 +26,7 @@ namespace BETAS.Triggers
                 2 => "Foraging",
                 3 => "Mining",
                 4 => "Combat",
+                5 => "Luck",
                 _ => null
             };
             var skillItem = ItemRegistry.Create(skill);
