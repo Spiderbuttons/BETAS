@@ -28,31 +28,81 @@ public static class ClearTerrainFeatures
 
         var loc = Game1.RequireLocation(location);
         
+        if (type.EqualsIgnoreCase("!All")) return false;
+        var negate = type.StartsWith("!");
+
         if (!ArgUtility.HasIndex(args, 3))
         {
-            loc.terrainFeatures.RemoveWhere(pair => pair.Value.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
-            loc.resourceClumps.RemoveWhere(clump => clump.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
-            loc.largeTerrainFeatures.RemoveWhere(feature => feature.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
+            if (!negate)
+            {
+                loc.terrainFeatures.RemoveWhere(pair =>
+                    pair.Value.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
+                loc.resourceClumps.RemoveWhere(clump =>
+                    clump.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
+                loc.largeTerrainFeatures.RemoveWhere(feature =>
+                    feature.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
+                return true;
+            }
+            type = type.Substring(1);
+            loc.terrainFeatures.RemoveWhere(pair => !pair.Value.GetType().Name.EqualsIgnoreCase(type));
+            loc.resourceClumps.RemoveWhere(clump => !clump.GetType().Name.EqualsIgnoreCase(type));
+            loc.largeTerrainFeatures.RemoveWhere(feature => !feature.GetType().Name.EqualsIgnoreCase(type));
             return true;
         }
 
         if (!ArgUtility.HasIndex(args, 5))
         {
-            loc.terrainFeatures.Remove(new Vector2(topLeftX, topLeftY));
-            loc.resourceClumps.RemoveWhere(clump => clump.Tile == new Vector2(topLeftX, topLeftY));
-            loc.largeTerrainFeatures.RemoveWhere(feature => feature.Tile == new Vector2(topLeftX, topLeftY));
+            if (!negate)
+            {
+                loc.terrainFeatures.RemoveWhere(pair => pair.Key == new Vector2(topLeftX, topLeftY) &&
+                                                        (pair.Value.GetType().Name.EqualsIgnoreCase(type) ||
+                                                         type.EqualsIgnoreCase("All")));
+                loc.resourceClumps.RemoveWhere(clump => clump.Tile == new Vector2(topLeftX, topLeftY) &&
+                                                        (clump.GetType().Name.EqualsIgnoreCase(type) ||
+                                                         type.EqualsIgnoreCase("All")));
+                loc.largeTerrainFeatures.RemoveWhere(feature => feature.Tile == new Vector2(topLeftX, topLeftY) &&
+                                                            (feature.GetType().Name.EqualsIgnoreCase(type) ||
+                                                             type.EqualsIgnoreCase("All")));
+                return true;
+            }
+            type = type.Substring(1);
+            loc.terrainFeatures.RemoveWhere(pair => pair.Key == new Vector2(topLeftX, topLeftY) &&
+                                                    !pair.Value.GetType().Name.EqualsIgnoreCase(type));
+            loc.resourceClumps.RemoveWhere(clump => clump.Tile == new Vector2(topLeftX, topLeftY) &&
+                                                    !clump.GetType().Name.EqualsIgnoreCase(type));
+            loc.largeTerrainFeatures.RemoveWhere(feature => feature.Tile == new Vector2(topLeftX, topLeftY) &&
+                                                        !feature.GetType().Name.EqualsIgnoreCase(type));
+            return true;
+        }
+
+        if (!negate)
+        {
+            loc.terrainFeatures.RemoveWhere(pair => pair.Key.X >= topLeftX && pair.Key.Y >= topLeftY &&
+                                                    pair.Key.X <= bottomRightX && pair.Key.Y <= bottomRightY &&
+                                                    (pair.Value.GetType().Name.EqualsIgnoreCase(type) ||
+                                                     type.EqualsIgnoreCase("All")));
+            loc.resourceClumps.RemoveWhere(clump => clump.Tile.X >= topLeftX && clump.Tile.Y >= topLeftY &&
+                                                    clump.Tile.X <= bottomRightX && clump.Tile.Y <= bottomRightY &&
+                                                    (clump.GetType().Name.EqualsIgnoreCase(type) ||
+                                                     type.EqualsIgnoreCase("All")));
+            loc.largeTerrainFeatures.RemoveWhere(feature => feature.Tile.X >= topLeftX && feature.Tile.Y >= topLeftY &&
+                                                            feature.Tile.X <= bottomRightX &&
+                                                            feature.Tile.Y <= bottomRightY &&
+                                                            (feature.GetType().Name.EqualsIgnoreCase(type) ||
+                                                             type.EqualsIgnoreCase("All")));
             return true;
         }
         
+        type = type.Substring(1);
         loc.terrainFeatures.RemoveWhere(pair => pair.Key.X >= topLeftX && pair.Key.Y >= topLeftY &&
-                                               pair.Key.X <= bottomRightX && pair.Key.Y <= bottomRightY &&
-                                               (pair.Value.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All")));
+                                                pair.Key.X <= bottomRightX && pair.Key.Y <= bottomRightY &&
+                                                !pair.Value.GetType().Name.EqualsIgnoreCase(type));
         loc.resourceClumps.RemoveWhere(clump => clump.Tile.X >= topLeftX && clump.Tile.Y >= topLeftY &&
-                                                  clump.Tile.X <= bottomRightX && clump.Tile.Y <= bottomRightY &&
-                                                  (clump.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All")));
+                                                clump.Tile.X <= bottomRightX && clump.Tile.Y <= bottomRightY &&
+                                                !clump.GetType().Name.EqualsIgnoreCase(type));
         loc.largeTerrainFeatures.RemoveWhere(feature => feature.Tile.X >= topLeftX && feature.Tile.Y >= topLeftY &&
-                                                       feature.Tile.X <= bottomRightX && feature.Tile.Y <= bottomRightY &&
-                                                       (feature.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All")));
+                                                        feature.Tile.X <= bottomRightX && feature.Tile.Y <= bottomRightY &&
+                                                        !feature.GetType().Name.EqualsIgnoreCase(type));
         
         return true;
     }
