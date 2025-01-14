@@ -27,6 +27,13 @@ public static class ClearTerrainFeatures
         }
 
         var loc = location.EqualsIgnoreCase("Here") ? Game1.player.currentLocation : Game1.RequireLocation(location);
+
+        if (!ArgUtility.HasIndex(args, 1) || !ArgUtility.HasIndex(args, 2))
+        {
+            loc.terrainFeatures.Clear();
+            loc.resourceClumps.Clear();
+            loc.largeTerrainFeatures.Clear();
+        }
         
         if (type.EqualsIgnoreCase("!All")) return false;
         var negate = type.StartsWith("!");
