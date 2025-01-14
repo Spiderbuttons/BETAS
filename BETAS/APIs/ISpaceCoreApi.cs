@@ -5,6 +5,12 @@ namespace BETAS.APIs
     public interface ISpaceCoreApi
     {
         /// <summary>
+        /// Returns a list of all currently loaded skill's string IDs
+        /// </summary>
+        /// <returns>An array of skill IDs</returns>
+        string[] GetCustomSkills();
+        
+        /// <summary>
         /// Add EXP to a custom skill
         /// </summary>
         /// <param name="farmer"> The farmer who you want to give exp to</param>
