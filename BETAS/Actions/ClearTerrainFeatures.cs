@@ -22,7 +22,7 @@ public static class ClearTerrainFeatures
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 5, out var bottomRightX, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 6, out var bottomRightY, out error))
         {
-            error = "Usage: ClearTerrainFeatures <Location> [Type] [TopLeft] [TopLeft] [BottomRightX] [BottomRightY]";
+            error = "Usage: ClearTerrainFeatures <Location> [Type] [TopLeftX] [TopLeftY] [BottomRightX] [BottomRightY]";
             return false;
         }
 
