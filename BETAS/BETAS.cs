@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using BETAS.APIs;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using BETAS.Models;
@@ -26,6 +27,7 @@ namespace BETAS
         internal static IManifest Manifest { get; set; } = null!;
         internal static HashSet<string> LoadedMods { get; set; } = [];
         internal static ModRegistry ModRegistry { get; set; } = null!;
+        internal static ISpaceCoreApi? SCAPI { get; set; } = null!;
 
         internal static MultiplayerNpcCache? Cache { get; set; }
 
@@ -68,6 +70,8 @@ namespace BETAS
             {
                 if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID)) LoadedMods.Add(mod.Manifest.UniqueID);
             }
+            
+            SCAPI = Helper.ModRegistry.GetApi<ISpaceCoreApi>("spacechase0.SpaceCore");
         }
         
         private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
