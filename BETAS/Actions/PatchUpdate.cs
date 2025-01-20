@@ -26,8 +26,6 @@ public static class PatchUpdate
             return false;
         }
         
-        Log.Warn($"update{(modId is not null ? $" {modId}" : "")}");
-        
         cpEntry.CommandHandler.Handle($"update{(modId is not null ? $" {modId}" : "")}".Split(" "));
         return true;
     }
