@@ -47,8 +47,6 @@ namespace BETAS.Triggers
                         new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ItemBought), nameof(Trigger)))
                     );
                 });
-                
-                Log.ILCode(matcher.InstructionEnumeration(), instructions);
         
                 return matcher.InstructionEnumeration();
             }
