@@ -1,7 +1,7 @@
 {
   "Name": "Button's Extra Trigger Action Stuff",
   "Author": "Spiderbuttons",
-  "Version": "2.10.0",
+  "Version": "2.11.0",
   "Description": "A whole bunch of triggers, actions, game state queries, and tokenizable strings for Content Patcher mod authors to utilize.",
   "UniqueID": "Spiderbuttons.BETAS",
   "EntryDll": "BETAS.dll",
