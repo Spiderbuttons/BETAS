@@ -19,63 +19,48 @@ namespace BETAS.Triggers
     {
         public static void Trigger(ISalable item, string shopId)
         {
+            Log.Warn("Fgfgf");
             if (item is null) return;
+            
+            Log.Warn($"Bought item {item.DisplayName} ({item.QualifiedItemId}) from shop {shopId}");
 
-            var soldItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
-            if (shopId is not null) soldItem.modData["BETAS/ItemBought/ShopId"] = shopId;
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemSold", targetItem: soldItem);
+            var boughtItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
+            if (shopId is not null) boughtItem.modData["BETAS/ItemBought/ShopId"] = shopId;
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemBought", targetItem: boughtItem);
         }
 
-        // [HarmonyTranspiler]
-        // [HarmonyPatch(typeof(Utility), nameof(Utility.performLightningUpdate))]
-        // public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
-        // {
-        //     var code = instructions.ToList();
-        //     try
-        //     {
-        //         var matcher = new CodeMatcher(code, il);
-        //
-        //         matcher.MatchEndForward(
-        //             new CodeMatch(op => op.IsLdarg()),
-        //             new CodeMatch(OpCodes.Ldfld,
-        //                 AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.inventory))),
-        //             new CodeMatch(op => op.IsLdarg()),
-        //             new CodeMatch(op => op.IsLdarg()),
-        //             new CodeMatch(OpCodes.Ldnull),
-        //             new CodeMatch(OpCodes.Ldc_I4_0)
-        //         ).ThrowIfNotMatch(
-        //             "Could not find first entry point for ShopMenu_receiveLeftClick/receiveRightClick_Transpiler");
-        //         
-        //         matcher.MatchEndForward(
-        //             new CodeMatch(op => op.opcode == OpCodes.Callvirt &&
-        //                                 (op.OperandIs(AccessTools.Method(typeof(InventoryMenu),
-        //                                      nameof(InventoryMenu.rightClick))) ||
-        //                                  op.OperandIs(AccessTools.Method(typeof(InventoryMenu),
-        //                                      nameof(InventoryMenu.leftClick))))),
-        //             new CodeMatch(op => op.IsStloc()),
-        //             new CodeMatch(op => op.IsLdloc())
-        //         ).ThrowIfNotMatch(
-        //             "Could not find second entry point for ShopMenu_receiveLeftClick/receiveRightClick_Transpiler");
-        //
-        //         matcher.Advance(1);
-        //
-        //         matcher.Insert(
-        //             new CodeInstruction(OpCodes.Dup),
-        //             new CodeInstruction(OpCodes.Ldarg_0),
-        //             new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.ShopId))),
-        //             new CodeInstruction(OpCodes.Call,
-        //                 AccessTools.Method(typeof(ItemSold), nameof(Trigger)))
-        //         );
-        //         
-        //         //Log.ILCode(matcher.InstructionEnumeration(), instructions);
-        //
-        //         return matcher.InstructionEnumeration();
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Log.Error("Error in BETAS.ItemSold_ShopMenu_receiveLeftClick/receiveRightClick_Transpiler: \n" + ex);
-        //         return code;
-        //     }
-        // }
+        [HarmonyTranspiler]
+        [HarmonyPatch(typeof(ShopMenu), "tryToPurchaseItem")]
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
+        {
+            var code = instructions.ToList();
+            try
+            {
+                var matcher = new CodeMatcher(code, il);
+        
+                matcher.MatchStartForward(
+                    new CodeMatch(op => op.IsLdloc()),
+                    new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(ItemStockInformation), nameof(ItemStockInformation.ActionsOnPurchase)))
+                ).ThrowIfNotMatch(
+                    "Could not find entry point for ShopMenu_tryToPurchaseItem_Transpiler");
+        
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldarg_1),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.ShopId))),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(ItemBought), nameof(ItemBought.Trigger)))
+                );
+                
+                Log.ILCode(matcher.InstructionEnumeration(), instructions);
+        
+                return matcher.InstructionEnumeration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error in BETAS.ItemBought_ShopMenu_tryToPurchaseItem_Transpiler: \n" + ex);
+                return code;
+            }
+        }
     }
 }

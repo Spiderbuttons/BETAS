@@ -19,6 +19,7 @@ namespace BETAS.Triggers
     {
         public static void Trigger(ISalable item, string shopId)
         {
+            Log.Warn("why");
             if (item is null) return;
 
             var soldItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
