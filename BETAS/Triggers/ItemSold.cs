@@ -19,7 +19,6 @@ namespace BETAS.Triggers
     {
         public static void Trigger(ISalable item, string shopId)
         {
-            Log.Warn("why");
             if (item is null) return;
 
             var soldItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
@@ -75,8 +74,6 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Call,
                         AccessTools.Method(typeof(ItemSold), nameof(Trigger)))
                 );
-                
-                //Log.ILCode(matcher.InstructionEnumeration(), instructions);
 
                 return matcher.InstructionEnumeration();
             }

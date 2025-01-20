@@ -19,7 +19,7 @@ namespace BETAS.Triggers
     {
         public static void Trigger(ISalable item, string shopId)
         {
-            Log.Warn("Fgfgf");
+            Log.Warn("tesT");
             if (item is null) return;
             
             Log.Warn($"Bought item {item.DisplayName} ({item.QualifiedItemId}) from shop {shopId}");
@@ -28,7 +28,7 @@ namespace BETAS.Triggers
             if (shopId is not null) boughtItem.modData["BETAS/ItemBought/ShopId"] = shopId;
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemBought", targetItem: boughtItem);
         }
-
+        
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(ShopMenu), "tryToPurchaseItem")]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
@@ -48,8 +48,7 @@ namespace BETAS.Triggers
                     new CodeInstruction(OpCodes.Ldarg_1),
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.ShopId))),
-                    new CodeInstruction(OpCodes.Call,
-                        AccessTools.Method(typeof(ItemBought), nameof(ItemBought.Trigger)))
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ItemBought), nameof(Trigger)))
                 );
                 
                 Log.ILCode(matcher.InstructionEnumeration(), instructions);
