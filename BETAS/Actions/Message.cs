@@ -14,7 +14,7 @@ public static class Message
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var message, out error, allowBlank: false))
         {
-            error = "Usage: Message <Text>";
+            error = "Usage: Spiderbuttons.BETAS_Message <Text>";
             return false;
         }
         

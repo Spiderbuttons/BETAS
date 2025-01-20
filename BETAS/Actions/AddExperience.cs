@@ -14,7 +14,7 @@ public static class AddExperience
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out var amount, out error, defaultValue: 1) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var skill, out error))
         {
-            error = "Usage: AddExperience [Amount] [Skill]";
+            error = "Usage: Spiderbuttons.BETAS_AddExperience [Amount] [Skill]";
             return false;
         }
 

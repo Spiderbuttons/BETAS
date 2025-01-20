@@ -14,7 +14,7 @@ public static class EmoteNpc
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out int emote, out error))
         {
-            error = "Usage: EmoteNpc <NPC Name> <EmoteId>";
+            error = "Usage: Spiderbuttons.BETAS_EmoteNpc <NPC Name> <EmoteId>";
             return false;
         }
 

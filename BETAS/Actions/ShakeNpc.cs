@@ -16,7 +16,7 @@ public static class ShakeNpc
         if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string npcName, out error, defaultValue: "All") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int duration, out error, defaultValue: 1000))
         {
-            error = "Usage: ShakeNpc [NPC Name] [Duration]";
+            error = "Usage: Spiderbuttons.BETAS_ShakeNpc [NPC Name] [Duration]";
             return false;
         }
 

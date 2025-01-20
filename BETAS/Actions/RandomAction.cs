@@ -15,7 +15,7 @@ public static class RandomAction
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var _, out error, allowBlank: false))
         {
-            error = "Usage: RandomAction <Action String>+";
+            error = "Usage: Spiderbuttons.BETAS_RandomAction <Action String>+";
             return false;
         }
         

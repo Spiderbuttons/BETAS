@@ -13,7 +13,7 @@ public static class SetFriendshipPoints
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var npcName, out error, allowBlank: true) || !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var points, out error))
         {
-            error = "Usage: SetFriendshipPoints <NPC Name> <Points>";
+            error = "Usage: Spiderbuttons.BETAS_SetFriendshipPoints <NPC Name> <Points>";
             return false;
         }
         

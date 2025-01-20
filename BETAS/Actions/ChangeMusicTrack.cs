@@ -13,7 +13,7 @@ public static class ChangeMusicTrack
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var track, out error))
         {
-            error = "Usage: ChangeMusicTrack <Track>";
+            error = "Usage: Spiderbuttons.BETAS_ChangeMusicTrack <Track>";
             return false;
         }
 

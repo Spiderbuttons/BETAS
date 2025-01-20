@@ -20,7 +20,7 @@ public static class ReloadItemField
                 allowBlank: false) ||
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var _, out error))
         {
-            error = "Usage: ReloadItemField <ItemId> <Field>+";
+            error = "Usage: Spiderbuttons.BETAS_ReloadItemField <ItemId> <Field>+";
             return false;
         }
 

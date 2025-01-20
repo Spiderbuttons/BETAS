@@ -19,7 +19,7 @@ public static class WarpNpc
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 4, out int y, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 5, out int facingDirection, out error, 2))
         {
-            error = "Usage: WarpNpc <NPC Name> <Location Name> <X> <Y> [Facing Direction]";
+            error = "Usage: Spiderbuttons.BETAS_WarpNpc <NPC Name> <Location Name> <X> <Y> [Facing Direction]";
             return false;
         }
 

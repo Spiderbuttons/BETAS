@@ -16,7 +16,7 @@ public static class PatchUpdate
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string modId, out error))
         {
-            error = "Usage: PatchUpdate [UniqueId]";
+            error = "Usage: Spiderbuttons.BETAS_PatchUpdate [UniqueId]";
             return false;
         }
 

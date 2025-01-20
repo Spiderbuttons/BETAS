@@ -13,7 +13,7 @@ public static class EmoteFarmer
     {
         if (!ArgUtilityExtensions.TryGetTokenizableInt(args, 1, out int emote, out error))
         {
-            error = "Usage: EmoteFarmer <EmoteId>";
+            error = "Usage: Spiderbuttons.BETAS_EmoteFarmer <EmoteId>";
             return false;
         }
 

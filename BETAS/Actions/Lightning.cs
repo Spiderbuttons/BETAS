@@ -17,7 +17,7 @@ public static class Lightning
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int y, out error,
                 defaultValue: Game1.player.TilePoint.Y))
         {
-            error = "Usage: Lightning [X] [Y]";
+            error = "Usage: Spiderbuttons.BETAS_Lightning [X] [Y]";
             return false;
         }
 

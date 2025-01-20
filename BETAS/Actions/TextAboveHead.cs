@@ -19,7 +19,7 @@ public static class TextAboveHead
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 6, out string colour, out error, defaultValue: null)
             )
         {
-            error = "Usage: TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Jitter?] [Colour]";
+            error = "Usage: Spiderbuttons.BETAS_TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Jitter?] [Colour]";
             return false;
         }
 

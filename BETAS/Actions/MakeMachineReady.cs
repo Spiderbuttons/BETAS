@@ -18,7 +18,7 @@ public static class MakeMachineReady
                 out error, defaultValue: "All") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int count, out error, defaultValue: -1))
         {
-            error = "Usage: MakeMachineReady [Machine ID] [Output ID] [Location Name] [Count]";
+            error = "Usage: Spiderbuttons.BETAS_MakeMachineReady [Machine ID] [Output ID] [Location Name] [Count]";
             return false;
         }
 

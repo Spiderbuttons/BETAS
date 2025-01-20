@@ -17,7 +17,7 @@ public static class SetNewDialogue
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool append, out error, false))
         {
-            error = "Usage: SetNewDialogue <NPC Name> <Dialogue> [Add?]";
+            error = "Usage: Spiderbuttons.BETAS_SetNewDialogue <NPC Name> <Dialogue> [Add?]";
             return false;
         }
 

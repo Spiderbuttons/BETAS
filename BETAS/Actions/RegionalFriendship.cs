@@ -16,7 +16,7 @@ public static class RegionalFriendship
                 allowBlank: false) || !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var amount, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out var set, out error, defaultValue: false))
         {
-            error = "Usage: RegionalFriendship <Region> <Amount> [Set?]";
+            error = "Usage: Spiderbuttons.BETAS_RegionalFriendship <Region> <Amount> [Set?]";
             return false;
         }
 

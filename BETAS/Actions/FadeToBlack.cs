@@ -13,7 +13,7 @@ public static class FadeToBlack
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out var duration, out error, defaultValue: 1000))
         {
-            error = "Usage: FadeToBlack <Duration>";
+            error = "Usage: Spiderbuttons.BETAS_FadeToBlack <Duration>";
             return false;
         }
 

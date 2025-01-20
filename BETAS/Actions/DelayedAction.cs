@@ -16,7 +16,7 @@ public static class DelayedAction
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var actionString, out error, allowBlank: false) || !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var delay, out error, allowBlank: false))
         {
-            error = "Usage: DelayedAction <Action String> <Delay>";
+            error = "Usage: Spiderbuttons.BETAS_DelayedAction <Action String> <Delay>";
             return false;
         }
         

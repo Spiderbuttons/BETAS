@@ -17,7 +17,7 @@ public static class WarpFarmer
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 3, out int y, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int facingDirection, out error, 2))
         {
-            error = "Usage: WarpFarmer <Location Name> <X> <Y> [Facing Direction]";
+            error = "Usage: Spiderbuttons.BETAS_WarpFarmer <Location Name> <X> <Y> [Facing Direction]";
             return false;
         }
         

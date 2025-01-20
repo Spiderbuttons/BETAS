@@ -48,7 +48,7 @@ public static class UpdateAppearance
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var appearanceId, out error))
         {
-            error = "Usage: UpdateAppearance <NPC> [AppearanceId]";
+            error = "Usage: Spiderbuttons.BETAS_UpdateAppearance <NPC> [AppearanceId]";
             return false;
         }
 

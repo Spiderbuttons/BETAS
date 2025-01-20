@@ -15,7 +15,7 @@ public static class EatObject
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string itemId, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out var fromInventory, out error, defaultValue: true))
         {
-            error = "Usage: EatObject <ItemId> [From Inventory?]";
+            error = "Usage: Spiderbuttons.BETAS_EatObject <ItemId> [From Inventory?]";
             return false;
         }
 
