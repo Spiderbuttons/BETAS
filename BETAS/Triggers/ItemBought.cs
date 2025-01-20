@@ -19,10 +19,7 @@ namespace BETAS.Triggers
     {
         public static void Trigger(ISalable item, string shopId)
         {
-            Log.Warn("tesT");
             if (item is null) return;
-            
-            Log.Warn($"Bought item {item.DisplayName} ({item.QualifiedItemId}) from shop {shopId}");
 
             var boughtItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) boughtItem.modData["BETAS/ItemBought/ShopId"] = shopId;
@@ -37,19 +34,19 @@ namespace BETAS.Triggers
             try
             {
                 var matcher = new CodeMatcher(code, il);
-        
-                matcher.MatchStartForward(
-                    new CodeMatch(op => op.IsLdloc()),
-                    new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(ItemStockInformation), nameof(ItemStockInformation.ActionsOnPurchase)))
-                ).ThrowIfNotMatch(
-                    "Could not find entry point for ShopMenu_tryToPurchaseItem_Transpiler");
-        
-                matcher.Insert(
-                    new CodeInstruction(OpCodes.Ldarg_1),
-                    new CodeInstruction(OpCodes.Ldarg_0),
-                    new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.ShopId))),
-                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ItemBought), nameof(Trigger)))
-                );
+
+                matcher.MatchEndForward(
+                    new CodeMatch(OpCodes.Call, AccessTools.Method(typeof(ShopMenu), nameof(ShopMenu.chargePlayer)))
+                ).Repeat(codeMatcher =>
+                {
+                    codeMatcher.Advance(1).Insert(
+                        new CodeInstruction(OpCodes.Ldarg_1),
+                        new CodeInstruction(OpCodes.Ldarg_0),
+                        new CodeInstruction(OpCodes.Ldfld,
+                            AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.ShopId))),
+                        new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ItemBought), nameof(Trigger)))
+                    );
+                });
                 
                 Log.ILCode(matcher.InstructionEnumeration(), instructions);
         
