@@ -23,8 +23,6 @@ public static class ReloadItemField
             error = "Usage: Spiderbuttons.BETAS_ReloadItemField <ItemId> <Field>+";
             return false;
         }
-
-        BETAS.ModHelper.GameContent.InvalidateCache("Data/Objects");
         
         var refItem = ItemRegistry.Create(itemId);
         if (refItem == null)
