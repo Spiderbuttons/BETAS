@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Reflection.Emit;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
 using StardewValley;
 using StardewValley.Menus;
-using StardewValley.Monsters;
+using StardewValley.Tools;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -20,6 +19,13 @@ namespace BETAS.Triggers
         public static void Trigger(ISalable item, string shopId)
         {
             if (item is null) return;
+
+            /*
+                Returning early if it's a GenericTool is a temporary fix to work around a SpaceCore bug.
+                SpaceCore.Patches.ToolDataDefinitionPatcher.After_CreateToolInstance(Tool, ToolData)
+                No null check in the Where(), null reference exception when checking toolData.ClassName.
+            */
+            if (item.GetType() == typeof(GenericTool)) return;
 
             var boughtItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) boughtItem.modData["BETAS/ItemBought/ShopId"] = shopId;
