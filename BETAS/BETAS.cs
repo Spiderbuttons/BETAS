@@ -9,6 +9,7 @@ using BETAS.Attributes;
 using BETAS.Helpers;
 using BETAS.Models;
 using HarmonyLib;
+using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewModdingAPI.Framework;
@@ -37,15 +38,16 @@ namespace BETAS
             ModMonitor = Monitor;
             Harmony = new Harmony(ModManifest.UniqueID);
             Manifest = ModManifest;
-            
+
             ModRegistry = SCore.Instance.ModRegistry;
-            
+
             var types = Assembly.GetExecutingAssembly().GetTypes();
             var methods = types.SelectMany(t => t.GetMethods())
                 .Where(m => !m.IsDefined(typeof(CompilerGeneratedAttribute), false));
-            
+
             RegisterTriggers(ref types);
-            RegisterActions(ref methods);
+            RegisterTriggerActions(ref methods);
+            RegisterMapActions(ref types);
             RegisterQueries(ref methods);
             RegisterTokenizableStrings(ref methods);
 
@@ -70,10 +72,10 @@ namespace BETAS
             {
                 if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID)) LoadedMods.Add(mod.Manifest.UniqueID);
             }
-            
+
             SCAPI = Helper.ModRegistry.GetApi<ISpaceCoreApi>("spacechase0.SpaceCore");
         }
-        
+
         private void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
         {
             if (!Context.IsMainPlayer) Helper.Multiplayer.SendMessage("PeerConnected", "BETAS.NpcCacheRequest");
@@ -85,7 +87,7 @@ namespace BETAS
             Cache ??= new MultiplayerNpcCache();
             Cache.UpdateCharacterList();
         }
-        
+
         private void OnAssetRequested(object? sender, AssetRequestedEventArgs e)
         {
             if (e.NameWithoutLocale.IsEquivalentTo("Spiderbuttons.BETAS/HarmonyPatches"))
@@ -109,24 +111,24 @@ namespace BETAS
             DynamicPatcher.Initialize(ModManifest);
             Helper.Events.GameLoop.UpdateTicked -= InitializePatcher;
         }
-        
+
         private void OnUpdateTicked(object? sender, UpdateTickedEventArgs e)
         {
             if (!Context.IsWorldReady || Cache is null || !Context.IsMainPlayer || !Context.HasRemotePlayers)
                 return;
 
             List<MultiplayerNpcCache.NpcCacheData> npcChanges = [];
-            
+
             if (e.IsMultipleOf(60))
             {
                 npcChanges.AddRange(Cache.CheckL1Cache());
             }
-            
+
             if (e.IsMultipleOf(180))
             {
                 npcChanges.AddRange(Cache.CheckL2Cache());
             }
-            
+
             if (e.IsMultipleOf(600))
             {
                 npcChanges.AddRange(Cache.CheckL3Cache());
@@ -137,7 +139,7 @@ namespace BETAS
                 Helper.Multiplayer.SendMessage(npcChanges, "BETAS.NpcCache");
             }
         }
-        
+
         private void OnPeerConnected(object? sender, PeerConnectedEventArgs e)
         {
             Cache ??= new MultiplayerNpcCache();
@@ -145,7 +147,7 @@ namespace BETAS
             Cache.CheckL2Cache();
             Cache.CheckL3Cache();
         }
-        
+
         private void OnModMessageReceived(object? sender, ModMessageReceivedEventArgs e)
         {
             switch (e.Type)
@@ -189,17 +191,16 @@ namespace BETAS
             foreach (var type in types)
             {
                 if (!type.IsDefined(typeof(TriggerAttribute), false)) continue;
-                
                 var initializeMethod = type.GetMethod("Initialize", BindingFlags.Public | BindingFlags.Static);
                 initializeMethod?.Invoke(null, null);
-                
+
                 var name = type.Name;
                 Log.Trace($"Registering BETAS Trigger: {name}");
                 TriggerActionManager.RegisterTrigger($"{Manifest.UniqueID}_{name}");
             }
         }
 
-        private static void RegisterActions(ref IEnumerable<MethodInfo> methods)
+        private static void RegisterTriggerActions(ref IEnumerable<MethodInfo> methods)
         {
             foreach (var method in methods)
             {
@@ -207,7 +208,49 @@ namespace BETAS
                 var name = method.GetCustomAttribute<ActionAttribute>()?.Name;
                 if (name is null) continue;
                 Log.Trace($"Registering BETAS Action: {name}");
-                TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_{name}", method.CreateDelegate<TriggerActionDelegate>());
+                TriggerActionManager.RegisterAction($"{Manifest.UniqueID}_{name}",
+                    method.CreateDelegate<TriggerActionDelegate>());
+                GameLocation.RegisterTileAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
+                {
+                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out Exception ex))
+                        return true;
+                    Log.Error($"Error in BETAS TileAction '{name}': {ex}");
+                    return false;
+                });
+                GameLocation.RegisterTouchAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
+                {
+                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out Exception ex))
+                        return;
+                    Log.Error($"Error in BETAS TouchAction '{name}': {ex}");
+                });
+            }
+        }
+
+        private static void RegisterMapActions(ref Type[] types)
+        {
+            foreach (var type in types)
+            {
+                if (!type.IsDefined(typeof(MapActionAttribute), false)) continue;
+                var tileActionMethod = type.GetMethod("TileAction", BindingFlags.Public | BindingFlags.Static);
+                var touchActionMethod = type.GetMethod("TouchAction", BindingFlags.Public | BindingFlags.Static);
+
+                if (tileActionMethod is not null)
+                {
+                    var tileAction =
+                        (Func<GameLocation, string[], Farmer, Point, bool>)Delegate.CreateDelegate(
+                            typeof(Func<GameLocation, string[], Farmer, Point, bool>), tileActionMethod);
+                    Log.Trace($"Registering BETAS TileAction: {type.Name}");
+                    GameLocation.RegisterTileAction($"{Manifest.UniqueID}_{type.Name}", tileAction);
+                }
+
+                if (touchActionMethod is not null)
+                {
+                    var touchAction =
+                        (Action<GameLocation, string[], Farmer, Vector2>)Delegate.CreateDelegate(
+                            typeof(Action<GameLocation, string[], Farmer, Vector2>), touchActionMethod);
+                    Log.Trace($"Registering BETAS TouchAction: {type.Name}");
+                    GameLocation.RegisterTouchAction($"{Manifest.UniqueID}_{type.Name}", touchAction);
+                }
             }
         }
 
