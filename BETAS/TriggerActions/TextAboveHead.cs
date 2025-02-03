@@ -36,7 +36,7 @@ public static class TextAboveHead
         // }
         // catch
         // {
-        //     Log.Trace("BETAS.Actions.TextAboveHead: Argument is not a translation key.");
+        //     Log.Trace("BETAS.TriggerActions.TextAboveHead: Argument is not a translation key.");
         // }
 
         npc.showTextAboveHead(dialogue, Utility.StringToColor(colour), jitter ? 0 : 2, duration, delay);
