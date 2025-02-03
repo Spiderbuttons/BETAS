@@ -1,0 +1,32 @@
+﻿using System;
+using BETAS.Attributes;
+using BETAS.Helpers;
+using Microsoft.Xna.Framework;
+using StardewValley;
+using StardewValley.Delegates;
+using StardewValley.Triggers;
+
+namespace BETAS.MapActions;
+
+[MapAction]
+// Run a Trigger Action action (e.g. AddMail or Spiderbuttons.BETAS_DialogueBox)
+public static class Action
+{
+    public static bool TileAction(GameLocation location, string[] args, Farmer player, Point point)
+    {
+        // join every element in the args array but not the first element
+        string action = string.Join(" ", args[1..]);
+        if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
+        {
+            Log.Error(error);
+            return false;
+        }
+        
+        return true;
+    }
+
+    public static void TouchAction(GameLocation location, string[] args, Farmer player, Vector2 position)
+    {
+        TileAction(location, args, player, position.ToPoint());
+    }
+}
