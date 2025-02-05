@@ -4,8 +4,11 @@ using System.Linq;
 using System.Reflection.Emit;
 using BETAS.Attributes;
 using BETAS.Helpers;
+using ContentPatcher;
 using HarmonyLib;
+using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.GameData.Tools;
 using StardewValley.Menus;
 using StardewValley.Tools;
 using StardewValley.Triggers;
@@ -25,13 +28,13 @@ namespace BETAS.Triggers
                 SpaceCore.Patches.ToolDataDefinitionPatcher.After_CreateToolInstance(Tool, ToolData)
                 No null check in the Where(), null reference exception when checking toolData.ClassName.
             */
-            if (item.GetType() == typeof(GenericTool)) return;
+            if (item is GenericTool) return;
 
             var boughtItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) boughtItem.modData["BETAS/ItemBought/ShopId"] = shopId;
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemBought", targetItem: boughtItem);
         }
-        
+
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(ShopMenu), "tryToPurchaseItem")]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
@@ -53,7 +56,7 @@ namespace BETAS.Triggers
                         new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ItemBought), nameof(Trigger)))
                     );
                 });
-        
+
                 return matcher.InstructionEnumeration();
             }
             catch (Exception ex)
