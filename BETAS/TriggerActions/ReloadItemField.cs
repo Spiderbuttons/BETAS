@@ -8,7 +8,7 @@ using StardewValley.ItemTypeDefinitions;
 using StardewValley.Menus;
 using Object = StardewValley.Object;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class ReloadItemField
 {

@@ -6,7 +6,7 @@ using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.Triggers;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class DelayedAction
 {

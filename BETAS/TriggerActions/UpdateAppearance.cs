@@ -5,7 +5,7 @@ using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.GameData.Characters;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class UpdateAppearance
 {

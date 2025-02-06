@@ -5,7 +5,7 @@ using StardewValley.Delegates;
 using StardewValley.Extensions;
 using StardewValley.Tools;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class WeatherForTomorrow
 {

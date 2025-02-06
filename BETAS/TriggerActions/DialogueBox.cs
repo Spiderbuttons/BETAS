@@ -7,7 +7,7 @@ using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.Extensions;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class DialogueBox
 {

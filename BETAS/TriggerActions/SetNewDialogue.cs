@@ -5,7 +5,7 @@ using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.Menus;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class SetNewDialogue
 {

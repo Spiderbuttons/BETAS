@@ -6,7 +6,7 @@ using HarmonyLib;
 using StardewValley;
 using StardewValley.Delegates;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class PatchUpdate
 {

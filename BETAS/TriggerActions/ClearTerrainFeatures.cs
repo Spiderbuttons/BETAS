@@ -7,7 +7,7 @@ using StardewValley.Delegates;
 using StardewValley.Extensions;
 using StardewValley.TerrainFeatures;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class ClearTerrainFeatures
 {

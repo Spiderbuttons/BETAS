@@ -4,7 +4,7 @@ using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;
 
-namespace BETAS.Actions;
+namespace BETAS.TriggerActions;
 
 public static class EatObject
 {
