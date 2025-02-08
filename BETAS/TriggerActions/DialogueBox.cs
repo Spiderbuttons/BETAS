@@ -17,9 +17,10 @@ public static class DialogueBox
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var name, out error) ||
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var message, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out var portrait, out error))
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out var portrait, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 4, out var displayName, out error))
         {
-            error = "Usage: Spiderbuttons.BETAS_DialogueBox <Name> <Message> [Portrait]";
+            error = "Usage: Spiderbuttons.BETAS_DialogueBox <Name> <Message> [Portrait] [DisplayName]";
             return false;
         }
 
@@ -42,16 +43,16 @@ public static class DialogueBox
         {
             if (NPC is not null)
             {
-                NPC = new NPC(NPC.Sprite, Microsoft.Xna.Framework.Vector2.Zero, "", 0, NPC.Name, portrait.EqualsIgnoreCase("null") ? null : portraitTexture ?? NPC.Portrait,
+                NPC = new NPC(NPC.Sprite, Microsoft.Xna.Framework.Vector2.Zero, "", 0, NPC.Name, portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
                     eventActor: false);
-                NPC.displayName = name ?? NPC.displayName;
+                NPC.displayName = displayName ?? NPC.displayName;
             }
             else if (portraitTexture is not null)
             {
                 NPC = new NPC(new AnimatedSprite("Characters\\Abigail", 0, 16, 16),
                     Microsoft.Xna.Framework.Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
                 {
-                    displayName = name ?? "???"
+                    displayName = displayName ?? name ?? "???"
                 };
             }
         }
