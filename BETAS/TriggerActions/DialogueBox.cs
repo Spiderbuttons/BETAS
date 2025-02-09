@@ -17,7 +17,7 @@ public static class DialogueBox
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var name, out error) ||
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var message, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out var portrait, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out var portrait, out error, defaultValue: "null") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 4, out var displayName, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_DialogueBox <Name> <Message> [Portrait] [DisplayName]";
