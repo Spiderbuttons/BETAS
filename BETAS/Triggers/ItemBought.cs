@@ -32,7 +32,7 @@ namespace BETAS.Triggers
 
             var boughtItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) boughtItem.modData["BETAS/ItemBought/ShopId"] = shopId;
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemBought", targetItem: boughtItem);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemBought", targetItem: boughtItem, triggerArgs: [boughtItem]);
         }
 
         [HarmonyTranspiler]

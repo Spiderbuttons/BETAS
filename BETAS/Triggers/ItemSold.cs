@@ -23,7 +23,7 @@ namespace BETAS.Triggers
 
             var soldItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) soldItem.modData["BETAS/ItemSold/ShopId"] = shopId;
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemSold", targetItem: soldItem);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemSold", targetItem: soldItem, triggerArgs: [soldItem]);
         }
         
         static IEnumerable<MethodBase> TargetMethods()
