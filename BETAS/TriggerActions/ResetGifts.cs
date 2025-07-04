@@ -7,7 +7,7 @@ namespace BETAS.TriggerActions;
 
 public static class ResetGifts
 {
-    // Reset the weekly gift giving limit for a specific NPC.
+    // Reset the weekly/daily gift giving limit for a specific NPC.
     [Action("ResetGifts")]
     public static bool Action(string[] args, TriggerActionContext context, out string error)
     {
