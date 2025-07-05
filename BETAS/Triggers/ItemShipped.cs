@@ -25,7 +25,6 @@ namespace BETAS.Triggers
                 {
                     var itemCopy = item.getOne();
                     itemCopy.Stack = item.Stack;
-                    Log.Alert($"ItemShipped: {itemCopy.DisplayName} ({itemCopy.Stack})");
                     TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemShipped", inputItem: itemCopy, targetItem: itemCopy);
                 }
             }

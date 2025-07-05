@@ -25,7 +25,6 @@ namespace BETAS.Triggers
 
         public static void OnAchievementUnlocked(int value)
         {
-            Log.Alert($"Achievement Unlocked: {value}");
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_AchievementUnlocked");
         }
     }

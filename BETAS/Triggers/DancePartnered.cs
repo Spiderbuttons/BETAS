@@ -27,7 +27,6 @@ namespace BETAS.Triggers
                 var danceItem = ItemRegistry.Create(value.Name);
                 danceItem.modData["BETAS/DancePartnered/WasNPC"] = (value is NPC).ToString();
                 danceItem.modData["BETAS/DancePartnered/WasFarmer"] = (value is Farmer).ToString();
-                Log.Alert($"DancePartnered: {danceItem.DisplayName} (WasNPC: {danceItem.modData["BETAS/DancePartnered/WasNPC"]}, WasFarmer: {danceItem.modData["BETAS/DancePartnered/WasFarmer"]})");
                 TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_DancePartnered", inputItem: danceItem, targetItem: danceItem);
             }
             catch (Exception ex)
