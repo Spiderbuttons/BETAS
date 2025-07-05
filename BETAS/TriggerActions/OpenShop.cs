@@ -1,0 +1,32 @@
+﻿using System.Linq;
+using BETAS.Attributes;
+using BETAS.Helpers;
+using StardewValley;
+using StardewValley.Delegates;
+using StardewValley.Extensions;
+using StardewValley.Menus;
+
+namespace BETAS.TriggerActions;
+
+public static class OpenShop
+{
+    // Open a shop menu.
+    [Action("OpenShop")]
+    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    {
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string shopId, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string ownerName, out error))
+        {
+            error = "Usage: Spiderbuttons.BETAS_OpenShop <ShopId> [Owner]";
+            return false;
+        }
+        
+        if (ownerName != null ? Utility.TryOpenShopMenu(shopId, ownerName) : Utility.TryOpenShopMenu(shopId, Game1.player.currentLocation, forceOpen: true))
+        {
+            return true;
+        }
+        
+        error = $"Failed to open shop with ID '{shopId}'" + (ownerName != null ? $" for owner '{ownerName}'" : string.Empty);
+        return false;
+    }
+}
