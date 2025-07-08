@@ -70,6 +70,7 @@ public static class ChangeRelationship
                 else Game1.player.autoGenerateActiveDialogueEvent("roommates_" + Game1.player.spouse);
                 break;
             case FriendshipStatus.Divorced:
+                if (Game1.player.spouse != npc.Name) break;
                 Game1.player.doDivorce();
                 npc.PerformDivorce();
                 break;
