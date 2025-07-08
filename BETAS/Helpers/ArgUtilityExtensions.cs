@@ -359,4 +359,56 @@ public static class ArgUtilityExtensions
         error = null;
         return true;
     }
+
+    public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string error)
+        where TEnum : struct
+    {
+        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        {
+            value = default(TEnum);
+            return false;
+        }
+        
+        if (!Utility.TryParseEnum<TEnum>(raw, out value))
+        {
+            Type type = typeof(TEnum);
+            value = default(TEnum);
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' should be one of {string.Join(", ", Enum.GetNames(type))}");
+            return false;
+        }
+
+        error = null;
+        return true;
+    }
+    
+    public static bool TryGetOptionalTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string error,
+        TEnum defaultValue = default(TEnum)) where TEnum : struct
+    {
+        if (array == null)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        array = CombineTokenizableIndices(array);
+        
+        if (index < 0 || index >= array.Length || array[index] == string.Empty)
+        {
+            value = defaultValue;
+            error = null;
+            return true;
+        }
+        
+        if (!Utility.TryParseEnum<TEnum>(TokenParser.ParseText(array[index]), out value))
+        {
+            Type type = typeof(TEnum);
+            value = defaultValue;
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, $"an enum of type '{type.FullName ?? type.Name}'");
+            return false;
+        }
+        
+        error = null;
+        return true;
+    }
 }
