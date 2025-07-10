@@ -64,6 +64,8 @@ public class MultiplayerNpcCache
             return true;
         });
     }
+    
+    // TODO: Make a function to grab the cached data, checking each cache in order, rather than only checking the L1 cache in GSQs.
 
     public List<NpcCacheData> CheckL1Cache()
     {
