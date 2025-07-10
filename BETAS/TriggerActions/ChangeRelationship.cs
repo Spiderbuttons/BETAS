@@ -19,7 +19,7 @@ public static class ChangeRelationship
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool roommates, out error, defaultValue: false ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int daysAway, out error, defaultValue: 3)))
         {
-            error = "Usage: Spiderbuttons.BETAS_ChangeRelationship [NPC] [Relationship] [Wedding Delay] [Roommates?]";
+            error = "Usage: Spiderbuttons.BETAS_ChangeRelationship <NPC> [Relationship] [Roommates?] [Wedding Delay]";
             return false;
         }
 
@@ -48,6 +48,11 @@ public static class ChangeRelationship
                 Game1.player.changeFriendship(25, npc);
                 break;
             case FriendshipStatus.Engaged:
+                if (Game1.player.HouseUpgradeLevel < 1)
+                {
+                    error = "Cannot set relationship to 'Engaged' without a house upgrade.";
+                    return false;
+                }
                 Game1.player.spouse = npc.Name;
                 if (!roommates) Game1.Multiplayer.globalChatInfoMessage("Engaged", Game1.player.Name, npc.GetTokenizedDisplayName());
                 friendship.RoommateMarriage = roommates;
@@ -58,11 +63,17 @@ public static class ChangeRelationship
                 Game1.player.changeFriendship(1, npc);
                 break;
             case FriendshipStatus.Married:
+                if (Game1.player.HouseUpgradeLevel < 1)
+                {
+                    error = "Cannot set relationship to 'Married' without a house upgrade.";
+                    return false;
+                }
                 Game1.player.spouse = npc.Name;
                 friendship.WeddingDate = new WorldDate(Game1.Date);
                 if (!roommates) Game1.Multiplayer.globalChatInfoMessage("Married", Game1.player.Name, npc.GetTokenizedDisplayName());
                 friendship.RoommateMarriage = roommates;
-                if (!Game1.player.getSpouse().isRoommate())
+                Game1.prepareSpouseForWedding(Game1.player);
+                if (Game1.player.getSpouse() is { } spouse && !spouse.isRoommate())
                 {
                     Game1.player.autoGenerateActiveDialogueEvent("married_" + Game1.player.spouse);
                     if (!Game1.player.autoGenerateActiveDialogueEvent("married")) Game1.player.autoGenerateActiveDialogueEvent("married_twice");
