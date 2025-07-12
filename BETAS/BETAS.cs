@@ -21,15 +21,15 @@ namespace BETAS
 {
     internal sealed class BETAS : Mod
     {
-        internal static IModHelper ModHelper { get; set; } = null!;
-        internal static IMonitor ModMonitor { get; set; } = null!;
-        internal static Harmony Harmony { get; set; } = null!;
-        internal static IManifest Manifest { get; set; } = null!;
+        internal static IModHelper ModHelper { get; private set; } = null!;
+        internal static IMonitor ModMonitor { get; private set; } = null!;
+        internal static Harmony Harmony { get; private set; } = null!;
+        internal static IManifest Manifest { get; private set; } = null!;
         internal static HashSet<string> LoadedMods { get; } = [];
-        internal static ModRegistry ModRegistry { get; set; } = null!;
-        internal static ISpaceCoreApi? SCAPI { get; set; }
+        internal static ModRegistry ModRegistry { get; private set; } = null!;
+        internal static ISpaceCoreApi? SCAPI { get; private set; }
 
-        internal static MultiplayerNpcCache? Cache { get; set; }
+        internal static MultiplayerNpcCache? Cache { get; private set; }
 
         public override void Entry(IModHelper helper)
         {
