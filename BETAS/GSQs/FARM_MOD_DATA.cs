@@ -22,10 +22,8 @@ public static class FarmModData
 
         var ignoreValue = !ArgUtility.HasIndex(query, 3);
 
-        string data;
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey,
-            (Farmer target) => target.modData.TryGetValue(key, out data) &&
-                               (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue));
+        return Game1.getFarm().modData.TryGetValue(key, out var data) &&
+               (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue);
     }
 
     // GSQ for checking whether the farm has a specific mod data key with a value within a specific range. Values are parsed as ints.
@@ -40,10 +38,8 @@ public static class FarmModData
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        string data;
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey,
-            (Farmer target) => target.modData.TryGetValue(key, out data) && int.TryParse(data, out var dataInt) &&
-                               dataInt >= minRange && dataInt <= maxRange);
+        return Game1.getFarm().modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
+               dataInt >= minRange && dataInt <= maxRange;
     }
 
     // GSQ for checking whether a comma- or space-delimited list of values in the farm's mod data contains a specific value.
@@ -56,17 +52,15 @@ public static class FarmModData
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
-        
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) =>
-        {
-            if (!target.modData.TryGetValue(key, out var data))
-            {
-                return false;
-            }
 
-            var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-            return GameStateQuery.Helpers.AnyArgMatches(query, 3,
-                (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
-        });
+
+        if (!Game1.getFarm().modData.TryGetValue(key, out var data))
+        {
+            return false;
+        }
+
+        var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+        return GameStateQuery.Helpers.AnyArgMatches(query, 3,
+            (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }
