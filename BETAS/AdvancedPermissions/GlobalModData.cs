@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using BETAS.Helpers;
 using StardewModdingAPI;
 using StardewModdingAPI.Framework;
 using StardewModdingAPI.Framework.ModHelpers;
@@ -10,10 +11,9 @@ namespace BETAS.AdvancedPermissions;
 
 public static class GlobalModData
 {
-    public static bool TryWriteGlobalModData(IModMetadata mod, string key, string value, out string error)
+    public static bool TryWriteGlobalModData(IModMetadata mod, string key, string value, [NotNullWhen(false)] out string? error)
     {
-        error = string.Empty;
-        
+        error = null;
         if (!mod.HasPermission(Permissions.GlobalModData))
         {
             error = $"Mod with UniqueID '{mod.Manifest.UniqueID}' has not enabled the 'GlobalModData' permission in its manifest.";
@@ -31,7 +31,7 @@ public static class GlobalModData
                     data = new Dictionary<string, string>();
                 }
                 data[key] = value;
-                helper!.JsonHelper.WriteJsonFile(path, data);
+                helper.JsonHelper.WriteJsonFile(path, data);
             }
             else
             {
@@ -46,14 +46,14 @@ public static class GlobalModData
             error = $"Failed to write global mod data: {ex}";
             return false;
         }
-
+        
         return true;
     }
     
-    public static bool TryReadGlobalModData(IModMetadata mod, string key, [NotNullWhen(true)] out string? value, out string error)
+    public static bool TryReadGlobalModData(IModMetadata mod, string key, [NotNullWhen(true)] out string? value, [NotNullWhen(false)] out string? error)
     {
         value = null;
-        error = string.Empty;
+        error = null;
 
         if (!mod.HasPermission(Permissions.GlobalModData))
         {
