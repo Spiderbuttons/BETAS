@@ -26,7 +26,7 @@ public static class TKGlboalModData
         var mod = BETAS.ModRegistry.Get(uniqueId);
         if (mod == null)
         {
-            return TokenParser.LogTokenError(query, $"No mod found with unique ID '{uniqueId}'.", out replacement);    
+            return TokenParser.LogTokenError(query, $"No mod found with unique ID '{uniqueId}'", out replacement);    
         }
         
         if (!GlobalModData.TryReadGlobalModData(mod, key, out var value, out error))
