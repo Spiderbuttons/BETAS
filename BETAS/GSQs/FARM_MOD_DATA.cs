@@ -57,7 +57,7 @@ public static class FarmModData
         }
 
         var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-        return GameStateQuery.Helpers.AnyArgMatches(query, 3,
+        return GameStateQuery.Helpers.AnyArgMatches(query, 2,
             (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }
