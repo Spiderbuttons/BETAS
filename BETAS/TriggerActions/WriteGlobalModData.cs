@@ -16,7 +16,7 @@ public static class WriteGlobalModData
 {
     // Write a value to global mod data with a given key.
     [Action("WriteGlobalModData")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string uniqueId, out error) ||
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string key, out error) ||
