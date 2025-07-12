@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using StardewModdingAPI;
@@ -65,5 +66,28 @@ public static class Log
     public static void ILCode(CodeInstruction code)
     {
         Debug($"{code.opcode} {code.operand}");
+    }
+
+    public static void LogPairs(this IEnumerable enumerable, int depth = 0)
+    {
+        if (enumerable is null)
+        {
+            Warn("Enumerable is null");
+            return;
+        }
+
+        foreach (var item in enumerable)
+        {
+            if (item is KeyValuePair<string, object> kvp)
+            {
+                if (kvp.Value is IEnumerable innerEnumerable and not string)
+                {
+                    Debug($"{new string(' ', depth * 2)}{kvp.Key}:");
+                    innerEnumerable.LogPairs(depth + 1);
+                }
+                else Debug($"{new string(' ', depth * 2)}{kvp.Key}: {kvp.Value}");
+            }
+            else Debug($"{new string(' ', depth * 2)}{item}");
+        }
     }
 }
