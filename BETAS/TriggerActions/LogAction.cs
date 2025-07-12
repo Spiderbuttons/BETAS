@@ -1,9 +1,7 @@
-﻿using System;
-using BETAS.AdvancedPermissions;
+﻿using BETAS.AdvancedPermissions;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewModdingAPI;
-using StardewValley;
 using StardewValley.Delegates;
 
 namespace BETAS.TriggerActions;

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Numerics;
 using BETAS.Attributes;
 using BETAS.Helpers;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using StardewValley;
 using StardewValley.Delegates;
@@ -43,14 +43,14 @@ public static class DialogueBox
         {
             if (NPC is not null)
             {
-                NPC = new NPC(NPC.Sprite, Microsoft.Xna.Framework.Vector2.Zero, "", 0, NPC.Name, portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
+                NPC = new NPC(NPC.Sprite, Vector2.Zero, "", 0, NPC.Name, portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
                     eventActor: false);
                 NPC.displayName = displayName ?? NPC.displayName;
             }
             else if (portraitTexture is not null)
             {
                 NPC = new NPC(new AnimatedSprite("Characters\\Abigail", 0, 16, 16),
-                    Microsoft.Xna.Framework.Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
+                    Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
                 {
                     displayName = displayName ?? name ?? "???"
                 };

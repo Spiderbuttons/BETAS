@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using BETAS.Attributes;
+﻿using BETAS.Attributes;
 using BETAS.Helpers;
-using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Delegates;
 

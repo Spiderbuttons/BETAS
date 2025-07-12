@@ -1,9 +1,7 @@
 ﻿using System;
 using BETAS.Attributes;
 using BETAS.Helpers;
-using Microsoft.Xna.Framework;
 using StardewValley;
-using StardewValley.Delegates;
 using StardewValley.TokenizableStrings;
 
 namespace BETAS.TokenizableStrings;

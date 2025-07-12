@@ -1,7 +1,4 @@
-﻿using System;
-using BETAS.Attributes;
-using BETAS.Helpers;
-using Microsoft.Xna.Framework;
+﻿using BETAS.Attributes;
 using StardewValley;
 using StardewValley.Delegates;
 

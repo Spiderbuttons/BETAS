@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
@@ -213,7 +212,7 @@ public static class ArgUtilityExtensions
     public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string error,
         bool allowBlank = true)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
         {
             value = 0;
             return false;
@@ -222,7 +221,7 @@ public static class ArgUtilityExtensions
         if (!int.TryParse(raw, out value))
         {
             value = 0;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, "an integer");
+            error = GetValueParseError(array, index, required: true, "an integer");
             return false;
         }
 
@@ -252,7 +251,7 @@ public static class ArgUtilityExtensions
         if (!int.TryParse(TokenParser.ParseText(array[index]), out value))
         {
             value = defaultValue;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, "an integer");
+            error = GetValueParseError(array, index, required: false, "an integer");
             return false;
         }
         
@@ -263,7 +262,7 @@ public static class ArgUtilityExtensions
     public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string error,
         bool allowBlank = true)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
         {
             value = 0f;
             return false;
@@ -272,7 +271,7 @@ public static class ArgUtilityExtensions
         if (!float.TryParse(raw, out value))
         {
             value = 0f;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, "a float");
+            error = GetValueParseError(array, index, required: true, "a float");
             return false;
         }
 
@@ -302,7 +301,7 @@ public static class ArgUtilityExtensions
         if (!float.TryParse(TokenParser.ParseText(array[index]), out value))
         {
             value = defaultValue;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, "a float");
+            error = GetValueParseError(array, index, required: false, "a float");
             return false;
         }
         
@@ -313,7 +312,7 @@ public static class ArgUtilityExtensions
     public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string error,
         bool allowBlank = true)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
         {
             value = false;
             return false;
@@ -322,7 +321,7 @@ public static class ArgUtilityExtensions
         if (!bool.TryParse(raw, out value))
         {
             value = false;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, "a boolean");
+            error = GetValueParseError(array, index, required: true, "a boolean");
             return false;
         }
 
@@ -352,7 +351,7 @@ public static class ArgUtilityExtensions
         if (!bool.TryParse(TokenParser.ParseText(array[index]), out value))
         {
             value = defaultValue;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, "a boolean");
+            error = GetValueParseError(array, index, required: false, "a boolean");
             return false;
         }
         
@@ -363,7 +362,7 @@ public static class ArgUtilityExtensions
     public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string error)
         where TEnum : struct
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
         {
             value = default(TEnum);
             return false;
@@ -373,7 +372,7 @@ public static class ArgUtilityExtensions
         {
             Type type = typeof(TEnum);
             value = default(TEnum);
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
+            error = GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
 
@@ -404,7 +403,7 @@ public static class ArgUtilityExtensions
         {
             Type type = typeof(TEnum);
             value = defaultValue;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
+            error = GetValueParseError(array, index, required: false, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
         

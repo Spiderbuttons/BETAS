@@ -1,7 +1,5 @@
 ﻿#nullable enable
 using BETAS.Attributes;
-using BETAS.Helpers;
-using HarmonyLib;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;

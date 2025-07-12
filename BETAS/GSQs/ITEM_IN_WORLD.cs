@@ -1,9 +1,6 @@
-﻿using System.Data;
-using System.Linq;
-using BETAS.Attributes;
+﻿using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewValley;
-using StardewValley.Characters;
 using StardewValley.Delegates;
 
 namespace BETAS.GSQs;

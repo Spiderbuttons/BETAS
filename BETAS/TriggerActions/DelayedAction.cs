@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text;
 using BETAS.Attributes;
 using BETAS.Helpers;
-using StardewValley;
 using StardewValley.Delegates;
 using StardewValley.Triggers;
 

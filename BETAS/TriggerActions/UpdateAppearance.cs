@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using BETAS.Attributes;
+﻿using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewValley;
 using StardewValley.Delegates;

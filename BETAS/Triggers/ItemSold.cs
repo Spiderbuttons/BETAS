@@ -8,7 +8,6 @@ using BETAS.Helpers;
 using HarmonyLib;
 using StardewValley;
 using StardewValley.Menus;
-using StardewValley.Monsters;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers

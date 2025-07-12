@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using BETAS.Attributes;
 using BETAS.Helpers;
-using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -21,7 +20,7 @@ public static class LocationHasFurniture
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        if (locationName.Equals("Any", System.StringComparison.OrdinalIgnoreCase))
+        if (locationName.Equals("Any", StringComparison.OrdinalIgnoreCase))
         {
             var foundFurniture = false;
             Utility.ForEachLocation((gameLocation) =>
@@ -37,7 +36,7 @@ public static class LocationHasFurniture
             return foundFurniture;
         }
         
-        if (locationName.Equals("All", System.StringComparison.OrdinalIgnoreCase))
+        if (locationName.Equals("All", StringComparison.OrdinalIgnoreCase))
         {
             var foundFurniture = true;
             Utility.ForEachLocation((gameLocation) =>

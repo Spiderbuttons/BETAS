@@ -2,7 +2,6 @@
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
-using StardewValley.Mods;
 using StardewValley.Triggers;
 
 namespace BETAS.Helpers;
