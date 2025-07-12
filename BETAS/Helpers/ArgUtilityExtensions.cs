@@ -373,7 +373,7 @@ public static class ArgUtilityExtensions
         {
             Type type = typeof(TEnum);
             value = default(TEnum);
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' should be one of {string.Join(", ", Enum.GetNames(type))}");
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
 
@@ -404,7 +404,7 @@ public static class ArgUtilityExtensions
         {
             Type type = typeof(TEnum);
             value = defaultValue;
-            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, $"an enum of type '{type.FullName ?? type.Name}'");
+            error = ArgUtilityExtensions.GetValueParseError(array, index, required: false, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
         
