@@ -60,7 +60,7 @@ public static class GlobalModData
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var uniqueId, out var error) ||
             !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out var value, out error, false))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out _, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

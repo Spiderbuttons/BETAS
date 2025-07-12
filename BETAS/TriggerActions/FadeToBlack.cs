@@ -9,7 +9,7 @@ public static class FadeToBlack
 {
     // Fade the screen to black, keep it black for a certain duration, and then fade to clear.
     [Action("FadeToBlack")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out var duration, out error, defaultValue: 1000))
         {

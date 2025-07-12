@@ -16,7 +16,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class ItemSold
     {
-        public static void Trigger(ISalable item, string shopId)
+        public static void Trigger(ISalable? item, string? shopId)
         {
             if (item is null) return;
 
@@ -25,6 +25,7 @@ namespace BETAS.Triggers
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemSold", targetItem: soldItem, triggerArgs: [soldItem]);
         }
         
+        // ReSharper disable once UnusedMember.Local
         static IEnumerable<MethodBase> TargetMethods()
         {
             return new[]

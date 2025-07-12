@@ -15,7 +15,7 @@ namespace BETAS.Triggers
             BETAS.ModHelper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
         }
         
-        public static void OnSaveLoaded(object sender, SaveLoadedEventArgs e)
+        public static void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
         {
             Game1.player.archaeologyFound.OnValueAdded += OnArtifactFound;
         }

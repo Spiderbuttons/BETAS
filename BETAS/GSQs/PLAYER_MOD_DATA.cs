@@ -24,7 +24,7 @@ public static class PlayerModData
 
         string data;
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey,
-            (Farmer target) => target.modData.TryGetValue(key, out data) &&
+            target => target.modData.TryGetValue(key, out data) &&
                                (string.Equals(data, value, StringComparison.OrdinalIgnoreCase) || ignoreValue));
     }
 
@@ -42,7 +42,7 @@ public static class PlayerModData
 
         string data;
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey,
-            (Farmer target) => target.modData.TryGetValue(key, out data) && int.TryParse(data, out var dataInt) &&
+            target => target.modData.TryGetValue(key, out data) && int.TryParse(data, out var dataInt) &&
                                dataInt >= minRange && dataInt <= maxRange);
     }
 
@@ -52,12 +52,12 @@ public static class PlayerModData
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
             !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out var value, out error, false))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out _, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
         
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) =>
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target =>
         {
             if (!target.modData.TryGetValue(key, out var data))
             {
@@ -66,7 +66,7 @@ public static class PlayerModData
 
             var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
             return GameStateQuery.Helpers.AnyArgMatches(query, 3,
-                (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
+                rawValue => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
         });
     }
 }

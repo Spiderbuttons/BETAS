@@ -9,9 +9,9 @@ public static class ReloadItemField
 {
     // Reload one or more fields on every item ID in the game (i.e. price) to overwrite cached values.
     [Action("ReloadItemField")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string itemId, out error,
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? itemId, out error,
                 allowBlank: false) ||
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var _, out error))
         {

@@ -17,7 +17,7 @@ public static class PlayerHeldItem
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
         
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) =>
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target =>
         {
             return GameStateQuery.Helpers.AnyArgMatches(query, 2,
                 (itemID) => target.ActiveObject?.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(itemID)) == true ||

@@ -12,7 +12,7 @@ public class MultiplayerNpcCache
         public string LocationName = locationName;
         public Point TilePoint = tilePoint;
         public Vector2 Position = position;
-        public int skippedFrames = 0;
+        public int skippedFrames;
         
         public bool HasChanged(NPC npc)
         {

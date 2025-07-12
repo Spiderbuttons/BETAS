@@ -9,9 +9,9 @@ public static class WarpFarmer
 {
     // Warp the current player to a specific map and X/Y coordinate, with optional facing direction.
     [Action("WarpFarmer")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string locationName, out error,
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? locationName, out error,
                 allowBlank: false) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out int x, out error) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 3, out int y, out error) ||
@@ -21,8 +21,6 @@ public static class WarpFarmer
             return false;
         }
         
-        
-
         var location = Game1.RequireLocation(locationName);
         if (location == null)
         {

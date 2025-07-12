@@ -10,11 +10,11 @@ public static class MakeMachineReady
 {
     // Make a number of machines instantly ready their output in a given location.
     [Action("MakeMachineReady")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string machineID, out error, defaultValue: "Any") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string outputID, out error, defaultValue: "Any") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out string locationName,
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? machineID, out error, defaultValue: "Any") ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string? outputID, out error, defaultValue: "Any") ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out string? locationName,
                 out error, defaultValue: "All") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int count, out error, defaultValue: -1))
         {

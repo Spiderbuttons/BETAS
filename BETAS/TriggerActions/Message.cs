@@ -10,7 +10,7 @@ public static class Message
 {
     // Makes a message box appear on the screen to display some text.
     [Action("Message")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var message, out error, allowBlank: false))
         {

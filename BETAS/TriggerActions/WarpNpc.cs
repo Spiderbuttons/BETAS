@@ -10,10 +10,10 @@ public static class WarpNpc
 {
     // Warp an NPC to a specific map and X/Y coordinate, with optional facing direction.
     [Action("WarpNpc")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string locationName, out error,
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string? locationName, out error,
                 allowBlank: false) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 3, out int x, out error) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 4, out int y, out error) ||

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -26,9 +25,9 @@ namespace BETAS
         internal static IMonitor ModMonitor { get; set; } = null!;
         internal static Harmony Harmony { get; set; } = null!;
         internal static IManifest Manifest { get; set; } = null!;
-        internal static HashSet<string> LoadedMods { get; set; } = [];
+        internal static HashSet<string> LoadedMods { get; } = [];
         internal static ModRegistry ModRegistry { get; set; } = null!;
-        internal static ISpaceCoreApi? SCAPI { get; set; } = null!;
+        internal static ISpaceCoreApi? SCAPI { get; set; }
 
         internal static MultiplayerNpcCache? Cache { get; set; }
 
@@ -212,14 +211,14 @@ namespace BETAS
                     method.CreateDelegate<TriggerActionDelegate>());
                 GameLocation.RegisterTileAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
                 {
-                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out Exception ex))
+                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out _, out Exception ex))
                         return true;
                     Log.Error($"Error in BETAS TileAction '{name}': {ex}");
                     return false;
                 });
                 GameLocation.RegisterTouchAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
                 {
-                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out Exception ex))
+                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out _, out Exception ex))
                         return;
                     Log.Error($"Error in BETAS TouchAction '{name}': {ex}");
                 });

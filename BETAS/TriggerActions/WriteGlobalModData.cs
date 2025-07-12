@@ -11,9 +11,9 @@ public static class WriteGlobalModData
     [Action("WriteGlobalModData")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string uniqueId, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 3, out string value, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? uniqueId, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string? key, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 3, out string? value, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_WriteGlobalModData <UniqueId> <Key> <Value>";
             return false;

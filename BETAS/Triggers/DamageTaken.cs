@@ -14,7 +14,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class DamageTaken
     {
-        public static void Trigger(Farmer who, int damage, Monster damager, bool parried)
+        public static void Trigger(Farmer who, int damage, Monster? damager, bool parried)
         {
             var damageItem = ItemRegistry.Create(damager?.Name ?? "Unknown");
             damageItem.modData["BETAS/DamageTaken/Damage"] = damage.ToString();
@@ -25,7 +25,7 @@ namespace BETAS.Triggers
 
         [HarmonyPrefix]
         [HarmonyPatch(typeof(Farmer), nameof(Farmer.takeDamage))]
-        public static void takeDamage_Prefix(Farmer __instance, int damage, bool overrideParry, Monster damager)
+        public static void takeDamage_Prefix(Farmer __instance, int damage, bool overrideParry, Monster? damager)
         {
             try
             {

@@ -17,7 +17,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class GarbageChecked
     {
-        public static void Trigger(string trashId, Item result, GarbageCanItemData data, bool caught, Farmer farmer,
+        public static void Trigger(string trashId, Item? result, GarbageCanItemData? data, bool caught, Farmer farmer,
             Vector2 tile, GameLocation location)
         {
             var trashItem = result ?? ItemRegistry.Create(trashId);

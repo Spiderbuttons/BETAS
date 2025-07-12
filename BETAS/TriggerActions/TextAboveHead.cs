@@ -9,14 +9,14 @@ public static class TextAboveHead
 {
     // Show a speech bubble of text above the head of an NPC.
     [Action("TextAboveHead")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string? dialogue, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int duration, out error, 3000) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int delay, out error, 0) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int delay, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 5, out bool jitter, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 6, out string colour, out error, defaultValue: null)
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 6, out string? colour, out error, defaultValue: null)
             )
         {
             error = "Usage: Spiderbuttons.BETAS_TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Jitter?] [Colour]";

@@ -11,9 +11,9 @@ public static class Jump
 {
     // Make an NPC or the Farmer jump up into the air with a specified velocity.
     [Action("Jump")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string npcName, out error, defaultValue: "All") ||
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? npcName, out error, defaultValue: "All") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableFloat(args, 2, out float jumpVelocity, out error, defaultValue: 4f) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int yVelocity, out error, defaultValue: 0) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int xVelocity, out error, defaultValue: 0))

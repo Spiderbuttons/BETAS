@@ -13,7 +13,7 @@ namespace BETAS.Triggers
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Game1), nameof(Game1.changeMusicTrack))]
-        public static void changeMusicTrack_Postfix(string newTrackName)
+        public static void changeMusicTrack_Postfix(string? newTrackName)
         {
             try
             {

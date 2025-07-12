@@ -9,7 +9,7 @@ public static class EmoteFarmer
 {
     // Make the current farmer perform an emote.
     [Action("EmoteFarmer")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizableInt(args, 1, out int emote, out error))
         {

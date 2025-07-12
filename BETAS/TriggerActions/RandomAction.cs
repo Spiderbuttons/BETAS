@@ -11,9 +11,9 @@ public static class RandomAction
 {
     // Choose a random action string from a list of given actions to run.
     [Action("RandomAction")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var _, out error, allowBlank: false))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out _, out error, allowBlank: false))
         {
             error = "Usage: Spiderbuttons.BETAS_RandomAction <Action String>+";
             return false;
@@ -25,6 +25,6 @@ public static class RandomAction
         Array.Copy(args, 1, actions, 0, actions.Length);
         var action = actions[r.Next(actions.Length)];
         
-        return TriggerActionManager.TryRunAction(action, out error, out Exception ex);
+        return TriggerActionManager.TryRunAction(action, out error, out _);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using BETAS.Attributes;
+﻿using BETAS.Attributes;
 using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewValley;
@@ -15,7 +14,7 @@ public static class Action
     {
         // join every element in the args array but not the first element
         string action = string.Join(" ", args[1..]);
-        if (!TriggerActionManager.TryRunAction(action, out string error, out Exception ex))
+        if (!TriggerActionManager.TryRunAction(action, out string error, out _))
         {
             Log.Error(error);
             return false;

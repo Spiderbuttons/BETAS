@@ -14,6 +14,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class ShopOpened
     {
+        // ReSharper disable once UnusedMember.Local
         static IEnumerable<MethodBase> TargetMethods()
         {
             return typeof(ShopMenu).GetConstructors();

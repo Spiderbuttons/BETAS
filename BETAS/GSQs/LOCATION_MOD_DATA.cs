@@ -13,7 +13,7 @@ public static class LocationModData
     [GSQ("LOCATION_MOD_DATA")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        GameLocation location = context.Location;
+        GameLocation? location = context.Location;
         if (!ArgUtilityExtensions.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
             !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 3, out var value, out error))
@@ -36,7 +36,7 @@ public static class LocationModData
     [GSQ("LOCATION_MOD_DATA_RANGE")]
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
-        GameLocation location = context.Location;
+        GameLocation? location = context.Location;
         if (!ArgUtilityExtensions.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
             !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(query, 3, out var minRange, out error) ||
@@ -58,10 +58,10 @@ public static class LocationModData
     [GSQ("LOCATION_MOD_DATA_CONTAINS")]
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
-        GameLocation location = context.Location;
+        GameLocation? location = context.Location;
         if (!ArgUtilityExtensions.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
             !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out var value, out error, false))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out _, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

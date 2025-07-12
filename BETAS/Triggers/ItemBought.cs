@@ -16,7 +16,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class ItemBought
     {
-        public static void Trigger(ISalable item, string shopId)
+        public static void Trigger(ISalable? item, string? shopId)
         {
             if (item is null) return;
 

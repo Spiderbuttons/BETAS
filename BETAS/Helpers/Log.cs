@@ -3,33 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using StardewModdingAPI;
+// ReSharper disable PossibleMultipleEnumeration
+// ReSharper disable RedundantArgumentDefaultValue
 
 namespace BETAS.Helpers;
 
 public static class Log
 {
     public static void Debug<T>(T message) => BETAS.ModMonitor.Log(
-        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        $"{(message is not string ? "[" + message?.GetType() + "] " : string.Empty)}{message?.ToString() ?? string.Empty}",
         LogLevel.Debug);
 
     public static void Error<T>(T message) => BETAS.ModMonitor.Log(
-        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        $"{(message is not string ? "[" + message?.GetType() + "] " : string.Empty)}{message?.ToString() ?? string.Empty}",
         LogLevel.Error);
 
     public static void Warn<T>(T message) => BETAS.ModMonitor.Log(
-        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        $"{(message is not string ? "[" + message?.GetType() + "] " : string.Empty)}{message?.ToString() ?? string.Empty}",
         LogLevel.Warn);
 
     public static void Info<T>(T message) => BETAS.ModMonitor.Log(
-        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        $"{(message is not string ? "[" + message?.GetType() + "] " : string.Empty)}{message?.ToString() ?? string.Empty}",
         LogLevel.Info);
 
     public static void Trace<T>(T message) => BETAS.ModMonitor.Log(
-        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        $"{(message is not string ? "[" + message?.GetType() + "] " : string.Empty)}{message?.ToString() ?? string.Empty}",
         LogLevel.Trace);
     
     public static void Alert<T>(T message) => BETAS.ModMonitor.Log(
-        $"{(message is not string ? "[" + message.GetType() + "] " : string.Empty)}{message.ToString() ?? string.Empty}",
+        $"{(message is not string ? "[" + message?.GetType() + "] " : string.Empty)}{message?.ToString() ?? string.Empty}",
         LogLevel.Alert);
 
     public static void ILCode(IEnumerable<CodeInstruction> code)
@@ -68,7 +70,7 @@ public static class Log
         Debug($"{code.opcode} {code.operand}");
     }
 
-    public static void LogPairs(this IEnumerable enumerable, int depth = 0)
+    public static void LogPairs(this IEnumerable? enumerable, int depth = 0)
     {
         if (enumerable is null)
         {

@@ -9,9 +9,9 @@ public static class PatchUpdate
 {
     // Make the current farmer perform an emote.
     [Action("PatchUpdate")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string modId, out error))
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? modId, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_PatchUpdate [UniqueId]";
             return false;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -52,7 +53,7 @@ public class DynamicPatcher
                 continue;
             }
 
-            var patchMethod = GetMethodFromString(patch.Target, out string error);
+            var patchMethod = GetMethodFromString(patch.Target, out string? error);
             if (patchMethod is null)
             {
                 Log.Error($"failed to get method from Target in dynamic patch '{patch.Id}': {error}");
@@ -103,7 +104,7 @@ public class DynamicPatcher
         Initialize(manifest);
     }
 
-    public static DynamicMethod DynamicFactory(MethodBase method)
+    public static DynamicMethod? DynamicFactory(MethodBase? method)
     {
         var methodFullName = $"{method?.DeclaringType}.{method?.Name}, {method?.DeclaringType?.Assembly.GetName().Name}";
         if (!Prefixes.TryGetValue(methodFullName, out var patches))
@@ -142,7 +143,6 @@ public class DynamicPatcher
         {
             Log.Trace($"Adding {patchInfo.PatchType} dynamic patch '{patchInfo.Id}' to method '{method?.Name}'");
             var skipBecauseConditionsLabel = il.DefineLabel();
-            var endOfResultChangeLabel = il.DefineLabel();
             il.Emit(OpCodes.Ldstr, patchInfo.Condition ?? "true");
             il.Emit(OpCodes.Ldnull);
             il.Emit(OpCodes.Ldnull);
@@ -184,7 +184,7 @@ public class DynamicPatcher
                     il.Emit(ops[0]);
                     il.Emit(OpCodes.Ldstr, patchInfo.ChangeResult.Value);
 
-                    if (returnType != typeof(string))
+                    if (returnType != typeof(string) && parseMethod is not null)
                     {
                         il.Emit(OpCodes.Call, parseMethod);
                         il.Emit(patchInfo.ChangeResult.Operation.ToUpper() switch
@@ -205,7 +205,7 @@ public class DynamicPatcher
                 else
                 {
                     il.Emit(OpCodes.Ldstr, patchInfo.ChangeResult.Value);
-                    if (returnType != typeof(string)) il.Emit(OpCodes.Call, parseMethod);
+                    if (returnType != typeof(string) && parseMethod is not null) il.Emit(OpCodes.Call, parseMethod);
                 }
 
                 il.Emit(ops[1]);
@@ -241,24 +241,24 @@ public class DynamicPatcher
 
     public static void TryRunSimplePatchAction(string patchID, string action)
     {
-        if (TriggerActionManager.TryRunAction(action, out var error, out var ex)) return;
+        if (TriggerActionManager.TryRunAction(action, out var error, out _)) return;
         Log.Warn($"Failed to run action '{action}' for dynamic patch '{patchID}': {error}");
     }
 
-    public static bool TryGetMethodInfo(MethodBase method, out Type returnType, out Type declaringType,
-        out ParameterInfo[] parameterList, out MethodInfo parseMethod)
+    public static bool TryGetMethodInfo(MethodBase? method, [NotNullWhen(true)] out Type? returnType, [NotNullWhen(true)] out Type? declaringType,
+        out ParameterInfo[] parameterList, out MethodInfo? parseMethod)
     {
         if (method is null)
         {
             returnType = typeof(void);
             declaringType = null;
-            parameterList = null;
+            parameterList = [];
             parseMethod = null;
             return false;
         }
 
         returnType = method is MethodInfo info ? info.ReturnType : typeof(void);
-        declaringType = method.DeclaringType;
+        declaringType = method.DeclaringType!;
         parameterList = method.GetParameters();
         parseMethod = returnType != typeof(void)
             ? returnType.GetMethod("Parse", new Type[] { typeof(string) })
@@ -288,7 +288,7 @@ public class DynamicPatcher
         };
     }
 
-    public static MethodBase GetMethodFromString(TargetMethod target, out string error)
+    public static MethodBase? GetMethodFromString(TargetMethod target, out string? error)
     {
         if (string.IsNullOrWhiteSpace(target.Type))
         {
@@ -318,11 +318,6 @@ public class DynamicPatcher
         }
 
         var methodName = $"{target.Type}:{target.Method}";
-        if (paramTypes.Any(t => t is null))
-        {
-            error = $"could not find one or more parameter types for method '{methodName}' in assembly '{target.Assembly}'";
-            return null;
-        }
 
         var result = target switch
         {

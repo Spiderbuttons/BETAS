@@ -16,6 +16,6 @@ public static class PlayerWeddingToday
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
         
-        return Game1.weddingToday && GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) => target.GetSpouseFriendship() is not null && target.GetSpouseFriendship().WeddingDate.Equals(Game1.Date));
+        return Game1.weddingToday && GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target => target.GetSpouseFriendship() is not null && target.GetSpouseFriendship().WeddingDate.Equals(Game1.Date));
     }
 }

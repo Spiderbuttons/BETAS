@@ -50,7 +50,7 @@ public static class PlayerPerfection
                 return farmerShipped >= min && farmerShipped <= max;
             }
 
-            var percent = ((float)farmerShipped / (float)total) * 100;
+            var percent = farmerShipped / (float)total * 100;
             return percent >= min && percent <= max;
         });
     }
@@ -90,7 +90,7 @@ public static class PlayerPerfection
                 return fishCaught >= min && fishCaught <= max;
             }
             
-            var percent = ((float)fishCaught / (float)totalFish) * 100;
+            var percent = fishCaught / (float)totalFish * 100;
             return percent >= min && percent <= max;
         });
     }
@@ -130,7 +130,7 @@ public static class PlayerPerfection
                 return numberOfRecipesCooked >= min && numberOfRecipesCooked <= max;
             }
             
-            var percent = ((float)numberOfRecipesCooked / (float)recipes.Count) * 100;
+            var percent = numberOfRecipesCooked / (float)recipes.Count * 100;
             return percent >= min && percent <= max;
         });
     }
@@ -167,7 +167,7 @@ public static class PlayerPerfection
                 return numberOfRecipesCrafted >= min && numberOfRecipesCrafted <= max;
             }
             
-            var percent = ((float)numberOfRecipesCrafted / (float)(recipes.Count - 1)) * 100;
+            var percent = numberOfRecipesCrafted / (float)(recipes.Count - 1) * 100;
             return percent >= min && percent <= max;
         });
     }
@@ -210,7 +210,7 @@ public static class PlayerPerfection
                 return maxedFriends >= min && maxedFriends <= max;
             }
             
-            var percent = ((float)maxedFriends / (float)totalFriends) * 100;
+            var percent = maxedFriends / (float)totalFriends * 100;
             return percent >= min && percent <= max;
         });
     }

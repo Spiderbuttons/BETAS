@@ -16,6 +16,6 @@ public static class PlayerAnniversaryToday
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
         
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) => target.GetSpouseFriendship() != null && target.GetSpouseFriendship().WeddingDate.DayOfMonth == Game1.Date.DayOfMonth && target.GetSpouseFriendship().WeddingDate.Season == Game1.Date.Season && target.GetSpouseFriendship().WeddingDate.Year != Game1.Date.Year);
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target => target.GetSpouseFriendship() != null && target.GetSpouseFriendship().WeddingDate.DayOfMonth == Game1.Date.DayOfMonth && target.GetSpouseFriendship().WeddingDate.Season == Game1.Date.Season && target.GetSpouseFriendship().WeddingDate.Year != Game1.Date.Year);
     }
 }

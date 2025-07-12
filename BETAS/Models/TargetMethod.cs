@@ -5,10 +5,10 @@ namespace BETAS.Models;
 public class TargetMethod
 {
     [ContentSerializer(Optional = false)]
-    public string Type;
+    public string? Type;
 
     [ContentSerializer(Optional = true)]
-    public string Method;
+    public string? Method;
 
     [ContentSerializer(Optional = true)]
     public string[] Parameters = [];

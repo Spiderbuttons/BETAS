@@ -10,12 +10,12 @@ public static class ChangeRelationship
 {
     // Change the current farmer's relationship with an NPC.
     [Action("ChangeRelationship")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error) ||
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableEnum(args, 2, out FriendshipStatus relation, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool roommates, out error, defaultValue: false ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int daysAway, out error, defaultValue: 3)))
+            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool roommates, out error, defaultValue: false) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int daysAway, out error, defaultValue: 3))
         {
             error = "Usage: Spiderbuttons.BETAS_ChangeRelationship <NPC> [Relationship] [Roommates?] [Wedding Delay]";
             return false;

@@ -20,7 +20,7 @@ namespace BETAS.Triggers
             BETAS.ModHelper.Events.GameLoop.GameLaunched += OnGameLaunched;
         }
         
-        public static void OnGameLaunched(object sender, GameLaunchedEventArgs e)
+        public static void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
         {
             if (BETAS.ModHelper.ModRegistry.IsLoaded("ApryllForever.PolyamorySweetKiss"))
             {

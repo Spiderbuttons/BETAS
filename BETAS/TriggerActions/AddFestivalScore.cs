@@ -9,7 +9,7 @@ public static class AddFestivalScore
 {
     // Add an amount of points to the current farmer's festival score.
     [Action("AddFestivalScore")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int amount, out error, defaultValue: 1))
         {

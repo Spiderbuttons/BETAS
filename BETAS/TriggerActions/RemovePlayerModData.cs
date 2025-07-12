@@ -9,9 +9,10 @@ public static class RemovePlayerModData
 {
     // Remove an entry from the current player's mod data dictionary, optionally only if the current value matches a given value.
     [Action("RemovePlayerModData")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string key, out error) || !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string value, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? key, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string? value, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_RemovePlayerModData <Key> [Value]";
             return false;

@@ -9,7 +9,7 @@ public static class ActionList
 {
     // Run every action in an action list, one after the other.
     [Action("ActionList")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var _, out error, allowBlank: false))
         {

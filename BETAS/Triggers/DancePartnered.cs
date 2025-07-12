@@ -14,7 +14,7 @@ namespace BETAS.Triggers
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(NetDancePartner), nameof(NetDancePartner.SetCharacter))]
-        public static void SetCharacter_Postfix(Character value)
+        public static void SetCharacter_Postfix(Character? value)
         {
             try
             {

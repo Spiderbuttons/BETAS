@@ -10,7 +10,7 @@ public static class Explode
 {
     // Make an explosion happen in the current location at the specified coordinates.
     [Action("Explode")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out int x, out error,
                 defaultValue: Game1.player.TilePoint.X) ||

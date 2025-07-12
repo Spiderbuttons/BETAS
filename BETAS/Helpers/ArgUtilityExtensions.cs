@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
@@ -24,7 +25,7 @@ public static class ArgUtilityExtensions
         };
     }
 
-    public static GameLocation GetCharacterLocationFromNameOrCache(string name)
+    public static GameLocation? GetCharacterLocationFromNameOrCache(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -89,9 +90,9 @@ public static class ArgUtilityExtensions
         return cache.TilePoint;
     }
 
-    private static string[] CombineTokenizableIndices(string[] array)
+    private static string[] CombineTokenizableIndices(string[]? array)
     {
-        if (array == null) return null;
+        if (array == null) return [];
 
         List<string> newArray = [];
         int open = 0;
@@ -106,7 +107,7 @@ public static class ArgUtilityExtensions
         return newArray.ToArray();
     }
 
-    public static bool TryGetTokenizable(string[] array, int index, out string value, out string error,
+    public static bool TryGetTokenizable(string[]? array, int index, [NotNullWhen(true)] out string? value, out string? error,
         bool allowBlank = true)
     {
         if (array == null)
@@ -137,8 +138,8 @@ public static class ArgUtilityExtensions
         return true;
     }
 
-    public static bool TryGetOptionalTokenizable(string[] array, int index, out string value,
-        out string error, string defaultValue = null, bool allowBlank = true)
+    public static bool TryGetOptionalTokenizable(string[]? array, int index, out string? value,
+        out string? error, string? defaultValue = null, bool allowBlank = true)
     {
         if (array == null)
         {
@@ -168,8 +169,7 @@ public static class ArgUtilityExtensions
         return true;
     }
 
-    public static bool TryGetTokenizableLocationName(string[] array, int index, GameLocation contextualLocation, out string value, out string error,
-        bool allowBlank = true)
+    public static bool TryGetTokenizableLocationName(string[] array, int index, GameLocation contextualLocation, [NotNullWhen(true)] out string? value, out string? error)
     {
         if (!TryGetTokenizable(array, index, out value, out error, allowBlank: false))
         {
@@ -191,7 +191,7 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetTokenizableLocation(string[] query, int index, ref GameLocation location, out string error)
+    public static bool TryGetTokenizableLocation(string[] query, int index, [NotNullWhen(true)] ref GameLocation? location, out string? error)
     {
         if (!TryGetTokenizable(query, index, out var locationTarget, out error))
         {
@@ -209,7 +209,7 @@ public static class ArgUtilityExtensions
         return true;
     }
 
-    public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string error,
+    public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string? error,
         bool allowBlank = true)
     {
         if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
@@ -229,7 +229,7 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableInt(string[] array, int index, out int value, out string error,
+    public static bool TryGetOptionalTokenizableInt(string[]? array, int index, out int value, out string? error,
         int defaultValue = 0)
     {
         if (array == null)
@@ -259,7 +259,7 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string error,
+    public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string? error,
         bool allowBlank = true)
     {
         if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
@@ -279,7 +279,7 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableFloat(string[] array, int index, out float value, out string error,
+    public static bool TryGetOptionalTokenizableFloat(string[]? array, int index, out float value, out string? error,
         float defaultValue = 0f)
     {
         if (array == null)
@@ -309,7 +309,7 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string error,
+    public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string? error,
         bool allowBlank = true)
     {
         if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
@@ -329,7 +329,7 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableBool(string[] array, int index, out bool value, out string error,
+    public static bool TryGetOptionalTokenizableBool(string[]? array, int index, out bool value, out string? error,
         bool defaultValue = false)
     {
         if (array == null)
@@ -359,7 +359,7 @@ public static class ArgUtilityExtensions
         return true;
     }
 
-    public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string error)
+    public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string? error)
         where TEnum : struct
     {
         if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
@@ -368,10 +368,10 @@ public static class ArgUtilityExtensions
             return false;
         }
         
-        if (!Utility.TryParseEnum<TEnum>(raw, out value))
+        if (!Utility.TryParseEnum(raw, out value))
         {
             Type type = typeof(TEnum);
-            value = default(TEnum);
+            value = default;
             error = GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
@@ -380,8 +380,8 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string error,
-        TEnum defaultValue = default(TEnum)) where TEnum : struct
+    public static bool TryGetOptionalTokenizableEnum<TEnum>(string[]? array, int index, out TEnum value, out string? error,
+        TEnum defaultValue = default) where TEnum : struct
     {
         if (array == null)
         {
@@ -399,7 +399,7 @@ public static class ArgUtilityExtensions
             return true;
         }
         
-        if (!Utility.TryParseEnum<TEnum>(TokenParser.ParseText(array[index]), out value))
+        if (!Utility.TryParseEnum(TokenParser.ParseText(array[index]), out value))
         {
             Type type = typeof(TEnum);
             value = defaultValue;

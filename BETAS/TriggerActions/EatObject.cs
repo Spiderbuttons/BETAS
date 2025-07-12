@@ -9,9 +9,9 @@ public static class EatObject
 {
     // Make the current farmer eat an object with the given ID, optionally not requiring it to be in the inventory.
     [Action("EatObject")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string itemId, out error) ||
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? itemId, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out var fromInventory, out error, defaultValue: true))
         {
             error = "Usage: Spiderbuttons.BETAS_EatObject <ItemId> [From Inventory?]";

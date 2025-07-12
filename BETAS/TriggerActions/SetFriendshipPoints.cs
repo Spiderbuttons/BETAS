@@ -9,7 +9,7 @@ public static class SetFriendshipPoints
 {
     // Set the friendship points the player has with an NPC.
     [Action("SetFriendshipPoints")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var npcName, out error, allowBlank: true) || !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var points, out error))
         {

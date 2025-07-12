@@ -11,9 +11,9 @@ public static class ShakeNpc
 {
     // Make an NPC perform an emote.
     [Action("ShakeNpc")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string npcName, out error, defaultValue: "All") ||
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? npcName, out error, defaultValue: "All") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int duration, out error, defaultValue: 1000))
         {
             error = "Usage: Spiderbuttons.BETAS_ShakeNpc [NPC Name] [Duration]";

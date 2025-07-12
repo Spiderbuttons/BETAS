@@ -10,11 +10,11 @@ public static class SetNewDialogue
 {
     // Add a new line of dialogue to an NPC, optionally adding on to their current dialogue instead of replacing it entirely.
     [Action("SetNewDialogue")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string dialogue, out error, allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool append, out error, false))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string? dialogue, out error, allowBlank: false) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out bool append, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_SetNewDialogue <NPC Name> <Dialogue> [Add?]";
             return false;

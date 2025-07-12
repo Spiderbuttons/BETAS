@@ -18,6 +18,6 @@ public static class CurrentSong
         }
 
         if (!ArgUtility.HasIndex(query, 1)) return (Game1.currentSong != null && Game1.currentSong.IsPlaying);
-        return Game1.currentSong != null && GameStateQuery.Helpers.AnyArgMatches(query, 1, (songName) => Game1.currentSong.Name.Equals(songName, StringComparison.OrdinalIgnoreCase));;
+        return Game1.currentSong != null && GameStateQuery.Helpers.AnyArgMatches(query, 1, (songName) => Game1.currentSong.Name.Equals(songName, StringComparison.OrdinalIgnoreCase));
     }
 }

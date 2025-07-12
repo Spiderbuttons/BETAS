@@ -9,7 +9,7 @@ public static class ChangeMusicTrack
 {
     // Change the current music to the requested music track.
     [Action("ChangeMusicTrack")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var track, out error))
         {

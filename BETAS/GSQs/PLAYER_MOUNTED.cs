@@ -16,6 +16,6 @@ public static class PlayerMounted
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) => target.isRidingHorse());
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target => target.isRidingHorse());
     }
 }

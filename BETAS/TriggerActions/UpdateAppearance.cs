@@ -8,7 +8,7 @@ namespace BETAS.TriggerActions;
 
 public static class UpdateAppearance
 {
-    public static bool ForceAppearance(NPC npc, string appearanceId = null)
+    private static bool ForceAppearance(NPC npc, string? appearanceId = null)
     {
         if (appearanceId == null)
         {
@@ -17,7 +17,7 @@ public static class UpdateAppearance
         }
 
         CharacterData data = npc.GetData();
-        CharacterAppearanceData appearance = data?.Appearance.Find(appearanceEntry => appearanceEntry.Id == appearanceId);
+        CharacterAppearanceData? appearance = data.Appearance.Find(appearanceEntry => appearanceEntry.Id == appearanceId);
         if (appearance == null) return false;
 
         if (!npc.TryLoadPortraits(appearance.Portrait, out var error1, Game1.content))
@@ -42,9 +42,9 @@ public static class UpdateAppearance
     
     // Force an update to an NPC's appearance, optionally specifying which appearance to force the change to.
     [Action("UpdateAppearance")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string npcName, out error, allowBlank: false) ||
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var appearanceId, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_UpdateAppearance <NPC> [AppearanceId]";

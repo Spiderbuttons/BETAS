@@ -11,7 +11,7 @@ public static class ClearTerrainFeatures
 {
     // Clear the terrain feature on a specific tile or all terrain features in a rectangle in a location according to class.
     [Action("ClearTerrainFeatures")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out var location, out error, defaultValue: "Here") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var type, out error, defaultValue: "All") ||
@@ -34,7 +34,7 @@ public static class ClearTerrainFeatures
         }
         
         if (type.EqualsIgnoreCase("!All")) return false;
-        var negate = type.StartsWith("!");
+        var negate = type is not null && type.StartsWith("!");
 
         if (!ArgUtility.HasIndex(args, 3))
         {
@@ -48,7 +48,7 @@ public static class ClearTerrainFeatures
                     feature.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
                 return true;
             }
-            type = type.Substring(1);
+            type = type?.Substring(1);
             loc.terrainFeatures.RemoveWhere(pair => !pair.Value.GetType().Name.EqualsIgnoreCase(type));
             loc.resourceClumps.RemoveWhere(clump => !clump.GetType().Name.EqualsIgnoreCase(type));
             loc.largeTerrainFeatures.RemoveWhere(feature => !feature.GetType().Name.EqualsIgnoreCase(type));
@@ -70,7 +70,7 @@ public static class ClearTerrainFeatures
                                                              type.EqualsIgnoreCase("All")));
                 return true;
             }
-            type = type.Substring(1);
+            type = type?.Substring(1);
             loc.terrainFeatures.RemoveWhere(pair => pair.Key == new Vector2(topLeftX, topLeftY) &&
                                                     !pair.Value.GetType().Name.EqualsIgnoreCase(type));
             loc.resourceClumps.RemoveWhere(clump => clump.Tile == new Vector2(topLeftX, topLeftY) &&
@@ -98,7 +98,7 @@ public static class ClearTerrainFeatures
             return true;
         }
         
-        type = type.Substring(1);
+        type = type?.Substring(1);
         loc.terrainFeatures.RemoveWhere(pair => pair.Key.X >= topLeftX && pair.Key.Y >= topLeftY &&
                                                 pair.Key.X <= bottomRightX && pair.Key.Y <= bottomRightY &&
                                                 !pair.Value.GetType().Name.EqualsIgnoreCase(type));

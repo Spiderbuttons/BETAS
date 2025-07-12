@@ -16,8 +16,10 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class ForgeUsed
     {
-        public static void Trigger(Item target, Item input = null, bool unforge = false)
+        public static void Trigger(Item? target, Item? input = null, bool unforge = false)
         {
+            if (target is null) return;
+            
             if (target is CombinedRing comboRing)
             {
                 target = comboRing.combinedRings[0];
@@ -31,7 +33,7 @@ namespace BETAS.Triggers
         
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ForgeMenu), nameof(ForgeMenu.CraftItem))]
-        public static void CraftItem_Postfix(Item __result, Item left_item, Item right_item, bool forReal)
+        public static void CraftItem_Postfix(Item? __result, Item left_item, Item right_item, bool forReal)
         {
             try
             {

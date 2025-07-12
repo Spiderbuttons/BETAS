@@ -15,7 +15,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class LightningStruck
     {
-        public static void Trigger(Farm.LightningStrikeEvent strike, bool hitRod, TerrainFeature hitFeature)
+        public static void Trigger(Farm.LightningStrikeEvent strike, bool hitRod, TerrainFeature? hitFeature)
         {
             var strikeItem = ItemRegistry.Create("Lightning Strike");
             strikeItem.modData["BETAS/LightningStruck/Size"] = strike is { bigFlash: true } ? "Big" : "Small";

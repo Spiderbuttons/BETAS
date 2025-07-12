@@ -15,7 +15,7 @@ namespace BETAS.Triggers
     [HarmonyPatch]
     static class CropHarvested
     {
-        public static void Trigger(Item crop, GameLocation loc, JunimoHarvester junimo = null, int numToHarvest = 1)
+        public static void Trigger(Item crop, GameLocation loc, JunimoHarvester? junimo = null, int numToHarvest = 1)
         {
             var newItem = ItemRegistry.Create(crop.QualifiedItemId, crop.Stack);
             

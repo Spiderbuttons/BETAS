@@ -9,7 +9,7 @@ public static class AddQiCoins
 {
     // Add an amount of Qi Coins to the farmer's casino wallet.
     [Action("AddQiCoins")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int amount, out error, defaultValue: 1))
         {

@@ -3,4 +3,4 @@
 namespace BETAS.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-public class MapActionAttribute() : Attribute;
+public class MapActionAttribute : Attribute;

@@ -11,9 +11,9 @@ public static class ShowMail
 {
     // Open a LetterViewerMenu
     [Action("ShowMail")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string mailId, out error) ||
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? mailId, out error) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out bool flag, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_ShowMail <Mail ID> [Flag?]";

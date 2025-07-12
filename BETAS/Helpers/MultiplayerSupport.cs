@@ -1,5 +1,4 @@
-﻿#nullable enable
-using StardewModdingAPI;
+﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Triggers;
@@ -21,7 +20,7 @@ public class MultiplayerSupport
         public string Location { get; set; }
         public long PlayerID { get; set; }
         
-        public TriggerPackage(string triggerName, Item targetItem, Item inputItem, string location, long player)
+        public TriggerPackage(string triggerName, Item? targetItem, Item? inputItem, string location, long player)
         {
             TriggerName = triggerName;
             TargetItemID = targetItem?.ItemId;

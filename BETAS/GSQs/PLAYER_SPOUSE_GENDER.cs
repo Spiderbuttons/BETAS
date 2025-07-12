@@ -24,7 +24,7 @@ public static class PlayerSpouseGender
             _ => Gender.Undefined
         };
 
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (Farmer target) =>
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target =>
         {
             var spouse = target.getSpouse();
             if (spouse == null)

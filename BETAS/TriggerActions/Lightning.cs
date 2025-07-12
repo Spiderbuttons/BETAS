@@ -3,6 +3,7 @@ using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Delegates;
+// ReSharper disable PossibleLossOfFraction
 
 namespace BETAS.TriggerActions;
 
@@ -10,7 +11,7 @@ public static class Lightning
 {
     // Make lightning strike at the specified coordinates, or on the current farmer if no coordinates are specified.
     [Action("Lightning")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out int x, out error,
                 defaultValue: Game1.player.TilePoint.X) ||

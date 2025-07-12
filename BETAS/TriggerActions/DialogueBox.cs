@@ -13,7 +13,7 @@ public static class DialogueBox
 {
     // Make the current farmer perform an emote.
     [Action("DialogueBox")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var name, out error) ||
             !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var message, out error) ||
@@ -25,7 +25,7 @@ public static class DialogueBox
         }
 
         var NPC = Game1.getCharacterFromName(name);
-        Texture2D portraitTexture = null;
+        Texture2D? portraitTexture = null;
 
         if (ArgUtility.HasIndex(args, 3) && !portrait.EqualsIgnoreCase("null"))
         {
@@ -39,7 +39,7 @@ public static class DialogueBox
             }
         }
 
-        if (portraitTexture is not null || name is not null)
+        if (portraitTexture is not null)
         {
             if (NPC is not null)
             {
@@ -47,12 +47,12 @@ public static class DialogueBox
                     eventActor: false);
                 NPC.displayName = displayName ?? NPC.displayName;
             }
-            else if (portraitTexture is not null)
+            else
             {
                 NPC = new NPC(new AnimatedSprite("Characters\\Abigail", 0, 16, 16),
                     Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
                 {
-                    displayName = displayName ?? name ?? "???"
+                    displayName = displayName ?? name
                 };
             }
         }

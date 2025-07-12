@@ -11,7 +11,7 @@ public static class ClearObjects
 {
     // Clear the objects (furniture, chests, etc) on a specific tile or all objects in a rectangle in a location according to class.
     [Action("ClearObjects")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out var location, out error, defaultValue: "Here") ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var type, out error, defaultValue: "All") ||
@@ -34,7 +34,7 @@ public static class ClearObjects
         }
         
         if (type.EqualsIgnoreCase("!All")) return false;
-        var negate = type.StartsWith("!");
+        var negate = type is not null && type.StartsWith("!");
 
         if (!ArgUtility.HasIndex(args, 3))
         {
@@ -50,7 +50,7 @@ public static class ClearObjects
                 loc.furniture.RemoveWhere(furn => furn.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All"));
                 return true;
             }
-            type = type.Substring(1);
+            type = type?.Substring(1);
             foreach (var obj in loc.Objects.Pairs)
             {
                 if (!obj.Value.GetType().Name.EqualsIgnoreCase(type))
@@ -78,7 +78,7 @@ public static class ClearObjects
                                                   (furn.GetType().Name.EqualsIgnoreCase(type) || type.EqualsIgnoreCase("All")));
                 return true;
             }
-            type = type.Substring(1);
+            type = type?.Substring(1);
             foreach (var obj in loc.Objects.Pairs)
             {
                 if (obj.Key == new Vector2(topLeftX, topLeftY) &&
@@ -109,7 +109,7 @@ public static class ClearObjects
             return true;
         }
         
-        type = type.Substring(1);
+        type = type?.Substring(1);
         foreach (var obj in loc.Objects.Pairs)
         {
             if (obj.Key.X >= topLeftX && obj.Key.Y >= topLeftY &&

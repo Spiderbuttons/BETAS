@@ -9,7 +9,7 @@ public static class AddExperience
 {
     // Add an amount of experience to the current player for the given skill, or all skills if none specified.
     [Action("AddExperience")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out var amount, out error, defaultValue: 1) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var skill, out error))

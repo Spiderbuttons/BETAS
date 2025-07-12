@@ -58,7 +58,7 @@ public static class ItemModData
     {
         if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item,
                 out var error) || !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out var value, out error, false))
+            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out _, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

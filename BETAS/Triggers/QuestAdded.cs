@@ -18,12 +18,12 @@ namespace BETAS.Triggers
             BETAS.ModHelper.Events.GameLoop.SaveLoaded += OnSaveLoaded;
         }
         
-        public static void OnSaveLoaded(object sender, SaveLoadedEventArgs e)
+        public static void OnSaveLoaded(object? sender, SaveLoadedEventArgs e)
         {
             Game1.player.questLog.OnElementChanged += OnQuestAdded;
         }
 
-        public static void OnQuestAdded(NetList<Quest, NetRef<Quest>> list, int index, Quest oldValue, Quest newValue)
+        public static void OnQuestAdded(NetList<Quest, NetRef<Quest>> list, int index, Quest? oldValue, Quest? newValue)
         {
             if (newValue is null || list.Contains(newValue)) return;
             

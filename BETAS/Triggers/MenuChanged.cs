@@ -1,5 +1,4 @@
-﻿#nullable enable
-using BETAS.Attributes;
+﻿using BETAS.Attributes;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;

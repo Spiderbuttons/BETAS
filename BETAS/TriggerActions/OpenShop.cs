@@ -9,10 +9,10 @@ public static class OpenShop
 {
     // Open a shop menu.
     [Action("OpenShop")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string shopId, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string ownerName, out error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? shopId, out error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string? ownerName, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_OpenShop <ShopId> [Owner]";
             return false;

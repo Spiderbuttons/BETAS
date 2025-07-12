@@ -9,7 +9,7 @@ public static class ResetGifts
 {
     // Reset the weekly/daily gift giving limit for a specific NPC.
     [Action("ResetGifts")]
-    public static bool Action(string[] args, TriggerActionContext context, out string error)
+    public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var npcName, out error, allowBlank: true) || !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out var gifts, out error, defaultValue: 0) || !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out var today, out error, defaultValue: false))
         {
