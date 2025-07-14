@@ -18,7 +18,7 @@ public static class Jump
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int yVelocity, out error, defaultValue: 0) ||
             !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int xVelocity, out error, defaultValue: 0))
         {
-            error = "Usage: Spiderbuttons.BETAS_Jump [NPC/Farmer] [Height] [Vertical Speed] [Horizontal Speed]";
+            error = "Usage: Spiderbuttons.BETAS_Jump [NPC/Farmer] [Velocity] [Vertical Speed] [Horizontal Speed]";
             return false;
         }
 
