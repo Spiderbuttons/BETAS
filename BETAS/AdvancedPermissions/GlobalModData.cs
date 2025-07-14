@@ -10,7 +10,7 @@ namespace BETAS.AdvancedPermissions;
 
 public static class GlobalModData
 {
-    public static bool TryWriteGlobalModData(IModMetadata mod, string key, string value, [NotNullWhen(false)] out string? error)
+    public static bool TryWriteGlobalModData(IModMetadata mod, string key, string? value, [NotNullWhen(false)] out string? error)
     {
         error = null;
         if (!mod.HasPermission(Permissions.GlobalModData))
@@ -29,14 +29,22 @@ public static class GlobalModData
                 {
                     data = new Dictionary<string, string>();
                 }
-                data[key] = value;
+
+                if (value is null)
+                {
+                    data.Remove(key);
+                } else data[key] = value;
                 helper.JsonHelper.WriteJsonFile(path, data);
             }
             else
             {
                 var data = mod.Mod!.Helper.Data.ReadGlobalData<Dictionary<string, string>>("betas");
                 data ??= new Dictionary<string, string>();
-                data[key] = value;
+                if (value is null)
+                {
+                    data.Remove(key);
+                }
+                else data[key] = value;
                 mod.Mod!.Helper.Data.WriteGlobalData("betas", data);
             }
         }
