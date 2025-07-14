@@ -1,6 +1,7 @@
 ﻿using System;
 using BETAS.Attributes;
 using BETAS.Helpers;
+using BETAS.Triggers;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -34,6 +35,8 @@ public static class ChangeRelationship
         }
 
         if (friendship.Status == relation) return true;
+
+        var oldFriendship = RelationshipChanged.FriendlyCloner(friendship);
         
         switch (relation) 
         {
@@ -96,6 +99,7 @@ public static class ChangeRelationship
         
         friendship.Status = relation;
         
+        RelationshipChanged.Trigger(friendship, oldFriendship!, npc, Game1.player);
         return true;
     }
 }
