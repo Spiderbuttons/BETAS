@@ -13,7 +13,7 @@ public static class ResetGifts
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var npcName, out error, allowBlank: true) || !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out var gifts, out error, defaultValue: 0) || !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out var today, out error, defaultValue: false))
         {
-            error = "Usage: Spiderbuttons.BETAS_ResetGifts <NPC Name> [Gifts] [Today?]";
+            error = "Usage: Spiderbuttons.BETAS_ResetGifts <NPC Name> [Amount] [Today?]";
             return false;
         }
         
