@@ -12,16 +12,20 @@ public static class PlayerDancePartner
     [GSQ("PLAYER_DANCE_PARTNER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(query, 1, out var npc, out var error))
+        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var npc, out error, defaultValue: null))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        var partner = Game1.player.dancePartner.GetCharacter();
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, farmer => {
+            var partner = farmer.dancePartner.GetCharacter();
         
-        if (partner == null) return npc == null;
-        if (npc is null or "Any") return true;   
-        if (npc.EqualsIgnoreCase("Farmer")) return partner is Farmer;
-        return partner.Name.EqualsIgnoreCase(npc);
+            if (partner == null) return false;
+            if (npc is null or "Any") return true;   
+            if (npc.EqualsIgnoreCase("Farmer")) return partner is Farmer;
+            return partner.Name.EqualsIgnoreCase(npc);
+        });
+        
     }
 }
