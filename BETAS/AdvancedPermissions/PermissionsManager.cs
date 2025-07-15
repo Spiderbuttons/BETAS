@@ -19,7 +19,7 @@ public static class PermissionsManager
 {
     private static readonly Dictionary<IModMetadata, Permissions> _permissionsCache = new();
     
-    private static Permissions ParsePermissionsFromManifest(IModMetadata? mod)
+    public static Permissions ParsePermissionsFromManifest(IModMetadata? mod)
     {
         if (mod is null)
         {

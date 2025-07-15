@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using BETAS.AdvancedPermissions;
 using BETAS.APIs;
 using BETAS.Attributes;
 using BETAS.Helpers;
@@ -67,9 +68,15 @@ namespace BETAS
 
         private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
         {
-            foreach (var mod in Helper.ModRegistry.GetAll())
+            foreach (var mod in ModRegistry.GetAll())
             {
-                if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID)) LoadedMods.Add(mod.Manifest.UniqueID);
+                if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID))
+                {
+                    LoadedMods.Add(mod.Manifest.UniqueID);
+                    var perms = PermissionsManager.ParsePermissionsFromManifest(mod);
+                    if (perms == Permissions.None) continue;
+                    Log.Info($"{mod.Manifest.Name} ({mod.Manifest.UniqueID}) enabled permissions: {perms}");
+                }
             }
 
             SCAPI = Helper.ModRegistry.GetApi<ISpaceCoreApi>("spacechase0.SpaceCore");
