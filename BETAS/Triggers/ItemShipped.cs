@@ -15,12 +15,13 @@ namespace BETAS.Triggers
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(ShippingMenu), nameof(ShippingMenu.parseItems))]
-        public static void parseItems_Postfix(IList<Item> items)
+        public static void parseItems_Postfix(IList<Item?> items)
         {
             try
             {
                 foreach (var item in items)
                 {
+                    if (item is null) continue;
                     var itemCopy = item.getOne();
                     itemCopy.Stack = item.Stack;
                     TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemShipped", inputItem: itemCopy, targetItem: itemCopy);
