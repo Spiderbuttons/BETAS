@@ -12,8 +12,8 @@ public static class AnimateNpc
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out bool flip, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out bool loop, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizableBool(args, 2, out bool flip, out error) ||
+            !ArgUtilityExtensions.TryGetTokenizableBool(args, 3, out bool loop, out error) ||
             !ArgUtilityExtensions.TryGetTokenizableInt(args, 4, out int frameDuration, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_AnimateNpc <Name> <Flip?> <Loop?> <#FrameDuration> <#AnimationFrame>+";
