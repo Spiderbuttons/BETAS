@@ -12,9 +12,15 @@ public static class SetNpcFacingDirection
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? npcName, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var facingDirection, out error))
+            !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var direction, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_SetNpcFacingDirection <Name> <int>";
+            return false;
+        }
+
+        if (direction > 3 || direction < 0)
+        {
+            error = "direction is not valid, 0 = up, 1 = right, 2 = down, 3 = left";
             return false;
         }
 
@@ -25,7 +31,7 @@ public static class SetNpcFacingDirection
             return false;
         }
 
-        npc.faceDirection(facingDirection)
+        npc.faceDirection(direction)
 
         return true;
     }

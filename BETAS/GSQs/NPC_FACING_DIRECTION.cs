@@ -23,7 +23,7 @@ public static class NpcFacingDirection
 
         if (direction > 3 || direction < 0)
         {
-            return GameStateQuery.Helpers.ErrorResult(query, "direction set is not valid, 0 = up, 1 = right, 2 = down, 3 = left");
+            return GameStateQuery.Helpers.ErrorResult(query, "direction is not valid, 0 = up, 1 = right, 2 = down, 3 = left");
             return false;
         }
 
