@@ -68,6 +68,7 @@ namespace BETAS
 
         private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
         {
+            Log.Trace("Step into my parlour...");
             foreach (var mod in ModRegistry.GetAll())
             {
                 if (Helper.ModRegistry.IsLoaded(mod.Manifest.UniqueID))
