@@ -18,7 +18,11 @@ public static class HoldUpItem
             return false;
         }
 
-        Game1.PerformActionWhenPlayerFree(() => Game1.player.holdUpItemThenMessage(ItemRegistry.Create(itemId), count));
+        if (Game1.eventUp && Game1.CurrentEvent.isFestival)
+        {
+            Game1.player.holdUpItemThenMessage(ItemRegistry.Create(itemId), count);
+        } else Game1.PerformActionWhenPlayerFree(() => Game1.player.holdUpItemThenMessage(ItemRegistry.Create(itemId), count));
+        
         return true;
     }
 }

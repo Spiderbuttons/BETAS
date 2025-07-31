@@ -31,14 +31,14 @@ public static class Jump
 
         if (npcName.EqualsIgnoreCase("All"))
         {
-            foreach (var chara in Game1.currentLocation.characters.Where(chara => chara.IsVillager))
+            foreach (var chara in Game1.currentLocation.EventCharactersIfPossible().Where(chara => chara.IsVillager))
             {
                 chara.jump(jumpVelocity);
             }
             return true;
         }
 
-        var npc = Game1.getCharacterFromName(npcName);
+        var npc = Game1.getCharacterFromName(npcName)?.EventActorIfPossible();
         if (npc == null)
         {
             error = "no NPC found with name '" + npcName + "'";

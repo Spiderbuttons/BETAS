@@ -13,8 +13,10 @@ public static class ShakeNpc
     [Action("ShakeNpc")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? npcName, out error, defaultValue: "All") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int duration, out error, defaultValue: 1000))
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? npcName, out error,
+                defaultValue: "All") ||
+            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int duration, out error,
+                defaultValue: 1000))
         {
             error = "Usage: Spiderbuttons.BETAS_ShakeNpc [NPC Name] [Duration]";
             return false;
@@ -22,15 +24,15 @@ public static class ShakeNpc
 
         if (npcName.EqualsIgnoreCase("All"))
         {
-            foreach (var chara in Game1.currentLocation.characters.Where(chara => chara.IsVillager))
+            foreach (var chara in Game1.currentLocation.EventCharactersIfPossible().Where(chara => chara.IsVillager))
             {
-                chara.shake(duration);
+                chara.EventActorIfPossible().shake(duration);
             }
 
             return true;
         }
 
-        var npc = Game1.getCharacterFromName(npcName);
+        var npc = Game1.getCharacterFromName(npcName)?.EventActorIfPossible();
         if (npc == null)
         {
             error = "no NPC found with name '" + npcName + "'";

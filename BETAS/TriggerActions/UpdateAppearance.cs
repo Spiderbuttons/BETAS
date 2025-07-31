@@ -51,7 +51,7 @@ public static class UpdateAppearance
             return false;
         }
 
-        var npc = Game1.getCharacterFromName(npcName);
+        var npc = Game1.getCharacterFromName(npcName)?.EventActorIfPossible();
         if (npc == null)
         {
             error = "no NPC found with name '" + npcName + "'";
