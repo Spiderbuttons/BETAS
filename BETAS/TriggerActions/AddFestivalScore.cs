@@ -11,11 +11,13 @@ public static class AddFestivalScore
     [Action("AddFestivalScore")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int amount, out error, defaultValue: 1))
+        if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out int amount, out error, defaultValue: 1))
         {
             error = "Usage: Spiderbuttons.BETAS_AddFestivalScore [Amount]";
             return false;
         }
+        
+        Log.Warn(amount);
 
         Game1.player.festivalScore += amount;
         return true;
