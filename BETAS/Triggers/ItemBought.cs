@@ -21,9 +21,8 @@ namespace BETAS.Triggers
             if (item is null) return;
 
             /*
-                Returning early if it's a GenericTool is a temporary fix to work around a SpaceCore bug.
-                SpaceCore.Patches.ToolDataDefinitionPatcher.After_CreateToolInstance(Tool, ToolData)
-                No null check in the Where(), null reference exception when checking toolData.ClassName.
+                Returning early if it's a GenericTool is a temporary fix to work around a vanilla bug.
+                This will crash in SpaceCore first if it's installed, but it's not actually the fault of SpaceCore.
             */
             if (item is GenericTool) return;
 

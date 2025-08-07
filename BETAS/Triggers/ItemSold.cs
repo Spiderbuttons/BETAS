@@ -8,6 +8,7 @@ using BETAS.Helpers;
 using HarmonyLib;
 using StardewValley;
 using StardewValley.Menus;
+using StardewValley.Tools;
 using StardewValley.Triggers;
 
 namespace BETAS.Triggers
@@ -18,7 +19,15 @@ namespace BETAS.Triggers
     {
         public static void Trigger(ISalable? item, string? shopId)
         {
-            if (item is null) return;
+            if (item is null || shopId is "Dresser") return;
+            
+            /*
+                Returning early if it's a GenericTool is a temporary fix to work around a vanilla bug.
+                This will crash in SpaceCore first if it's installed, but it's not actually the fault of SpaceCore.
+            */
+            if (item is GenericTool) return;
+
+            Log.Alert(shopId);
 
             var soldItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) soldItem.modData["BETAS/ItemSold/ShopId"] = shopId;
