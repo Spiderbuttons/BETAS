@@ -5,6 +5,8 @@ using System.Reflection.Emit;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
+using StardewModdingAPI;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 using StardewValley.Triggers;
 
@@ -173,7 +175,6 @@ namespace BETAS.Triggers
                 var oldFriendship = il.DeclareLocal(typeof(Friendship));
 
                 matcher.MatchStartForward(
-                    new CodeMatch(OpCodes.Dup),
                     new CodeMatch(OpCodes.Ldc_I4_3),
                     new CodeMatch(OpCodes.Callvirt,
                         AccessTools.PropertySetter(typeof(Friendship), nameof(Friendship.Status)))
