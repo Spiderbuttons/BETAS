@@ -87,8 +87,7 @@ namespace BETAS.Triggers
                     new CodeMatch(OpCodes.Call, AccessTools.PropertyGetter(typeof(Game1), nameof(Game1.player))),
                     new CodeMatch(OpCodes.Ldloc_1),
                     new CodeMatch(OpCodes.Ldc_I4_0),
-                    new CodeMatch(OpCodes.Callvirt,
-                        AccessTools.Method(typeof(Farmer), nameof(Farmer.addItemToInventoryBool))),
+                    new CodeMatch(op => (op.opcode == OpCodes.Call || op.opcode == OpCodes.Callvirt) && op.operand.ToString()!.Contains("addItemToInventoryBool")),
                     new CodeMatch(OpCodes.Brfalse),
                     new CodeMatch(OpCodes.Ldloca_S)
                 ).ThrowIfNotMatch("Could not find proper entry point #4 for Crop_harvest_Transpiler");
