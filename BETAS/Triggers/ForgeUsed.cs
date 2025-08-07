@@ -5,6 +5,8 @@ using System.Reflection.Emit;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
+using StardewModdingAPI;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 using StardewValley.Menus;
 using StardewValley.Objects;
@@ -55,6 +57,8 @@ namespace BETAS.Triggers
         [HarmonyPatch(typeof(ForgeMenu), nameof(ForgeMenu.update))]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
+            if (Constants.Platform is Platform.Android) return ForgeMenu_update_AndroidTranspiler(instructions, il);
+            
             var code = instructions.ToList();
             try
             {
@@ -98,7 +102,57 @@ namespace BETAS.Triggers
             }
             catch (Exception ex)
             {
-                Log.Error("Error in BETAS.LightningStruck_Utility_performLightningUpdate_Transpiler: \n" + ex);
+                Log.Error("Error in BETAS.ForgeUsed_ForgeMenu_update_Transpiler: \n" + ex);
+                return code;
+            }
+        }
+
+        private static IEnumerable<CodeInstruction> ForgeMenu_update_AndroidTranspiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
+        {
+            var code = instructions.ToList();
+            try
+            {
+                var matcher = new CodeMatcher(code, il);
+
+                matcher.MatchEndForward(
+                    new CodeMatch(OpCodes.Ldarg_0),
+                    new CodeMatch(OpCodes.Ldfld),
+                    new CodeMatch(OpCodes.Call,
+                        AccessTools.Method(typeof(Utility), "CollectOrDrop", [typeof(Item)])),
+                    new CodeMatch(OpCodes.Pop),
+                    new CodeMatch(OpCodes.Ldstr, "(O)848")
+                ).ThrowIfNotMatch("Could not find proper entry point #1 for ForgeMenu_update_Transpiler");
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Ldfld,
+                        AccessTools.Field(typeof(MenuWithInventory), "heldItem")),
+                    new CodeInstruction(OpCodes.Ldnull),
+                    new CodeInstruction(OpCodes.Ldc_I4_1),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ForgeUsed), nameof(Trigger)))
+                );
+                
+                matcher.MatchEndForward(
+                    new CodeMatch(OpCodes.Ldloc_S),
+                    new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(CombinedRing), nameof(CombinedRing.combinedRings))),
+                    new CodeMatch(OpCodes.Newobj),
+                    new CodeMatch(OpCodes.Stloc_S)
+                ).ThrowIfNotMatch("Could not find proper entry point #2 for ForgeMenu_update_Transpiler");
+                
+                var listLocal = matcher.Instruction.operand;
+                
+                matcher.Advance(1);
+                
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Ldloc_S, listLocal),
+                    new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(ForgeUsed), nameof(RingGrabber)))
+                );
+
+                return matcher.InstructionEnumeration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error in BETAS.ForgeUsed_ForgeMenu_update_AndroidTranspiler: \n" + ex);
                 return code;
             }
         }
