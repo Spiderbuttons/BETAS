@@ -6,6 +6,8 @@ using System.Reflection.Emit;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
+using StardewModdingAPI;
+using StardewModdingAPI.Toolkit.Utilities;
 using StardewValley;
 using StardewValley.Menus;
 using StardewValley.Tools;
@@ -27,8 +29,6 @@ namespace BETAS.Triggers
             */
             if (item is GenericTool) return;
 
-            Log.Alert(shopId);
-
             var soldItem = ItemRegistry.Create(item.QualifiedItemId, item.Stack, item.Quality);
             if (shopId is not null) soldItem.modData["BETAS/ItemSold/ShopId"] = shopId;
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_ItemSold", targetItem: soldItem, triggerArgs: [soldItem]);
@@ -37,6 +37,13 @@ namespace BETAS.Triggers
         // ReSharper disable once UnusedMember.Local
         static IEnumerable<MethodBase> TargetMethods()
         {
+            if (Constants.Platform is Platform.Android)
+                return new[]
+                {
+                    AccessTools.Method(typeof(ShopMenu), nameof(ShopMenu.releaseLeftClick)),
+                    AccessTools.Method(typeof(ShopMenu), nameof(ShopMenu.receiveRightClick))
+                };
+            
             return new[]
             {
                 AccessTools.Method(typeof(ShopMenu), nameof(ShopMenu.receiveLeftClick)),
@@ -47,6 +54,8 @@ namespace BETAS.Triggers
         [HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
+            if (Constants.Platform is Platform.Android) return ShopMenu_AndroidTranspiler(instructions, il);
+            
             var code = instructions.ToList();
             try
             {
@@ -89,6 +98,38 @@ namespace BETAS.Triggers
             catch (Exception ex)
             {
                 Log.Error("Error in BETAS.ItemSold_ShopMenu_receiveLeftClick/receiveRightClick_Transpiler: \n" + ex);
+                return code;
+            }
+        }
+
+        private static IEnumerable<CodeInstruction> ShopMenu_AndroidTranspiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
+        {
+            var code = instructions.ToList();
+            try
+            {
+                var matcher = new CodeMatcher(code, il);
+
+                matcher.MatchStartForward(
+                    new CodeMatch(OpCodes.Isinst),
+                    new CodeMatch(OpCodes.Ldc_I4_M1),
+                    new CodeMatch(OpCodes.Conv_I8),
+                    new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(Item), nameof(Item.sellToStorePrice)))
+                ).ThrowIfNotMatch(
+                    "Could not find entry point for ShopMenu_AndroidTranspiler");
+
+                matcher.Insert(
+                    new CodeInstruction(OpCodes.Dup),
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(ShopMenu), nameof(ShopMenu.ShopId))),
+                    new CodeInstruction(OpCodes.Call,
+                        AccessTools.Method(typeof(ItemSold), nameof(Trigger)))
+                );
+
+                return matcher.InstructionEnumeration();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error in BETAS.ItemSold_ShopMenu_AndroidTranspiler: \n" + ex);
                 return code;
             }
         }
