@@ -93,9 +93,9 @@ namespace BETAS.Triggers
 
                 var bushItem = ItemRegistry.Create("Bush");
 
-                if (!__instance.townBush.Value && __instance.tileSheetOffset.Value == 1 && __instance.inBloom())
+                if (!__instance.townBush.Value && __instance.tileSheetOffset.Value == 1 && __instance.inBloom() && __instance.GetShakeOffItem() is { } itemId)
                 {
-                    var item = ItemRegistry.Create(__instance.GetShakeOffItem());
+                    var item = ItemRegistry.Create(itemId);
                     if (item is not null)
                     {
                         bushItem.ItemId = $"{item.Name} Bush";
