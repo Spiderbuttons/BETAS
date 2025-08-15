@@ -27,7 +27,7 @@ public static class ItemEnchantments
             return enchants.Any();
         }
         
-        return GameStateQuery.Helpers.AnyArgMatches(query, 2, (enchant) =>
+        return ArgUtilityExtensions.AnyArgMatches(query, 2, (enchant) =>
         {
             return enchants.Any(e =>
             {

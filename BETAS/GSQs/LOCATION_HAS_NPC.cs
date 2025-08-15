@@ -32,7 +32,7 @@ public static class LocationHasNpc
         {
             return query.Length == 2
                 ? location.characters.Any()
-                : GameStateQuery.Helpers.AnyArgMatches(query, 2,
+                : ArgUtilityExtensions.AnyArgMatches(query, 2,
                     (rawName) => string.Equals(location.Name, Game1.getCharacterFromName(rawName)?.currentLocation?.Name));
         }
 
@@ -41,7 +41,7 @@ public static class LocationHasNpc
 
         return query.Length == 2
             ? npcInLocationFromCache.Any()
-            : GameStateQuery.Helpers.AnyArgMatches(query, 2,
+            : ArgUtilityExtensions.AnyArgMatches(query, 2,
                 (rawName) => npcInLocationFromCache.Contains(rawName.ToLower()));
     }
 }

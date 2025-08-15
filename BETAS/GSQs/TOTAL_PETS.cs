@@ -31,7 +31,7 @@ public static class TotalPets
                 {
                     petCount++;
                 }
-                else if (GameStateQuery.Helpers.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
+                else if (ArgUtilityExtensions.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
                 {
                     petCount++;
                 }
@@ -45,7 +45,7 @@ public static class TotalPets
             {
                 petCount++;
             }
-            else if (GameStateQuery.Helpers.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
+            else if (ArgUtilityExtensions.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
             {
                 petCount++;
             }

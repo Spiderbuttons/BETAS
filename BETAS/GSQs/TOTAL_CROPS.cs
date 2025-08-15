@@ -34,7 +34,7 @@ public static class TotalCrops
             if (!ArgUtility.HasIndex(query, 3))
             {
                 cropCount++;
-            } else if (GameStateQuery.Helpers.AnyArgMatches(query, 3, (cropID) =>
+            } else if (ArgUtilityExtensions.AnyArgMatches(query, 3, (cropID) =>
                        {
                            if (crop.indexOfHarvest.Value is null) return ItemRegistry.QualifyItemId(crop.netSeedIndex.Value).Equals(ItemRegistry.QualifyItemId(cropID));
                            return ItemRegistry.QualifyItemId(crop.indexOfHarvest.Value)

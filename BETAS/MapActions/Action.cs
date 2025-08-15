@@ -12,7 +12,6 @@ public static class Action
 {
     public static bool TileAction(GameLocation location, string[] args, Farmer player, Point point)
     {
-        // join every element in the args array but not the first element
         string action = string.Join(" ", args[1..]);
         if (!TriggerActionManager.TryRunAction(action, out string error, out _))
         {

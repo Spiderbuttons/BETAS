@@ -17,6 +17,6 @@ public static class SaloonDish
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return GameStateQuery.Helpers.AnyArgMatches(query, 1, (dishName) => Game1.dishOfTheDay.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(dishName), StringComparison.OrdinalIgnoreCase));
+        return ArgUtilityExtensions.AnyArgMatches(query, 1, (dishName) => Game1.dishOfTheDay.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(dishName), StringComparison.OrdinalIgnoreCase));
     }
 }

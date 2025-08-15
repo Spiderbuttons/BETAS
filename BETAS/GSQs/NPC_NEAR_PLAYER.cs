@@ -30,7 +30,7 @@ public static class NpcNearPlayer
                 return target.currentLocation.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
             }
 
-            return GameStateQuery.Helpers.AnyArgMatches(query, 3,
+            return ArgUtilityExtensions.AnyArgMatches(query, 3,
                 (rawName) =>
                 {
                     return target.currentLocation.characters.Any(i =>

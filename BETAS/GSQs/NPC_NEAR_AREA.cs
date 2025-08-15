@@ -44,7 +44,7 @@ public static class NpcNearArea
             {
                 return target.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
             }
-            return GameStateQuery.Helpers.AnyArgMatches(query, 5, (rawName) =>
+            return ArgUtilityExtensions.AnyArgMatches(query, 5, (rawName) =>
             {
                 return target.characters.Any(i =>
                     i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
@@ -62,7 +62,7 @@ public static class NpcNearArea
             return npcPositionsFromCache.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Value)));
         }
         
-        return GameStateQuery.Helpers.AnyArgMatches(query, 5, (rawName) =>
+        return ArgUtilityExtensions.AnyArgMatches(query, 5, (rawName) =>
         {
             return npcPositionsFromCache.Any(i => i.Key.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Value)));
         });

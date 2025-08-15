@@ -19,6 +19,6 @@ public static class WeatherForTomorrow
 
         var weatherTomorrow = locationContext.EqualsIgnoreCase("Default") ? Game1.weatherForTomorrow : Game1.netWorldState.Value.GetWeatherForLocation(locationContext).WeatherForTomorrow;
 
-        return GameStateQuery.Helpers.AnyArgMatches(query, 2, (weather) => weatherTomorrow.EqualsIgnoreCase(weather));
+        return ArgUtilityExtensions.AnyArgMatches(query, 2, (weather) => weatherTomorrow.EqualsIgnoreCase(weather));
     }
 }

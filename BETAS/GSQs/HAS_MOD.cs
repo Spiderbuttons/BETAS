@@ -16,6 +16,6 @@ public static class HasMod
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return GameStateQuery.Helpers.AnyArgMatches(query, 1, (modID) => BETAS.LoadedMods.Contains(modID));
+        return ArgUtilityExtensions.AnyArgMatches(query, 1, (modID) => BETAS.LoadedMods.Contains(modID));
     }
 }

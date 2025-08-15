@@ -19,7 +19,7 @@ public static class PlayerHeldItem
         
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target =>
         {
-            return GameStateQuery.Helpers.AnyArgMatches(query, 2,
+            return ArgUtilityExtensions.AnyArgMatches(query, 2,
                 (itemID) => target.ActiveObject?.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(itemID)) == true ||
                            target.CurrentTool?.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(itemID)) == true
                 );

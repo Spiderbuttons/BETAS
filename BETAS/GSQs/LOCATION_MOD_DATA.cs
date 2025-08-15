@@ -77,7 +77,7 @@ public static class LocationModData
         }
 
         var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-        return GameStateQuery.Helpers.AnyArgMatches(query, 3,
+        return ArgUtilityExtensions.AnyArgMatches(query, 3,
             (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }

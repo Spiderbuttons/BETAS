@@ -16,7 +16,7 @@ public static class NpcIsSingle
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return GameStateQuery.Helpers.AnyArgMatches(query, 1, (name) =>
+        return ArgUtilityExtensions.AnyArgMatches(query, 1, (name) =>
             {
                 var npc = Game1.getCharacterFromName(name);
                 if (npc == null)

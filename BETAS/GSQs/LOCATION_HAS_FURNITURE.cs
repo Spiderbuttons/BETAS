@@ -25,7 +25,7 @@ public static class LocationHasFurniture
             var foundFurniture = false;
             Utility.ForEachLocation((gameLocation) =>
             {
-                if (GameStateQuery.Helpers.AnyArgMatches(query, 2,
+                if (ArgUtilityExtensions.AnyArgMatches(query, 2,
                         (furnitureID) => gameLocation.furniture.Any(furniture => furniture.QualifiedItemId == furnitureID || furniture.ItemId == furnitureID)))
                 {
                     foundFurniture = true;
@@ -41,7 +41,7 @@ public static class LocationHasFurniture
             var foundFurniture = true;
             Utility.ForEachLocation((gameLocation) =>
             {
-                if (!GameStateQuery.Helpers.AnyArgMatches(query, 2,
+                if (!ArgUtilityExtensions.AnyArgMatches(query, 2,
                         (furnitureID) => gameLocation.furniture.Any(furniture => furniture.QualifiedItemId == furnitureID || furniture.ItemId == furnitureID)))
                 {
                     foundFurniture = false;
@@ -58,7 +58,7 @@ public static class LocationHasFurniture
             return GameStateQuery.Helpers.ErrorResult(query, "no location found with name '" + locationName + "'");
         }
         
-        return GameStateQuery.Helpers.AnyArgMatches(query, 2,
+        return ArgUtilityExtensions.AnyArgMatches(query, 2,
                 (furnitureID) => location.furniture.Any(furniture => furniture.QualifiedItemId == furnitureID || furniture.ItemId == furnitureID));
     }
 }

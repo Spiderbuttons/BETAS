@@ -36,7 +36,7 @@ public static class NpcNearNpc
             return npc.CachedLocation().CachedCharacters().Any(i => i.Name != npc.Name && rect.Contains(i.CachedTilePoint()));
         }
         
-        return GameStateQuery.Helpers.AnyArgMatches(query, 3, (rawName) =>
+        return ArgUtilityExtensions.AnyArgMatches(query, 3, (rawName) =>
         {
             return npc.CachedLocation().CachedCharacters().Any(i => i.Name.Equals(rawName) && rect.Contains(i.CachedTilePoint()));
         });

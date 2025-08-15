@@ -19,7 +19,7 @@ public static class ItemInWorld
         var found = false;
         Utility.ForEachItem((item) =>
         {
-            if (!GameStateQuery.Helpers.AnyArgMatches(query, 1,
+            if (!ArgUtilityExtensions.AnyArgMatches(query, 1,
                     (itemID) => item.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(itemID)))) return true;
             found = true;
             return false;
