@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewValley;
@@ -10,18 +11,23 @@ namespace BETAS.Helpers;
 
 public static class ArgUtilityExtensions
 {
-    private static string GetValueParseError(string[] array, int index, bool required, string typeSummary)
+    private static string GetFieldLabel(int index, string? name)
     {
-        return $"{(required ? "required" : "optional")} index {index} has value '{array[index]}', which can't be parsed as {typeSummary}";
+        return name != null ? $"index {index} ({name})" : $"index {index}";
+    }
+    
+    private static string GetValueParseError(string[] array, int index, string? name, bool required, string typeSummary)
+    {
+        return $"{(required ? "required" : "optional")} {GetFieldLabel(index, name)} has value '{array[index]}', which can't be parsed as {typeSummary}";
     }
 
-    private static string GetMissingRequiredIndexError(string[] array, int index)
+    private static string GetMissingRequiredIndexError(string[] array, int index, string? name)
     {
         return array.Length switch
         {
-            0 => $"required index {index} not found (list is empty)",
-            1 => $"required index {index} not found (list has a single value at index 0)",
-            _ => $"required index {index} not found (list has indexes 0 through {array.Length - 1})"
+            0 => "required " + GetFieldLabel(index, name) + " not found (list is empty)", 
+            1 => "required " + GetFieldLabel(index, name) + " not found (list has a single value at index 0)", 
+            _ => $"required {GetFieldLabel(index, name)} not found (list has indexes 0 through {array.Length - 1})", 
         };
     }
 
@@ -71,7 +77,7 @@ public static class ArgUtilityExtensions
     }
 
     public static bool TryGetTokenizable(string[]? array, int index, [NotNullWhen(true)] out string? value, out string? error,
-        bool allowBlank = true)
+        bool allowBlank = true, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
         {
@@ -85,7 +91,7 @@ public static class ArgUtilityExtensions
         if (index < 0 || index >= array.Length)
         {
             value = null;
-            error = GetMissingRequiredIndexError(array, index);
+            error = GetMissingRequiredIndexError(array, index, name);
             return false;
         }
 
@@ -93,7 +99,7 @@ public static class ArgUtilityExtensions
         if (!allowBlank && string.IsNullOrWhiteSpace(value))
         {
             value = null;
-            error = $"required index {index} has a blank value";
+            error = $"required {GetFieldLabel(index, name)} has a {(!string.IsNullOrWhiteSpace(array[index]) ? "blank value after parsing" : "blank value")}";
             return false;
         }
 
@@ -102,7 +108,7 @@ public static class ArgUtilityExtensions
     }
 
     public static bool TryGetOptionalTokenizable(string[]? array, int index, out string? value,
-        out string? error, string? defaultValue = null, bool allowBlank = true)
+        out string? error, string? defaultValue = null, bool allowBlank = true, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
         {
@@ -124,7 +130,7 @@ public static class ArgUtilityExtensions
         if (!allowBlank && string.IsNullOrWhiteSpace(value))
         {
             value = null;
-            error = $"optional index {index} can't have a blank value";
+            error = $"optional {GetFieldLabel(index, name)} can't have a {(!string.IsNullOrWhiteSpace(array[index]) ? "blank value after parsing" : "blank value")}";
             return false;
         }
 
@@ -172,10 +178,9 @@ public static class ArgUtilityExtensions
         return true;
     }
 
-    public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string? error,
-        bool allowBlank = true)
+    public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = 0;
             return false;
@@ -184,7 +189,7 @@ public static class ArgUtilityExtensions
         if (!int.TryParse(raw, out value))
         {
             value = 0;
-            error = GetValueParseError(array, index, required: true, "an integer");
+            error = GetValueParseError(array, index, name, required: true, "an integer");
             return false;
         }
 
@@ -193,7 +198,7 @@ public static class ArgUtilityExtensions
     }
     
     public static bool TryGetOptionalTokenizableInt(string[]? array, int index, out int value, out string? error,
-        int defaultValue = 0)
+        int defaultValue = 0, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
         {
@@ -214,7 +219,7 @@ public static class ArgUtilityExtensions
         if (!int.TryParse(TokenParser.ParseText(array[index]), out value))
         {
             value = defaultValue;
-            error = GetValueParseError(array, index, required: false, "an integer");
+            error = GetValueParseError(array, index, name, required: false, "an integer");
             return false;
         }
         
@@ -222,10 +227,9 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string? error,
-        bool allowBlank = true)
+    public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = 0f;
             return false;
@@ -234,7 +238,7 @@ public static class ArgUtilityExtensions
         if (!float.TryParse(raw, out value))
         {
             value = 0f;
-            error = GetValueParseError(array, index, required: true, "a float");
+            error = GetValueParseError(array, index, name, required: true, "a float");
             return false;
         }
 
@@ -243,7 +247,7 @@ public static class ArgUtilityExtensions
     }
     
     public static bool TryGetOptionalTokenizableFloat(string[]? array, int index, out float value, out string? error,
-        float defaultValue = 0f)
+        float defaultValue = 0f, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
         {
@@ -264,7 +268,7 @@ public static class ArgUtilityExtensions
         if (!float.TryParse(TokenParser.ParseText(array[index]), out value))
         {
             value = defaultValue;
-            error = GetValueParseError(array, index, required: false, "a float");
+            error = GetValueParseError(array, index, name, required: false, "a float");
             return false;
         }
         
@@ -272,10 +276,9 @@ public static class ArgUtilityExtensions
         return true;
     }
     
-    public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string? error,
-        bool allowBlank = true)
+    public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = false;
             return false;
@@ -284,7 +287,7 @@ public static class ArgUtilityExtensions
         if (!bool.TryParse(raw, out value))
         {
             value = false;
-            error = GetValueParseError(array, index, required: true, "a boolean");
+            error = GetValueParseError(array, index, name, required: true, "a boolean");
             return false;
         }
 
@@ -293,7 +296,7 @@ public static class ArgUtilityExtensions
     }
     
     public static bool TryGetOptionalTokenizableBool(string[]? array, int index, out bool value, out string? error,
-        bool defaultValue = false)
+        bool defaultValue = false, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
         {
@@ -314,7 +317,7 @@ public static class ArgUtilityExtensions
         if (!bool.TryParse(TokenParser.ParseText(array[index]), out value))
         {
             value = defaultValue;
-            error = GetValueParseError(array, index, required: false, "a boolean");
+            error = GetValueParseError(array, index, name, required: false, "a boolean");
             return false;
         }
         
@@ -322,10 +325,10 @@ public static class ArgUtilityExtensions
         return true;
     }
 
-    public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string? error)
+    public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string? error, [CallerArgumentExpression("value")] string? name = null)
         where TEnum : struct
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false))
+        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = default(TEnum);
             return false;
@@ -335,7 +338,7 @@ public static class ArgUtilityExtensions
         {
             Type type = typeof(TEnum);
             value = default;
-            error = GetValueParseError(array, index, required: true, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
+            error = GetValueParseError(array, index, name, required: true, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
 
@@ -344,7 +347,7 @@ public static class ArgUtilityExtensions
     }
     
     public static bool TryGetOptionalTokenizableEnum<TEnum>(string[]? array, int index, out TEnum value, out string? error,
-        TEnum defaultValue = default) where TEnum : struct
+        TEnum defaultValue = default, [CallerArgumentExpression("value")] string? name = null) where TEnum : struct
     {
         if (array == null)
         {
@@ -366,7 +369,7 @@ public static class ArgUtilityExtensions
         {
             Type type = typeof(TEnum);
             value = defaultValue;
-            error = GetValueParseError(array, index, required: false, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
+            error = GetValueParseError(array, index, name, required: false, $"an enum of type '{type.FullName ?? type.Name}' (should be one of {string.Join(", ", Enum.GetNames(type))})");
             return false;
         }
         

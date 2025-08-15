@@ -12,7 +12,7 @@ public static class SetStamina
     [Action("SetStamina")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizableInt(args, 1, out var stamina, out error, allowBlank: false) || !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out var overrideBool, out error, defaultValue: false))
+        if (!ArgUtilityExtensions.TryGetTokenizableInt(args, 1, out var stamina, out error) || !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out var overrideBool, out error, defaultValue: false))
         {
             error = "Usage: Spiderbuttons.BETAS_SetStamina <Value> [Override Max]";
             return false;
