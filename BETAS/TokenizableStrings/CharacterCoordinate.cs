@@ -35,12 +35,13 @@ public static class TKCharacterCoordinate
             return true;
         }
 
-        Point? tilePoint = ArgUtilityExtensions.GetCharacterTilePointFromNameOrCache(characterName);
-        if (tilePoint is null)
+        NPC npc = Game1.getCharacterFromName(characterName);
+        if (npc is null)
         {
-            return TokenParser.LogTokenError(query, "no coordinates found for character with name '" + characterName + "'", out replacement);
+            return TokenParser.LogTokenError(query, "no NPC found with name '" + characterName + "'", out replacement);
         }
-            
+        
+        Point? tilePoint = npc.CachedTilePoint();
         if (axis.Equals("X", StringComparison.OrdinalIgnoreCase))
         {
             replacement = tilePoint.Value.X.ToString();

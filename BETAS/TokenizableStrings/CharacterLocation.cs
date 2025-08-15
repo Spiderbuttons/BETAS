@@ -24,13 +24,9 @@ public static class TKCharacterLocation
             return true;
         }
 
-        GameLocation? location = ArgUtilityExtensions.GetCharacterLocationFromNameOrCache(characterName);
-        if (location == null)
-        {
-            return TokenParser.LogTokenError(query, "no location found for character with name '" + characterName + "'", out replacement);
-        }
+        NPC npc = Game1.getCharacterFromName(characterName);
             
-        replacement = displayName ? location.DisplayName : location.Name;
+        replacement = displayName ? npc.CachedLocation().DisplayName : npc.CachedLocation().Name;
         return true;
     }
 }
