@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using StardewValley;
 
@@ -6,6 +8,10 @@ namespace BETAS;
 
 public class MultiplayerNpcCache
 {
+    // TODO: Also need to make some sort of GameLocation.characters cache, to get all the NPCs in a location.
+    // This NpcCache isn't good enough because we'd need to iterate over every NPC in this cache to know which location they're in.
+    // That's not great!
+    
     public class NpcCacheData(string npcName, string locationName, Point tilePoint, Vector2 position)
     {
         public readonly string NpcName = npcName;
@@ -63,7 +69,20 @@ public class MultiplayerNpcCache
         });
     }
     
-    // TODO: Make a function to grab the cached data, checking each cache in order, rather than only checking the L1 cache in GSQs.
+    public List<NpcCacheData> GetAllCachedCharacters()
+    {
+        return L1Cache.Values.Concat(L2Cache.Values).Concat(L3Cache.Values).ToList();
+    }
+    
+    public bool TryGetCachedCharacter(string name, [NotNullWhen(true)] out NpcCacheData? data)
+    {
+        if (L1Cache.TryGetValue(name, out data)) return true;
+        if (L2Cache.TryGetValue(name, out data)) return true;
+        if (L3Cache.TryGetValue(name, out data)) return true;
+        
+        data = null;
+        return false;
+    }
 
     public List<NpcCacheData> CheckL1Cache()
     {

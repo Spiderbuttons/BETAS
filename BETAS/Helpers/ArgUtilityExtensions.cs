@@ -24,25 +24,6 @@ public static class ArgUtilityExtensions
             _ => $"required index {index} not found (list has indexes 0 through {array.Length - 1})"
         };
     }
-
-    public static GameLocation? GetCharacterLocationFromNameOrCache(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return null;
-        }
-
-        var npc = Game1.getCharacterFromName(name);
-        if (npc is null) return null;
-
-        if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
-            !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
-        {
-            return npc.currentLocation;
-        }
-
-        return Game1.getLocationFromName(cache.LocationName);
-    }
     
     public static void ForEachArg(string[] args, int startIndex, Action<string> action)
     {
@@ -50,44 +31,6 @@ public static class ArgUtilityExtensions
         {
             action(args[i]);
         }
-    }
-    
-    public static Vector2? GetCharacterPositionFromNameOrCache(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return null;
-        }
-        
-        var npc = Game1.getCharacterFromName(name);
-        if (npc is null) return null;
-        
-        if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
-            !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
-        {
-            return npc.Position;
-        }
-        
-        return cache.Position;
-    }
-    
-    public static Point? GetCharacterTilePointFromNameOrCache(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-        {
-            return null;
-        }
-        
-        var npc = Game1.getCharacterFromName(name);
-        if (npc is null) return null;
-        
-        if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
-            !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
-        {
-            return npc.TilePoint;
-        }
-        
-        return cache.TilePoint;
     }
 
     private static string[] CombineTokenizableIndices(string[]? array)
