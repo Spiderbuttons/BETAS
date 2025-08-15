@@ -22,7 +22,7 @@ namespace BETAS.Triggers
                 if ((__instance.maxShake != 0f && !doEvenIfStillShaking) || __instance.growthStage.Value < 3 ||
                     __instance.stump.Value) return;
 
-                var treeItem = ItemRegistry.Create(__instance.treeType.Value);
+                var treeItem = ItemRegistry.Create(__instance.treeType.Value ?? "Tree");
                 treeItem.modData["BETAS/FloraShaken/Stage"] = $"{__instance.growthStage.Value}";
                 treeItem.modData["BETAS/FloraShaken/Seed"] = $"{__instance.GetData()?.SeedItemId ?? "Unknown"}";
                 treeItem.modData["BETAS/FloraShaken/WasInSeason"] = $"{__instance.IsInSeason()}";
@@ -52,7 +52,7 @@ namespace BETAS.Triggers
                 if ((__instance.maxShake != 0f && !doEvenIfStillShaking) || __instance.growthStage.Value < 3 ||
                     __instance.stump.Value) return;
 
-                var treeItem = ItemRegistry.Create(__instance.treeId.Value);
+                var treeItem = ItemRegistry.Create(__instance.treeId.Value ?? "Fruit Tree");
 
                 var fruits = __instance.fruit.Select(fruit => fruit.QualifiedItemId).ToList();
                 if (__instance.struckByLightningCountdown.Value > 0) fruits.Add("(O)382");
