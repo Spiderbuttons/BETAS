@@ -24,14 +24,6 @@ public static class ArgUtilityExtensions
             _ => $"required index {index} not found (list has indexes 0 through {array.Length - 1})"
         };
     }
-    
-    public static void ForEachArg(string[] args, int startIndex, Action<string> action)
-    {
-        for (var i = startIndex; i < args.Length; i++)
-        {
-            action(args[i]);
-        }
-    }
 
     private static string[] CombineTokenizableIndices(string[]? array)
     {
@@ -48,6 +40,34 @@ public static class ArgUtilityExtensions
         }
         
         return newArray.ToArray();
+    }
+    
+    public static bool AnyArgMatches(string[] query, int startAt, Func<string, bool?> check)
+    {
+        query = CombineTokenizableIndices(query);
+        for (int i = startAt; i < query.Length; i++)
+        {
+            bool? flag = check(TokenParser.ParseText(query[i]));
+            if (flag.HasValue)
+            {
+                if (flag.GetValueOrDefault())
+                {
+                    return true;
+                }
+                continue;
+            }
+            return false;
+        }
+        return false;
+    }
+    
+    public static void ForEachArg(string[] args, int startIndex, Action<string> action)
+    {
+        args = CombineTokenizableIndices(args);
+        for (var i = startIndex; i < args.Length; i++)
+        {
+            action(TokenParser.ParseText(args[i]));
+        }
     }
 
     public static bool TryGetTokenizable(string[]? array, int index, [NotNullWhen(true)] out string? value, out string? error,
