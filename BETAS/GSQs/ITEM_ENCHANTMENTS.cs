@@ -13,7 +13,8 @@ public static class ItemEnchantments
     [GSQ("ITEM_ENCHANTMENTS")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !TokenizableArgUtility.TryGetOptional(query, 2, out var _, out error))
+        if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || 
+            !TokenizableArgUtility.TryGetOptional(query, 2, out _, out error, name: "string Enchantment"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -21,12 +22,12 @@ public static class ItemEnchantments
         if (item is not Tool tool) return false;
 
         var enchants = tool.enchantments;
-        
+
         if (query.Length == 2)
         {
             return enchants.Any();
         }
-        
+
         return TokenizableArgUtility.AnyArgMatches(query, 2, (enchant) =>
         {
             return enchants.Any(e =>

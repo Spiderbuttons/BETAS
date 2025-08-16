@@ -11,10 +11,10 @@ public static class PlayerHasCookedItem
     [GSQ("PLAYER_HAS_COOKED_ITEM")]
     public static bool Current(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var itemId, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var min, out error, defaultValue: 1) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, defaultValue: int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var itemId, out error, name: "string Item ID") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var min, out error, defaultValue: 1, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, defaultValue: int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

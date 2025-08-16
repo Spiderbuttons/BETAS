@@ -13,8 +13,8 @@ public static class FarmModData
     [GSQ("FARM_MOD_DATA")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 2, out var value, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetOptional(query, 2, out var value, out error, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -29,9 +29,9 @@ public static class FarmModData
     [GSQ("FARM_MOD_DATA_RANGE")]
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error) ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out var minRange, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var maxRange, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var minRange, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var maxRange, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -44,8 +44,8 @@ public static class FarmModData
     [GSQ("FARM_MOD_DATA_CONTAINS")]
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out _, out error, false))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error, name: "string Key") ||
+            !TokenizableArgUtility.TryGet(query, 2, out _, out error, false, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

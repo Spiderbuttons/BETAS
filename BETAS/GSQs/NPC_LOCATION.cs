@@ -14,7 +14,7 @@ public static class NpcLocation
     [GSQ("NPC_LOCATION")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out string? npcName, out var error, name: "NPC Name") ||
+        if (!TokenizableArgUtility.TryGet(query, 1, out string? npcName, out var error, name: "string NPC") ||
             !TokenizableArgUtility.TryGetLocationName(query, 2, context.Location, out _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);

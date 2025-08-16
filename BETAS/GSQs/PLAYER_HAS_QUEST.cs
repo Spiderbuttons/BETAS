@@ -11,8 +11,8 @@ public static class PlayerHasQuest
     [GSQ("PLAYER_HAS_QUEST")]
     public static bool Current(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var questId, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var questId, out error, name: "string Quest ID"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

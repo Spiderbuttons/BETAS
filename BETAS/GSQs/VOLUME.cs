@@ -11,9 +11,9 @@ public static class Volume
     [GSQ("VOLUME")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var category, out var error) ||
-            !TokenizableArgUtility.TryGetFloat(query, 2, out var min, out error) ||
-            !TokenizableArgUtility.TryGetOptionalFloat(query, 3, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var category, out var error, name: "string Category") ||
+            !TokenizableArgUtility.TryGetFloat(query, 2, out var min, out error, name: "float Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalFloat(query, 3, out var max, out error, int.MaxValue, name: "float Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

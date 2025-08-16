@@ -12,9 +12,9 @@ public static class TotalPets
     [GSQ("TOTAL_PETS")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetInt(query, 1, out var min, out var error) || 
-            !TokenizableArgUtility.TryGetOptionalInt(query, 2, out var max, out error, int.MaxValue) ||
-            !TokenizableArgUtility.TryGetOptional(query, 3, out var _, out error))
+        if (!TokenizableArgUtility.TryGetInt(query, 1, out var min, out var error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 2, out var max, out error, int.MaxValue, name: "int Maximum") ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out _, out error, name: "string Pet Type"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

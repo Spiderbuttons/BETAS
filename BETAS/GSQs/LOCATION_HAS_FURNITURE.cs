@@ -15,7 +15,7 @@ public static class LocationHasFurniture
     {
         GameLocation contextualLocation = context.Location;
         if (!TokenizableArgUtility.TryGetLocationName(query, 1, contextualLocation, out var locationName, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var _, out error))
+            !TokenizableArgUtility.TryGet(query, 2, out _, out error, name: "string Furniture ID"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

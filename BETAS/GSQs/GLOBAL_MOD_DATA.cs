@@ -13,9 +13,9 @@ public static class GlobalModData
     [GSQ("GLOBAL_MOD_DATA")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 3, out var value, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error, name: "string UniqueID") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out var value, out error, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -23,7 +23,7 @@ public static class GlobalModData
         var mod = BETAS.ModRegistry.Get(uniqueId);
         if (mod == null)
         {
-            return GameStateQuery.Helpers.ErrorResult(query, $"No mod found with unique ID '{uniqueId}'");
+            return GameStateQuery.Helpers.ErrorResult(query, $"No mod found with UniqueID '{uniqueId}'");
         }
 
         var ignoreValue = !ArgUtility.HasIndex(query, 3);
@@ -36,10 +36,10 @@ public static class GlobalModData
     [GSQ("GLOBAL_MOD_DATA_RANGE")]
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error, name: "string UniqueID") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int Maximum")) 
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -47,7 +47,7 @@ public static class GlobalModData
         var mod = BETAS.ModRegistry.Get(uniqueId);
         if (mod == null)
         {
-            return GameStateQuery.Helpers.ErrorResult(query, $"No mod found with unique ID '{uniqueId}'");
+            return GameStateQuery.Helpers.ErrorResult(query, $"No mod found with UniqueID '{uniqueId}'");
         }
 
         return AdvancedPermissions.GlobalModData.TryReadGlobalModData(mod, key, out var data, out error) && int.TryParse(data, out var dataInt) &&
@@ -58,9 +58,9 @@ public static class GlobalModData
     [GSQ("GLOBAL_MOD_DATA_CONTAINS")]
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGet(query, 3, out _, out error, false))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error, name: "string UniqueID") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGet(query, 3, out _, out error, false, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -68,7 +68,7 @@ public static class GlobalModData
         var mod = BETAS.ModRegistry.Get(uniqueId);
         if (mod == null)
         {
-            return GameStateQuery.Helpers.ErrorResult(query, $"No mod found with unique ID '{uniqueId}'");
+            return GameStateQuery.Helpers.ErrorResult(query, $"No mod found with UniqueID '{uniqueId}'");
         }
 
         if (!AdvancedPermissions.GlobalModData.TryReadGlobalModData(mod, key, out var data, out error))

@@ -12,7 +12,7 @@ public static class CurrentSong
     [GSQ("CURRENT_SONG")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetOptional(query, 1, out var _, out var error))
+        if (!TokenizableArgUtility.TryGetOptional(query, 1, out _, out var error, name: "string Song ID"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

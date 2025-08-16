@@ -11,25 +11,18 @@ public static class PlayerSpouseGender
     [GSQ("PLAYER_SPOUSE_GENDER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var genderName, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGetEnum(query, 2, out Gender gender, out error, name: "Gender Spouse Gender"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
-
-        var genderEnum = genderName switch
-        {
-            "Male" => Gender.Male,
-            "Female" => Gender.Female,
-            _ => Gender.Undefined
-        };
 
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, target =>
         {
             var spouse = target.getSpouse();
             if (spouse == null)
                 return false;
-            return spouse.Gender == genderEnum;
+            return spouse.Gender == gender;
         });
     }
 }

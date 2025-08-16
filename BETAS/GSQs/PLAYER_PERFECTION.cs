@@ -18,10 +18,10 @@ public static class PlayerPerfection
     [GSQ("PLAYER_PERFECTION_ITEMS_SHIPPED")]
     public static bool Items(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error, name: "string Calculation") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -59,10 +59,10 @@ public static class PlayerPerfection
     [GSQ("PLAYER_PERFECTION_FISH_CAUGHT")]
     public static bool Fish(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error, name: "string Calculation") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -99,10 +99,10 @@ public static class PlayerPerfection
     [GSQ("PLAYER_PERFECTION_RECIPES_COOKED")]
     public static bool Cooking(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error, name: "string Calculation") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -139,10 +139,10 @@ public static class PlayerPerfection
     [GSQ("PLAYER_PERFECTION_RECIPES_CRAFTED")]
     public static bool Crafting(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error, name: "string Calculation") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -176,10 +176,10 @@ public static class PlayerPerfection
     [GSQ("PLAYER_PERFECTION_FRIENDSHIP")]
     public static bool Friendships(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGet(query, 2, out var calculation, out error, name: "string Calculation") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var min, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

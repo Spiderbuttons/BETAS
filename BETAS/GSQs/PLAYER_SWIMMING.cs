@@ -11,7 +11,7 @@ public static class PlayerSwimming
     [GSQ("PLAYER_SWIMMING")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

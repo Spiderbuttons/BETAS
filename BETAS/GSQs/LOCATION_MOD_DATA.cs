@@ -15,15 +15,10 @@ public static class LocationModData
     {
         GameLocation? location = context.Location;
         if (!TokenizableArgUtility.TryGetLocation(query, 1, ref location, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 3, out var value, out error))
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out var value, out error, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
-        }
-
-        if (location == null)
-        {
-            return false;
         }
 
         bool ignoreValue = !ArgUtility.HasIndex(query, 3);
@@ -38,16 +33,11 @@ public static class LocationModData
     {
         GameLocation? location = context.Location;
         if (!TokenizableArgUtility.TryGetLocation(query, 1, ref location, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
-        }
-
-        if (location == null)
-        {
-            return false;
         }
 
         return location.modData.TryGetValue(key, out var data) && int.TryParse(data, out var dataInt) &&
@@ -60,15 +50,10 @@ public static class LocationModData
     {
         GameLocation? location = context.Location;
         if (!TokenizableArgUtility.TryGetLocation(query, 1, ref location, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGet(query, 3, out _, out error, false))
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGet(query, 3, out _, out error, false, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
-        }
-
-        if (location == null)
-        {
-            return false;
         }
 
         if (!location.modData.TryGetValue(key, out var data))

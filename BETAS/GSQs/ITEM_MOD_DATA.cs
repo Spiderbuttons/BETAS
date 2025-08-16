@@ -14,8 +14,8 @@ public static class ItemModData
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item,
-                out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 3, out var value, out error))
+                out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out var value, out error, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -36,9 +36,9 @@ public static class ItemModData
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
         if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item,
-                out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue))
+                out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -57,8 +57,8 @@ public static class ItemModData
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
         if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item,
-                out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
-            !TokenizableArgUtility.TryGet(query, 3, out _, out error, false))
+                out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGet(query, 3, out _, out error, false, name: "string Value"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
