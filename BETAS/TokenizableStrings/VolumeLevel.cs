@@ -14,7 +14,7 @@ public static class TKVolumeLevel
     [TKString("VolumeLevel")]
     public static bool Parse(string[] query, out string replacement, Random random, Farmer player)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var category, out var error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var category, out var error))
         {
             return TokenParser.LogTokenError(query, error, out replacement);
         }

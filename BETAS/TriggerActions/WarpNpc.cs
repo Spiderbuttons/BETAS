@@ -12,12 +12,12 @@ public static class WarpNpc
     [Action("WarpNpc")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetTokenizable(args, 2, out string? locationName, out error,
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false) ||
+            !TokenizableArgUtility.TryGet(args, 2, out string? locationName, out error,
                 allowBlank: false) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(args, 3, out int x, out error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(args, 4, out int y, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 5, out int facingDirection, out error, 2))
+            !TokenizableArgUtility.TryGetInt(args, 3, out int x, out error) ||
+            !TokenizableArgUtility.TryGetInt(args, 4, out int y, out error) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 5, out int facingDirection, out error, 2))
         {
             error = "Usage: Spiderbuttons.BETAS_WarpNpc <NPC Name> <Location Name> <X> <Y> [Facing Direction]";
             return false;

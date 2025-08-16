@@ -12,7 +12,7 @@ public static class WeatherForTomorrow
     [Action("WeatherForTomorrow")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var locationContext, out error) || !TokenizableArgUtility.TryGetTokenizable(args, 2, out var weather, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var locationContext, out error) || !TokenizableArgUtility.TryGet(args, 2, out var weather, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_WeatherForTomorrow <Context ID> <Weather>";
             return false;

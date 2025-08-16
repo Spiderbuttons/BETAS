@@ -11,7 +11,7 @@ public static class PatchUpdate
     [Action("PatchUpdate")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalTokenizable(args, 1, out string? modId, out error))
+        if (!TokenizableArgUtility.TryGetOptional(args, 1, out string? modId, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_PatchUpdate [UniqueId]";
             return false;

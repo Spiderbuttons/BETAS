@@ -11,8 +11,8 @@ public static class PlayerHeldItem
     [GSQ("PLAYER_HELD_ITEM")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var _, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGet(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

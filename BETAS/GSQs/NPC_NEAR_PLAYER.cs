@@ -13,9 +13,9 @@ public static class NpcNearPlayer
     [GSQ("NPC_NEAR_PLAYER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var radius, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 3, out var _, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error) ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

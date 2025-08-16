@@ -76,7 +76,7 @@ public static class TokenizableArgUtility
         }
     }
 
-    public static bool TryGetTokenizable(string[]? array, int index, [NotNullWhen(true)] out string? value, out string? error,
+    public static bool TryGet(string[]? array, int index, [NotNullWhen(true)] out string? value, out string? error,
         bool allowBlank = true, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
@@ -107,7 +107,7 @@ public static class TokenizableArgUtility
         return true;
     }
 
-    public static bool TryGetOptionalTokenizable(string[]? array, int index, out string? value,
+    public static bool TryGetOptional(string[]? array, int index, out string? value,
         out string? error, string? defaultValue = null, bool allowBlank = true, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
@@ -138,9 +138,9 @@ public static class TokenizableArgUtility
         return true;
     }
 
-    public static bool TryGetTokenizableLocationName(string[] array, int index, GameLocation contextualLocation, [NotNullWhen(true)] out string? value, out string? error)
+    public static bool TryGetLocationName(string[] array, int index, GameLocation contextualLocation, [NotNullWhen(true)] out string? value, out string? error)
     {
-        if (!TryGetTokenizable(array, index, out value, out error, allowBlank: false))
+        if (!TryGet(array, index, out value, out error, allowBlank: false))
         {
             return false;
         }
@@ -160,9 +160,9 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetTokenizableLocation(string[] query, int index, [NotNullWhen(true)] ref GameLocation? location, out string? error)
+    public static bool TryGetLocation(string[] query, int index, [NotNullWhen(true)] ref GameLocation? location, out string? error)
     {
-        if (!TryGetTokenizable(query, index, out var locationTarget, out error))
+        if (!TryGet(query, index, out var locationTarget, out error))
         {
             location = null;
             return false;
@@ -178,9 +178,9 @@ public static class TokenizableArgUtility
         return true;
     }
 
-    public static bool TryGetTokenizableInt(string[] array, int index, out int value, out string? error, [CallerArgumentExpression("value")] string? name = null)
+    public static bool TryGetInt(string[] array, int index, out int value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
+        if (!TryGet(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = 0;
             return false;
@@ -197,7 +197,7 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableInt(string[]? array, int index, out int value, out string? error,
+    public static bool TryGetOptionalInt(string[]? array, int index, out int value, out string? error,
         int defaultValue = 0, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
@@ -227,9 +227,9 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetTokenizableFloat(string[] array, int index, out float value, out string? error, [CallerArgumentExpression("value")] string? name = null)
+    public static bool TryGetFloat(string[] array, int index, out float value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
+        if (!TryGet(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = 0f;
             return false;
@@ -246,7 +246,7 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableFloat(string[]? array, int index, out float value, out string? error,
+    public static bool TryGetOptionalFloat(string[]? array, int index, out float value, out string? error,
         float defaultValue = 0f, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
@@ -276,9 +276,9 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetTokenizableBool(string[] array, int index, out bool value, out string? error, [CallerArgumentExpression("value")] string? name = null)
+    public static bool TryGetBool(string[] array, int index, out bool value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
+        if (!TryGet(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = false;
             return false;
@@ -295,7 +295,7 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableBool(string[]? array, int index, out bool value, out string? error,
+    public static bool TryGetOptionalBool(string[]? array, int index, out bool value, out string? error,
         bool defaultValue = false, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
@@ -325,10 +325,10 @@ public static class TokenizableArgUtility
         return true;
     }
 
-    public static bool TryGetTokenizableEnum<TEnum>(string[] array, int index, out TEnum value, out string? error, [CallerArgumentExpression("value")] string? name = null)
+    public static bool TryGetEnum<TEnum>(string[] array, int index, out TEnum value, out string? error, [CallerArgumentExpression("value")] string? name = null)
         where TEnum : struct
     {
-        if (!TryGetTokenizable(array, index, out var raw, out error, allowBlank: false, name))
+        if (!TryGet(array, index, out var raw, out error, allowBlank: false, name))
         {
             value = default(TEnum);
             return false;
@@ -346,7 +346,7 @@ public static class TokenizableArgUtility
         return true;
     }
     
-    public static bool TryGetOptionalTokenizableEnum<TEnum>(string[]? array, int index, out TEnum value, out string? error,
+    public static bool TryGetOptionalEnum<TEnum>(string[]? array, int index, out TEnum value, out string? error,
         TEnum defaultValue = default, [CallerArgumentExpression("value")] string? name = null) where TEnum : struct
     {
         if (array == null)

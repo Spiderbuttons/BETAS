@@ -12,7 +12,7 @@ public static class GrandpaScore
     [GSQ("GRANDPA_SCORE")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var scoreType, out var error) || !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var min, out error) || !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 3, out var max, out error, defaultValue: int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var scoreType, out var error) || !TokenizableArgUtility.TryGetInt(query, 2, out var min, out error) || !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var max, out error, defaultValue: int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

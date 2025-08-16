@@ -11,8 +11,8 @@ public static class RemoveFarmModData
     [Action("RemoveFarmModData")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? key, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 2, out string? value, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? key, out error) ||
+            !TokenizableArgUtility.TryGetOptional(args, 2, out string? value, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_RemoveFarmModData <Key> [Value]";
             return false;

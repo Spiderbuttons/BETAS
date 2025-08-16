@@ -13,12 +13,12 @@ public static class ClearTerrainFeatures
     [Action("ClearTerrainFeatures")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalTokenizable(args, 1, out var location, out error, defaultValue: "Here") ||
-            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 2, out var type, out error, defaultValue: "All") ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 3, out var topLeftX, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 4, out var topLeftY, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 5, out var bottomRightX, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 6, out var bottomRightY, out error))
+        if (!TokenizableArgUtility.TryGetOptional(args, 1, out var location, out error, defaultValue: "Here") ||
+            !TokenizableArgUtility.TryGetOptional(args, 2, out var type, out error, defaultValue: "All") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 3, out var topLeftX, out error) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out var topLeftY, out error) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 5, out var bottomRightX, out error) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 6, out var bottomRightY, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_ClearTerrainFeatures [Location] [Type] [TopLeftX] [TopLeftY] [BottomRightX] [BottomRightY]";
             return false;

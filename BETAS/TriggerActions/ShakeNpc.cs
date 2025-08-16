@@ -13,9 +13,9 @@ public static class ShakeNpc
     [Action("ShakeNpc")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalTokenizable(args, 1, out string? npcName, out error,
+        if (!TokenizableArgUtility.TryGetOptional(args, 1, out string? npcName, out error,
                 defaultValue: "All") ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 2, out int duration, out error,
+            !TokenizableArgUtility.TryGetOptionalInt(args, 2, out int duration, out error,
                 defaultValue: 1000))
         {
             error = "Usage: Spiderbuttons.BETAS_ShakeNpc [NPC Name] [Duration]";

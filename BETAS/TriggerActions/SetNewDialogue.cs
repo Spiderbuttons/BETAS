@@ -12,9 +12,9 @@ public static class SetNewDialogue
     [Action("SetNewDialogue")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetTokenizable(args, 2, out string? dialogue, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 3, out bool append, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false) ||
+            !TokenizableArgUtility.TryGet(args, 2, out string? dialogue, out error, allowBlank: false) ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 3, out bool append, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_SetNewDialogue <NPC Name> <Dialogue> [Add?]";
             return false;

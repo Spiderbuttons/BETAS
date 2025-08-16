@@ -11,12 +11,12 @@ public static class TextAboveHead
     [Action("TextAboveHead")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? npcName, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetTokenizable(args, 2, out string? dialogue, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 3, out int duration, out error, 3000) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 4, out int delay, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 5, out bool jitter, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 6, out string? colour, out error, defaultValue: null)
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false) ||
+            !TokenizableArgUtility.TryGet(args, 2, out string? dialogue, out error, allowBlank: false) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 3, out int duration, out error, 3000) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out int delay, out error) ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 5, out bool jitter, out error) ||
+            !TokenizableArgUtility.TryGetOptional(args, 6, out string? colour, out error, defaultValue: null)
             )
         {
             error = "Usage: Spiderbuttons.BETAS_TextAboveHead <NPC Name> <Dialogue> [Duration] [Delay] [Jitter?] [Colour]";

@@ -13,9 +13,9 @@ public static class Lightning
     [Action("Lightning")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 1, out int x, out error,
+        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out int x, out error,
                 defaultValue: Game1.player.TilePoint.X) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 2, out int y, out error,
+            !TokenizableArgUtility.TryGetOptionalInt(args, 2, out int y, out error,
                 defaultValue: Game1.player.TilePoint.Y))
         {
             error = "Usage: Spiderbuttons.BETAS_Lightning [X] [Y]";

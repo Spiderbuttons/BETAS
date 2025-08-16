@@ -11,7 +11,7 @@ public static class ChangeMusicTrack
     [Action("ChangeMusicTrack")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var track, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var track, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_ChangeMusicTrack <Track>";
             return false;

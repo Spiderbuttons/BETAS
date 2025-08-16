@@ -11,7 +11,7 @@ public static class PlayerMounted
     [GSQ("PLAYER_MOUNTED")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

@@ -11,7 +11,7 @@ public static class ResetGifts
     [Action("ResetGifts")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var npcName, out error, allowBlank: true) || !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 2, out var gifts, out error, defaultValue: 0) || !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 3, out var today, out error, defaultValue: false))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var npcName, out error, allowBlank: true) || !TokenizableArgUtility.TryGetOptionalInt(args, 2, out var gifts, out error, defaultValue: 0) || !TokenizableArgUtility.TryGetOptionalBool(args, 3, out var today, out error, defaultValue: false))
         {
             error = "Usage: Spiderbuttons.BETAS_ResetGifts <NPC Name> [Amount] [Today?]";
             return false;

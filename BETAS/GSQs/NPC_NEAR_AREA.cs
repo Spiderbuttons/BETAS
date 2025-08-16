@@ -15,11 +15,11 @@ public static class NpcNearArea
     [GSQ("NPC_NEAR_AREA")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var locationName, out var error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var x, out error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(query, 3, out var y, out error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(query, 4, out var radius, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 5, out var _, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var locationName, out var error) ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var x, out error) ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out var y, out error) ||
+            !TokenizableArgUtility.TryGetInt(query, 4, out var radius, out error) ||
+            !TokenizableArgUtility.TryGetOptional(query, 5, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

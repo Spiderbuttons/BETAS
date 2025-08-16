@@ -11,8 +11,8 @@ public static class OpenShop
     [Action("OpenShop")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? shopId, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 2, out string? ownerName, out error, defaultValue: null))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? shopId, out error) ||
+            !TokenizableArgUtility.TryGetOptional(args, 2, out string? ownerName, out error, defaultValue: null))
         {
             error = "Usage: Spiderbuttons.BETAS_OpenShop <ShopId> [Owner]";
             return false;

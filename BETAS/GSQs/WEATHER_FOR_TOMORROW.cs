@@ -12,8 +12,8 @@ public static class WeatherForTomorrow
     [GSQ("WEATHER_FOR_TOMORROW")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var locationContext, out var error) ||
-            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var _, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var locationContext, out var error) ||
+            !TokenizableArgUtility.TryGet(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

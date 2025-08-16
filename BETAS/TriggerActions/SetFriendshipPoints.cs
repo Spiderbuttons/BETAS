@@ -11,7 +11,7 @@ public static class SetFriendshipPoints
     [Action("SetFriendshipPoints")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var npcName, out error, allowBlank: true) || !TokenizableArgUtility.TryGetTokenizableInt(args, 2, out var points, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var npcName, out error, allowBlank: true) || !TokenizableArgUtility.TryGetInt(args, 2, out var points, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_SetFriendshipPoints <NPC Name> <Points>";
             return false;

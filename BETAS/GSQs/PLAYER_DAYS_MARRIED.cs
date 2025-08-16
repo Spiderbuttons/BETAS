@@ -11,9 +11,9 @@ public static class PlayerDaysMarried
     [GSQ("PLAYER_DAYS_MARRIED")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var minDays, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 3, out var maxDays, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var minDays, out error) ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var maxDays, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

@@ -11,11 +11,11 @@ public static class WarpFarmer
     [Action("WarpFarmer")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? locationName, out error,
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? locationName, out error,
                 allowBlank: false) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(args, 2, out int x, out error) ||
-            !TokenizableArgUtility.TryGetTokenizableInt(args, 3, out int y, out error) ||
-            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 4, out int facingDirection, out error, 2))
+            !TokenizableArgUtility.TryGetInt(args, 2, out int x, out error) ||
+            !TokenizableArgUtility.TryGetInt(args, 3, out int y, out error) ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2))
         {
             error = "Usage: Spiderbuttons.BETAS_WarpFarmer <Location Name> <X> <Y> [Facing Direction]";
             return false;
