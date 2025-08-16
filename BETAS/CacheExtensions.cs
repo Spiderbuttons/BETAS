@@ -32,8 +32,7 @@ public static class CacheExtensions
     
     public static GameLocation CachedLocation(this NPC npc)
     {
-        if (Context.IsMainPlayer || npc.currentLocation.Name == Game1.player.currentLocation.Name || npc.currentLocation.isAlwaysActive.Value ||
-            !(BETAS.Cache is not null && BETAS.Cache.TryGetCachedCharacter(npc.Name, out var cache)))
+        if (Context.IsMainPlayer || Game1.player.currentLocation.Name.Equals(npc.currentLocation.Name) || npc.currentLocation.isAlwaysActive.Value || npc.currentLocation.IsActiveLocation() || !(BETAS.Cache is not null && BETAS.Cache.TryGetCachedCharacter(npc.Name, out var cache)))
         {
             return npc.currentLocation;
         }
@@ -43,7 +42,7 @@ public static class CacheExtensions
     
     public static List<NPC> CachedCharacters(this GameLocation location)
     {
-        if (Context.IsMainPlayer || location.isAlwaysActive.Value || BETAS.Cache is null)
+        if (Context.IsMainPlayer || Game1.player.currentLocation.Name.Equals(location.Name) || location.isAlwaysActive.Value || location.IsActiveLocation() || BETAS.Cache is null)
         {
             return location.characters.ToList();
         }
