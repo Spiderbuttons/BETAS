@@ -5,6 +5,7 @@ using BETAS.Helpers;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Delegates;
+using Program = StardewModdingAPI.Program;
 
 namespace BETAS.GSQs;
 
@@ -14,34 +15,19 @@ public static class LocationHasNpc
     [GSQ("LOCATION_HAS_NPC")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        GameLocation contextualLocation = context.Location;
-        if (!TokenizableArgUtility.TryGetLocationName(query, 1, contextualLocation, out var locationName, out var error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 2, out var _, out error))
+        GameLocation? location = context.Location;
+        if (!TokenizableArgUtility.TryGetLocation(query, 1, ref location, out var error) ||
+            !TokenizableArgUtility.TryGetOptional(query, 2, out _, out error, name: "string NPC"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        var location = Game1.getLocationFromName(locationName);
-        if (location == null)
+        if (!ArgUtility.HasIndex(query, 2))
         {
-            return GameStateQuery.Helpers.ErrorResult(query, "no location found with name '" + locationName + "'");
+            return location.CachedCharacters().Any();
         }
         
-        if (location.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
-            BETAS.Cache is null || !BETAS.Cache.L1Cache.Any())
-        {
-            return query.Length == 2
-                ? location.characters.Any()
-                : TokenizableArgUtility.AnyArgMatches(query, 2,
-                    (rawName) => string.Equals(location.Name, Game1.getCharacterFromName(rawName)?.currentLocation?.Name));
-        }
-
-        List<string> npcInLocationFromCache = [];
-        npcInLocationFromCache.AddRange(BETAS.Cache.L1Cache.Values.Where(npc => npc.LocationName == location.Name).Select(npc => npc.NpcName.ToLower()));
-
-        return query.Length == 2
-            ? npcInLocationFromCache.Any()
-            : TokenizableArgUtility.AnyArgMatches(query, 2,
-                (rawName) => npcInLocationFromCache.Contains(rawName.ToLower()));
+        return TokenizableArgUtility.AnyArgMatches(query, 2, (rawName) => location.CachedCharacters().Any(
+            i => i.Name.Equals(rawName)));
     }
 }

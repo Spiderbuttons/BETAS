@@ -13,28 +13,29 @@ public static class NpcNearPlayer
     [GSQ("NPC_NEAR_PLAYER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error) ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 3, out var _, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error, name: "int Radius") ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out _, out error, name: "string NPC"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, delegate(Farmer target)
+        return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, (farmer) =>
         {
-            var playerPosition = Utility.Vector2ToPoint(target.Position);
-            Rectangle rect = new Rectangle(playerPosition.X - radius * 64, playerPosition.Y - radius * 64,
-                (radius * 2 + 1) * 64, (radius * 2 + 1) * 64);
+            var playerTile = farmer.TilePoint;
+            Rectangle rect = new Rectangle(playerTile.X, playerTile.Y, 1, 1);
+            rect.Inflate(radius, radius);
+
             if (!ArgUtility.HasIndex(query, 3))
             {
-                return target.currentLocation.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
+                return farmer.currentLocation.characters.Any(i => rect.Contains(i.TilePoint));
             }
 
             return TokenizableArgUtility.AnyArgMatches(query, 3,
                 (rawName) =>
                 {
-                    return target.currentLocation.characters.Any(i =>
-                        i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
+                    return farmer.currentLocation.characters.Any(i =>
+                        i.Name.Equals(rawName) && rect.Contains(i.TilePoint));
                 });
         });
     }

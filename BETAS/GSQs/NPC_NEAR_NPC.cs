@@ -15,9 +15,9 @@ public static class NpcNearNpc
     [GSQ("NPC_NEAR_NPC")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var npcName, out var error) ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error) ||
-            !TokenizableArgUtility.TryGetOptional(query, 3, out var _, out error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var npcName, out var error, name: "string Target NPC Name") ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error, name: "int Radius") ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out _, out error, name: "string Other NPC Name"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
