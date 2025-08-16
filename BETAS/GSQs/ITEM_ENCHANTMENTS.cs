@@ -13,7 +13,7 @@ public static class ItemEnchantments
     [GSQ("ITEM_ENCHANTMENTS")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var _, out error))
+        if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item, out var error) || !TokenizableArgUtility.TryGetOptionalTokenizable(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -27,7 +27,7 @@ public static class ItemEnchantments
             return enchants.Any();
         }
         
-        return ArgUtilityExtensions.AnyArgMatches(query, 2, (enchant) =>
+        return TokenizableArgUtility.AnyArgMatches(query, 2, (enchant) =>
         {
             return enchants.Any(e =>
             {

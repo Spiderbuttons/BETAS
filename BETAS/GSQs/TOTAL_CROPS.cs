@@ -12,9 +12,9 @@ public static class TotalCrops
     [GSQ("TOTAL_CROPS")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizableInt(query, 1, out var min, out var error) || 
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 2, out var max, out error, int.MaxValue) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 3, out var _, out error))
+        if (!TokenizableArgUtility.TryGetTokenizableInt(query, 1, out var min, out var error) || 
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 2, out var max, out error, int.MaxValue) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 3, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -34,7 +34,7 @@ public static class TotalCrops
             if (!ArgUtility.HasIndex(query, 3))
             {
                 cropCount++;
-            } else if (ArgUtilityExtensions.AnyArgMatches(query, 3, (cropID) =>
+            } else if (TokenizableArgUtility.AnyArgMatches(query, 3, (cropID) =>
                        {
                            if (crop.indexOfHarvest.Value is null) return ItemRegistry.QualifyItemId(crop.netSeedIndex.Value).Equals(ItemRegistry.QualifyItemId(cropID));
                            return ItemRegistry.QualifyItemId(crop.indexOfHarvest.Value)

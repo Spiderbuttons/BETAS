@@ -11,12 +11,12 @@ public static class NpcIsSingle
     [GSQ("NPC_IS_SINGLE")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var _, out var error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var _, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return ArgUtilityExtensions.AnyArgMatches(query, 1, (name) =>
+        return TokenizableArgUtility.AnyArgMatches(query, 1, (name) =>
             {
                 var npc = Game1.getCharacterFromName(name);
                 if (npc == null)

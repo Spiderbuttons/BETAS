@@ -13,10 +13,10 @@ public static class Jump
     [Action("Jump")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? npcName, out error, defaultValue: "All") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableFloat(args, 2, out float jumpVelocity, out error, defaultValue: 4f) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int yVelocity, out error, defaultValue: 0) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int xVelocity, out error, defaultValue: 0))
+        if (!TokenizableArgUtility.TryGetOptionalTokenizable(args, 1, out string? npcName, out error, defaultValue: "All") ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableFloat(args, 2, out float jumpVelocity, out error, defaultValue: 4f) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 3, out int yVelocity, out error, defaultValue: 0) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 4, out int xVelocity, out error, defaultValue: 0))
         {
             error = "Usage: Spiderbuttons.BETAS_Jump [NPC/Farmer] [Velocity] [Vertical Speed] [Horizontal Speed]";
             return false;

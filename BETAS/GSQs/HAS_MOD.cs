@@ -11,11 +11,11 @@ public static class HasMod
     [GSQ("HAS_MOD")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var _, out var error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var _, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return ArgUtilityExtensions.AnyArgMatches(query, 1, (modID) => BETAS.LoadedMods.Contains(modID));
+        return TokenizableArgUtility.AnyArgMatches(query, 1, (modID) => BETAS.LoadedMods.Contains(modID));
     }
 }

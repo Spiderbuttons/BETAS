@@ -11,9 +11,9 @@ public static class PlayerStardropsFound
     [GSQ("PLAYER_STARDROPS_FOUND")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(query, 2, out var minDrops, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 3, out var maxDrops, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var minDrops, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 3, out var maxDrops, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

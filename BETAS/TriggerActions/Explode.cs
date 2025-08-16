@@ -12,17 +12,17 @@ public static class Explode
     [Action("Explode")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 1, out int x, out error,
+        if (!TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 1, out int x, out error,
                 defaultValue: Game1.player.TilePoint.X) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out int y, out error,
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 2, out int y, out error,
                 defaultValue: Game1.player.TilePoint.Y) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 3, out int radius, out error,
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 3, out int radius, out error,
                 defaultValue: 3) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 4, out bool damageFarmers, out error,
+            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 4, out bool damageFarmers, out error,
                 defaultValue: false) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 5, out int damageAmount, out error,
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 5, out int damageAmount, out error,
                 defaultValue: -1) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 6, out bool destroyObjects, out error,
+            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 6, out bool destroyObjects, out error,
                 defaultValue: false))
         {
             error = "Usage: Spiderbuttons.BETAS_Explode [Tile X] [Tile Y] [Radius] [Damage Farmers?] [Damage Amount] [Destroy Objects?]";

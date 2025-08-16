@@ -13,8 +13,8 @@ public static class FarmModData
     [GSQ("FARM_MOD_DATA")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var key, out var error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var value, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var key, out var error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 2, out var value, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -29,9 +29,9 @@ public static class FarmModData
     [GSQ("FARM_MOD_DATA_RANGE")]
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var key, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(query, 2, out var minRange, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 3, out var maxRange, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var key, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var minRange, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 3, out var maxRange, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -44,8 +44,8 @@ public static class FarmModData
     [GSQ("FARM_MOD_DATA_CONTAINS")]
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var key, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out _, out error, false))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var key, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out _, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -57,7 +57,7 @@ public static class FarmModData
         }
 
         var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-        return ArgUtilityExtensions.AnyArgMatches(query, 2,
+        return TokenizableArgUtility.AnyArgMatches(query, 2,
             (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }

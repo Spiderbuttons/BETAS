@@ -14,15 +14,15 @@ public static class NpcLocation
     [GSQ("NPC_LOCATION")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var npcName, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizableLocationName(query, 2, context.Location, out var _, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var npcName, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizableLocationName(query, 2, context.Location, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
         if (npcName.Equals("Any"))
         {
-            return ArgUtilityExtensions.AnyArgMatches(query, 2, (rawName) => Game1.getLocationFromName(rawName)?.characters.Any());
+            return TokenizableArgUtility.AnyArgMatches(query, 2, (rawName) => Game1.getLocationFromName(rawName)?.characters.Any());
         }
 
         var npc = Game1.getCharacterFromName(npcName);
@@ -34,11 +34,11 @@ public static class NpcLocation
         if (npc.currentLocation.Name == Game1.player.currentLocation.Name || Context.IsMainPlayer ||
             !(BETAS.Cache is not null && BETAS.Cache.L1Cache.TryGetValue(npc.Name, out var cache)))
         {
-            return ArgUtilityExtensions.AnyArgMatches(query, 2,
+            return TokenizableArgUtility.AnyArgMatches(query, 2,
                 (rawName) => string.Equals(rawName, npc.currentLocation?.Name, StringComparison.OrdinalIgnoreCase));
         }
 
-        return ArgUtilityExtensions.AnyArgMatches(query, 2,
+        return TokenizableArgUtility.AnyArgMatches(query, 2,
             (rawName) => string.Equals(rawName, cache.LocationName, StringComparison.OrdinalIgnoreCase));
     }
 }

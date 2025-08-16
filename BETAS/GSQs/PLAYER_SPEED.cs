@@ -11,9 +11,9 @@ public static class PlayerSpeed
     [GSQ("PLAYER_SPEED")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizableFloat(query, 2, out var minSpeed, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableFloat(query, 3, out var maxSpeed, out error, float.MaxValue))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizableFloat(query, 2, out var minSpeed, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableFloat(query, 3, out var maxSpeed, out error, float.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

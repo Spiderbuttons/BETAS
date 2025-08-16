@@ -11,8 +11,8 @@ public static class PlayerSpouseGender
     [GSQ("PLAYER_SPOUSE_GENDER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var genderName, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var genderName, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

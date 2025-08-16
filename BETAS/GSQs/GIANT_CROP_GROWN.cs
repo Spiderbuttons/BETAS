@@ -15,7 +15,7 @@ public static class GiantCropGrown
     [GSQ("GIANT_CROP_GROWN")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var cropId, out var error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var cropId, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

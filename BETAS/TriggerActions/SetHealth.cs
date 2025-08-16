@@ -12,7 +12,7 @@ public static class SetHealth
     [Action("SetHealth")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizableInt(args, 1, out var health, out error) || !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out var overrideBool, out error, defaultValue: false))
+        if (!TokenizableArgUtility.TryGetTokenizableInt(args, 1, out var health, out error) || !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 2, out var overrideBool, out error, defaultValue: false))
         {
             error = "Usage: Spiderbuttons.BETAS_SetHealth <Value> [Override Max]";
             return false;

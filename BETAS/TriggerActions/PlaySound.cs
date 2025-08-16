@@ -11,8 +11,8 @@ public static class PlaySound
     [Action("PlaySound")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var cueName, out error, allowBlank: true) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out var local, out error, defaultValue: false))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var cueName, out error, allowBlank: true) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 2, out var local, out error, defaultValue: false))
         {
             error = "Usage: Spiderbuttons.BETAS_PlaySound <Sound> [Everyone?]";
             return false;

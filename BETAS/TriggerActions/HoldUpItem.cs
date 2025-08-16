@@ -11,8 +11,8 @@ public static class HoldUpItem
     [Action("HoldUpItem")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var itemId, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 2, out var count, out error, defaultValue: 1))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var itemId, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 2, out var count, out error, defaultValue: 1))
         {
             error = "Usage: Spiderbuttons.BETAS_HoldUpItem <ItemId> [Count]";
             return false;

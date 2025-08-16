@@ -12,8 +12,8 @@ public static class TriggerAction
     [Action("TriggerAction")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var triggerActionId, out error, allowBlank: false) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out var trigger, out error, defaultValue: "Manual"))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var triggerActionId, out error, allowBlank: false) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 2, out var trigger, out error, defaultValue: "Manual"))
         {
             error = "Usage: Spiderbuttons.BETAS_TriggerAction <Id> [Trigger]";
             return false;

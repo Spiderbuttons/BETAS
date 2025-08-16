@@ -12,9 +12,9 @@ public static class TotalPets
     [GSQ("TOTAL_PETS")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizableInt(query, 1, out var min, out var error) || 
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 2, out var max, out error, int.MaxValue) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 3, out var _, out error))
+        if (!TokenizableArgUtility.TryGetTokenizableInt(query, 1, out var min, out var error) || 
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 2, out var max, out error, int.MaxValue) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 3, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -31,7 +31,7 @@ public static class TotalPets
                 {
                     petCount++;
                 }
-                else if (ArgUtilityExtensions.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
+                else if (TokenizableArgUtility.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
                 {
                     petCount++;
                 }
@@ -45,7 +45,7 @@ public static class TotalPets
             {
                 petCount++;
             }
-            else if (ArgUtilityExtensions.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
+            else if (TokenizableArgUtility.AnyArgMatches(query, 3, (petID) => pet.petType.Value.Equals(petID)))
             {
                 petCount++;
             }

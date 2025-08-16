@@ -12,11 +12,11 @@ public static class MakeMachineReady
     [Action("MakeMachineReady")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(args, 1, out string? machineID, out error, defaultValue: "Any") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string? outputID, out error, defaultValue: "Any") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 3, out string? locationName,
+        if (!TokenizableArgUtility.TryGetOptionalTokenizable(args, 1, out string? machineID, out error, defaultValue: "Any") ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 2, out string? outputID, out error, defaultValue: "Any") ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 3, out string? locationName,
                 out error, defaultValue: "All") ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(args, 4, out int count, out error, defaultValue: -1))
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(args, 4, out int count, out error, defaultValue: -1))
         {
             error = "Usage: Spiderbuttons.BETAS_MakeMachineReady [Machine ID] [Output ID] [Location Name] [Count]";
             return false;

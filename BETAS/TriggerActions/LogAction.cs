@@ -12,9 +12,9 @@ public static class LogAction
     [Action("Log")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out var uniqueId, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out var message, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableEnum(args, 3, out var logLevel, out error, defaultValue: LogLevel.Info))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out var uniqueId, out error) ||
+            !TokenizableArgUtility.TryGetTokenizable(args, 2, out var message, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableEnum(args, 3, out var logLevel, out error, defaultValue: LogLevel.Info))
         {
             return false;
         }

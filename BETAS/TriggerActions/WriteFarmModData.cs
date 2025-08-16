@@ -11,8 +11,8 @@ public static class WriteFarmModData
     [Action("WriteFarmModData")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(args, 2, out string? value, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? key, out error) ||
+            !TokenizableArgUtility.TryGetTokenizable(args, 2, out string? value, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_WriteFarmModData <Key> <Value>";
             return false;

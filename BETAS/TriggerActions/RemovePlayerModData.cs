@@ -11,8 +11,8 @@ public static class RemovePlayerModData
     [Action("RemovePlayerModData")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? key, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(args, 2, out string? value, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? key, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(args, 2, out string? value, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_RemovePlayerModData <Key> [Value]";
             return false;

@@ -14,9 +14,9 @@ public static class LocationModData
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         GameLocation? location = context.Location;
-        if (!ArgUtilityExtensions.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 3, out var value, out error))
+        if (!TokenizableArgUtility.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var key, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 3, out var value, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -37,10 +37,10 @@ public static class LocationModData
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
         GameLocation? location = context.Location;
-        if (!ArgUtilityExtensions.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(query, 3, out var minRange, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 4, out var maxRange, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var key, out error) ||
+            !TokenizableArgUtility.TryGetTokenizableInt(query, 3, out var minRange, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 4, out var maxRange, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -59,9 +59,9 @@ public static class LocationModData
     public static bool Query_Contains(string[] query, GameStateQueryContext context)
     {
         GameLocation? location = context.Location;
-        if (!ArgUtilityExtensions.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var key, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 3, out _, out error, false))
+        if (!TokenizableArgUtility.TryGetTokenizableLocation(query, 1, ref location, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var key, out error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 3, out _, out error, false))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -77,7 +77,7 @@ public static class LocationModData
         }
 
         var list = data.Replace(",", " ").Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
-        return ArgUtilityExtensions.AnyArgMatches(query, 3,
+        return TokenizableArgUtility.AnyArgMatches(query, 3,
             (rawValue) => list.Contains(rawValue, StringComparer.OrdinalIgnoreCase));
     }
 }

@@ -11,24 +11,27 @@ public static class Volume
     [GSQ("VOLUME")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var category, out var error) || !ArgUtilityExtensions.TryGetTokenizableFloat(query, 2, out var min, out error) || !ArgUtilityExtensions.TryGetOptionalTokenizableFloat(query, 3, out var max, out error, int.MaxValue))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var category, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizableFloat(query, 2, out var min, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableFloat(query, 3, out var max, out error, int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        float? volumeLevel = category.ToLower() switch {
+        float? volumeLevel = category.ToLower() switch
+        {
             "music" => Game1.options.musicVolumeLevel,
             "sound" => Game1.options.soundVolumeLevel,
             "ambient" => Game1.options.ambientVolumeLevel,
             "footstep" => Game1.options.footstepVolumeLevel,
             _ => null
         };
-        
+
         if (volumeLevel is null)
         {
             return GameStateQuery.Helpers.ErrorResult(query, $"Invalid volume category: {category}");
         }
-        
+
         return volumeLevel >= min && volumeLevel <= max;
     }
 }

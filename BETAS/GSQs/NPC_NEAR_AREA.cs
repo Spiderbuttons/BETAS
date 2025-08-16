@@ -15,11 +15,11 @@ public static class NpcNearArea
     [GSQ("NPC_NEAR_AREA")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var locationName, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(query, 2, out var x, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(query, 3, out var y, out error) ||
-            !ArgUtilityExtensions.TryGetTokenizableInt(query, 4, out var radius, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 5, out var _, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var locationName, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizableInt(query, 2, out var x, out error) ||
+            !TokenizableArgUtility.TryGetTokenizableInt(query, 3, out var y, out error) ||
+            !TokenizableArgUtility.TryGetTokenizableInt(query, 4, out var radius, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 5, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -44,7 +44,7 @@ public static class NpcNearArea
             {
                 return target.characters.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Position)));
             }
-            return ArgUtilityExtensions.AnyArgMatches(query, 5, (rawName) =>
+            return TokenizableArgUtility.AnyArgMatches(query, 5, (rawName) =>
             {
                 return target.characters.Any(i =>
                     i.Name.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Position)));
@@ -62,7 +62,7 @@ public static class NpcNearArea
             return npcPositionsFromCache.Any(i => rect.Contains(Utility.Vector2ToPoint(i.Value)));
         }
         
-        return ArgUtilityExtensions.AnyArgMatches(query, 5, (rawName) =>
+        return TokenizableArgUtility.AnyArgMatches(query, 5, (rawName) =>
         {
             return npcPositionsFromCache.Any(i => i.Key.Equals(rawName) && rect.Contains(Utility.Vector2ToPoint(i.Value)));
         });

@@ -12,9 +12,9 @@ public static class RegionalFriendship
     [Action("RegionalFriendship")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? region, out error,
-                allowBlank: false) || !ArgUtilityExtensions.TryGetTokenizableInt(args, 2, out var amount, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 3, out var set, out error, defaultValue: false))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? region, out error,
+                allowBlank: false) || !TokenizableArgUtility.TryGetTokenizableInt(args, 2, out var amount, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 3, out var set, out error, defaultValue: false))
         {
             error = "Usage: Spiderbuttons.BETAS_RegionalFriendship <Region> <Amount> [Set?]";
             return false;

@@ -13,7 +13,7 @@ public static class TKPlayerModData
     [TKString("PlayerModData")]
     public static bool Parse(string[] query, out string replacement, Random random, Farmer player)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var key, out var error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var key, out var error))
         {
             return TokenParser.LogTokenError(query, error, out replacement);
         }

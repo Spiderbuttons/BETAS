@@ -12,11 +12,11 @@ public static class SaloonDish
     [GSQ("SALOON_DISH")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var _, out var error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var _, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
-        return ArgUtilityExtensions.AnyArgMatches(query, 1, (dishName) => Game1.dishOfTheDay.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(dishName), StringComparison.OrdinalIgnoreCase));
+        return TokenizableArgUtility.AnyArgMatches(query, 1, (dishName) => Game1.dishOfTheDay.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(dishName), StringComparison.OrdinalIgnoreCase));
     }
 }

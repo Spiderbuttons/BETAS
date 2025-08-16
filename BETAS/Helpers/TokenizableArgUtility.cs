@@ -9,7 +9,7 @@ using StardewValley.TokenizableStrings;
 
 namespace BETAS.Helpers;
 
-public static class ArgUtilityExtensions
+public static class TokenizableArgUtility
 {
     private static string GetFieldLabel(int index, string? name)
     {

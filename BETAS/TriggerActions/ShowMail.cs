@@ -13,8 +13,8 @@ public static class ShowMail
     [Action("ShowMail")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(args, 1, out string? mailId, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableBool(args, 2, out bool flag, out error))
+        if (!TokenizableArgUtility.TryGetTokenizable(args, 1, out string? mailId, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableBool(args, 2, out bool flag, out error))
         {
             error = "Usage: Spiderbuttons.BETAS_ShowMail <Mail ID> [Flag?]";
             return false;

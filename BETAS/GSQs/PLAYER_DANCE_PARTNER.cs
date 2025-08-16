@@ -12,8 +12,8 @@ public static class PlayerDancePartner
     [GSQ("PLAYER_DANCE_PARTNER")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var npc, out error, defaultValue: null))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 2, out var npc, out error, defaultValue: null))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

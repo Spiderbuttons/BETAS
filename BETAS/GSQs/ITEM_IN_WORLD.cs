@@ -11,7 +11,7 @@ public static class ItemInWorld
     [GSQ("ITEM_IN_WORLD")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var _, out var error))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var _, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -19,7 +19,7 @@ public static class ItemInWorld
         var found = false;
         Utility.ForEachItem((item) =>
         {
-            if (!ArgUtilityExtensions.AnyArgMatches(query, 1,
+            if (!TokenizableArgUtility.AnyArgMatches(query, 1,
                     (itemID) => item.QualifiedItemId.Equals(ItemRegistry.QualifyItemId(itemID)))) return true;
             found = true;
             return false;

@@ -15,8 +15,8 @@ public static class LocationHasNpc
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         GameLocation contextualLocation = context.Location;
-        if (!ArgUtilityExtensions.TryGetTokenizableLocationName(query, 1, contextualLocation, out var locationName, out var error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizable(query, 2, out var _, out error))
+        if (!TokenizableArgUtility.TryGetTokenizableLocationName(query, 1, contextualLocation, out var locationName, out var error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizable(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -32,7 +32,7 @@ public static class LocationHasNpc
         {
             return query.Length == 2
                 ? location.characters.Any()
-                : ArgUtilityExtensions.AnyArgMatches(query, 2,
+                : TokenizableArgUtility.AnyArgMatches(query, 2,
                     (rawName) => string.Equals(location.Name, Game1.getCharacterFromName(rawName)?.currentLocation?.Name));
         }
 
@@ -41,7 +41,7 @@ public static class LocationHasNpc
 
         return query.Length == 2
             ? npcInLocationFromCache.Any()
-            : ArgUtilityExtensions.AnyArgMatches(query, 2,
+            : TokenizableArgUtility.AnyArgMatches(query, 2,
                 (rawName) => npcInLocationFromCache.Contains(rawName.ToLower()));
     }
 }

@@ -12,12 +12,12 @@ public static class CurrentSong
     [GSQ("CURRENT_SONG")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetOptionalTokenizable(query, 1, out var _, out var error))
+        if (!TokenizableArgUtility.TryGetOptionalTokenizable(query, 1, out var _, out var error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
 
         if (!ArgUtility.HasIndex(query, 1)) return (Game1.currentSong != null && Game1.currentSong.IsPlaying);
-        return Game1.currentSong != null && ArgUtilityExtensions.AnyArgMatches(query, 1, (songName) => Game1.currentSong.Name.Equals(songName, StringComparison.OrdinalIgnoreCase));
+        return Game1.currentSong != null && TokenizableArgUtility.AnyArgMatches(query, 1, (songName) => Game1.currentSong.Name.Equals(songName, StringComparison.OrdinalIgnoreCase));
     }
 }

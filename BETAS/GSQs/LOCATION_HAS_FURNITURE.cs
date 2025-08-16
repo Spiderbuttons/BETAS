@@ -14,8 +14,8 @@ public static class LocationHasFurniture
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         GameLocation contextualLocation = context.Location;
-        if (!ArgUtilityExtensions.TryGetTokenizableLocationName(query, 1, contextualLocation, out var locationName, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var _, out error))
+        if (!TokenizableArgUtility.TryGetTokenizableLocationName(query, 1, contextualLocation, out var locationName, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var _, out error))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
@@ -25,7 +25,7 @@ public static class LocationHasFurniture
             var foundFurniture = false;
             Utility.ForEachLocation((gameLocation) =>
             {
-                if (ArgUtilityExtensions.AnyArgMatches(query, 2,
+                if (TokenizableArgUtility.AnyArgMatches(query, 2,
                         (furnitureID) => gameLocation.furniture.Any(furniture => furniture.QualifiedItemId == furnitureID || furniture.ItemId == furnitureID)))
                 {
                     foundFurniture = true;
@@ -41,7 +41,7 @@ public static class LocationHasFurniture
             var foundFurniture = true;
             Utility.ForEachLocation((gameLocation) =>
             {
-                if (!ArgUtilityExtensions.AnyArgMatches(query, 2,
+                if (!TokenizableArgUtility.AnyArgMatches(query, 2,
                         (furnitureID) => gameLocation.furniture.Any(furniture => furniture.QualifiedItemId == furnitureID || furniture.ItemId == furnitureID)))
                 {
                     foundFurniture = false;
@@ -58,7 +58,7 @@ public static class LocationHasFurniture
             return GameStateQuery.Helpers.ErrorResult(query, "no location found with name '" + locationName + "'");
         }
         
-        return ArgUtilityExtensions.AnyArgMatches(query, 2,
+        return TokenizableArgUtility.AnyArgMatches(query, 2,
                 (furnitureID) => location.furniture.Any(furniture => furniture.QualifiedItemId == furnitureID || furniture.ItemId == furnitureID));
     }
 }

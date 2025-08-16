@@ -11,10 +11,10 @@ public static class PlayerHasCraftedItem
     [GSQ("PLAYER_HAS_CRAFTED_ITEM")]
     public static bool Current(string[] query, GameStateQueryContext context)
     {
-        if (!ArgUtilityExtensions.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
-            !ArgUtilityExtensions.TryGetTokenizable(query, 2, out var recipeId, out error) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 3, out var min, out error, defaultValue: 1) ||
-            !ArgUtilityExtensions.TryGetOptionalTokenizableInt(query, 4, out var max, out error, defaultValue: int.MaxValue))
+        if (!TokenizableArgUtility.TryGetTokenizable(query, 1, out var playerKey, out var error) ||
+            !TokenizableArgUtility.TryGetTokenizable(query, 2, out var recipeId, out error) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 3, out var min, out error, defaultValue: 1) ||
+            !TokenizableArgUtility.TryGetOptionalTokenizableInt(query, 4, out var max, out error, defaultValue: int.MaxValue))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }
