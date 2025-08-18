@@ -11,9 +11,8 @@ public static class AddQiCoins
     [Action("AddQiCoins")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out int amount, out error, defaultValue: 1))
+        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out int amount, out error, defaultValue: 1, name: "int #Amount"))
         {
-            error = "Usage: Spiderbuttons.BETAS_AddQiCoins [Amount]";
             return false;
         }
 

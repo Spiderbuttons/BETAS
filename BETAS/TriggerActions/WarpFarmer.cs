@@ -11,24 +11,16 @@ public static class WarpFarmer
     [Action("WarpFarmer")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? locationName, out error,
-                allowBlank: false) ||
-            !TokenizableArgUtility.TryGetInt(args, 2, out int x, out error) ||
-            !TokenizableArgUtility.TryGetInt(args, 3, out int y, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2))
+        GameLocation? location = Game1.player.currentLocation;
+        if (!TokenizableArgUtility.TryGetLocation(args, 1, ref location, out error) ||
+            !TokenizableArgUtility.TryGetInt(args, 2, out int x, out error, name: "int #X Coordinate") ||
+            !TokenizableArgUtility.TryGetInt(args, 3, out int y, out error, name: "int #Y Coordinate") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out int facingDirection, out error, 2, name: "int #Facing Direction"))
         {
-            error = "Usage: Spiderbuttons.BETAS_WarpFarmer <Location Name> <X> <Y> [Facing Direction]";
-            return false;
-        }
-        
-        var location = Game1.RequireLocation(locationName);
-        if (location == null)
-        {
-            error = "no location found with name '" + locationName + "'";
             return false;
         }
 
-        Game1.warpFarmer(Game1.getLocationRequest(locationName), x, y, facingDirection);
+        Game1.warpFarmer(Game1.getLocationRequest(location.NameOrUniqueName), x, y, facingDirection);
         return true;
     }
 }

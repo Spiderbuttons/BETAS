@@ -13,10 +13,9 @@ public static class ShowMail
     [Action("ShowMail")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? mailId, out error) ||
-            !TokenizableArgUtility.TryGetOptionalBool(args, 2, out bool flag, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? mailId, out error, name: "string Mail ID") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 2, out bool flag, out error, name: "bool Flag?"))
         {
-            error = "Usage: Spiderbuttons.BETAS_ShowMail <Mail ID> [Flag?]";
             return false;
         }
 

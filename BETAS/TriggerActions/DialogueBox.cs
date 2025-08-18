@@ -15,12 +15,11 @@ public static class DialogueBox
     [Action("DialogueBox")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out var name, out error) ||
-            !TokenizableArgUtility.TryGet(args, 2, out var message, out error) ||
-            !TokenizableArgUtility.TryGetOptional(args, 3, out var portrait, out error, defaultValue: "null") ||
-            !TokenizableArgUtility.TryGetOptional(args, 4, out var displayName, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var name, out error, name: "string NPC") ||
+            !TokenizableArgUtility.TryGet(args, 2, out var message, out error, name: "string Message") ||
+            !TokenizableArgUtility.TryGetOptional(args, 3, out var portrait, out error, defaultValue: "null", name: "string Portrait") ||
+            !TokenizableArgUtility.TryGetOptional(args, 4, out var displayName, out error, name: "string DisplayName"))
         {
-            error = "Usage: Spiderbuttons.BETAS_DialogueBox <Name> <Message> [Portrait] [DisplayName]";
             return false;
         }
 

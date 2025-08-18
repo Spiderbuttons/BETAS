@@ -13,9 +13,8 @@ public static class RandomAction
     [Action("RandomAction")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out _, out error, allowBlank: false))
+        if (!TokenizableArgUtility.TryGet(args, 1, out _, out error, allowBlank: false, name: "string Action String"))
         {
-            error = "Usage: Spiderbuttons.BETAS_RandomAction <Action String>+";
             return false;
         }
         

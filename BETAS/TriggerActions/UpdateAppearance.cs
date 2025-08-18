@@ -44,10 +44,9 @@ public static class UpdateAppearance
     [Action("UpdateAppearance")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetOptional(args, 2, out var appearanceId, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false, name: "string NPC") ||
+            !TokenizableArgUtility.TryGetOptional(args, 2, out var appearanceId, out error, name: "string Appearance ID"))
         {
-            error = "Usage: Spiderbuttons.BETAS_UpdateAppearance <NPC> [AppearanceId]";
             return false;
         }
 

@@ -12,11 +12,10 @@ public static class SetNewDialogue
     [Action("SetNewDialogue")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGet(args, 2, out string? dialogue, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetOptionalBool(args, 3, out bool append, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false, name: "string NPC") ||
+            !TokenizableArgUtility.TryGet(args, 2, out string? dialogue, out error, allowBlank: false, name: "string Dialogue") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 3, out bool append, out error, name: "bool Add?"))
         {
-            error = "Usage: Spiderbuttons.BETAS_SetNewDialogue <NPC Name> <Dialogue> [Add?]";
             return false;
         }
 
@@ -26,6 +25,8 @@ public static class SetNewDialogue
             error = "no NPC found with name '" + npcName + "'";
             return false;
         }
+        
+        // TODO: This may need to be run only on the host?
         
         try
         {

@@ -30,8 +30,8 @@ public static class FarmModData
     public static bool Query_Range(string[] query, GameStateQueryContext context)
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error, name: "string Key") ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out var minRange, out error, name: "int Minimum") ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var maxRange, out error, int.MaxValue, name: "int Maximum"))
+            !TokenizableArgUtility.TryGetInt(query, 2, out var minRange, out error, name: "int #Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var maxRange, out error, int.MaxValue, name: "int #Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

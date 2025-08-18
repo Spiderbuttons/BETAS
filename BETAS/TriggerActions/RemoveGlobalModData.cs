@@ -12,11 +12,10 @@ public static class RemoveGlobalModData
     [Action("RemoveGlobalModData")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? uniqueId, out error) ||
-            !TokenizableArgUtility.TryGet(args, 2, out string? key, out error) ||
-            !TokenizableArgUtility.TryGetOptional(args, 3, out string? value, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? uniqueId, out error, name: "string UniqueID") ||
+            !TokenizableArgUtility.TryGet(args, 2, out string? key, out error, name: "string Key") ||
+            !TokenizableArgUtility.TryGetOptional(args, 3, out string? value, out error, name: "string Value"))
         {
-            error = "Usage: Spiderbuttons.BETAS_RemoveGlobalModData <UniqueId> <Key> [Value]";
             return false;
         }
 

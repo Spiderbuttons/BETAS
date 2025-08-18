@@ -11,10 +11,9 @@ public static class EatObject
     [Action("EatObject")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? itemId, out error) ||
-            !TokenizableArgUtility.TryGetOptionalBool(args, 2, out var fromInventory, out error, defaultValue: true))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? itemId, out error, name: "string Item ID") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 2, out var fromInventory, out error, defaultValue: true, name: "bool From Inventory?"))
         {
-            error = "Usage: Spiderbuttons.BETAS_EatObject <ItemId> [From Inventory?]";
             return false;
         }
 

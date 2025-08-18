@@ -17,9 +17,9 @@ public static class NpcNearArea
     {
         GameLocation? location = context.Location;
         if (!TokenizableArgUtility.TryGetLocation(query, 1, ref location, out var error) ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out int x, out error, name: "int X Coordinate") ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out int y, out error, name: "int Y Coordinate") ||
-            !TokenizableArgUtility.TryGetInt(query, 4, out int radius, out error, name: "int Radius") ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out int x, out error, name: "int #X Coordinate") ||
+            !TokenizableArgUtility.TryGetInt(query, 3, out int y, out error, name: "int #Y Coordinate") ||
+            !TokenizableArgUtility.TryGetInt(query, 4, out int radius, out error, name: "int #Radius") ||
             !TokenizableArgUtility.TryGetOptional(query, 5, out _, out error, name: "string NPC"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);

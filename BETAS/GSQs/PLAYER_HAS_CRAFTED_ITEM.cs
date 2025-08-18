@@ -13,8 +13,8 @@ public static class PlayerHasCraftedItem
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
             !TokenizableArgUtility.TryGet(query, 2, out var recipeId, out error, name: "string Item ID") ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var min, out error, defaultValue: 1, name: "int Minimum") ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, defaultValue: int.MaxValue, name: "int Maximum"))
+            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var min, out error, defaultValue: 1, name: "int #Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var max, out error, defaultValue: int.MaxValue, name: "int #Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

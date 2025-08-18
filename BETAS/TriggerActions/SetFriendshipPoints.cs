@@ -11,19 +11,19 @@ public static class SetFriendshipPoints
     [Action("SetFriendshipPoints")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out var npcName, out error, allowBlank: true) || !TokenizableArgUtility.TryGetInt(args, 2, out var points, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var npcName, out error, allowBlank: true, name: "string NPC") ||
+            !TokenizableArgUtility.TryGetInt(args, 2, out var points, out error, name: "int #Points"))
         {
-            error = "Usage: Spiderbuttons.BETAS_SetFriendshipPoints <NPC Name> <Points>";
             return false;
         }
-        
+
         var npc = Game1.getCharacterFromName(npcName);
         if (npc == null)
         {
             error = "no NPC found with name '" + npcName + "'";
             return false;
         }
-        
+
         if (Game1.player.friendshipData.TryGetValue(npc.Name, out var friendship))
         {
             friendship.Points = points < 0 ? 0 : points;
@@ -32,7 +32,7 @@ public static class SetFriendshipPoints
         {
             Game1.debugOutput = "Tried to change friendship for a friend that wasn't there.";
         }
-        
+
         return true;
     }
 }

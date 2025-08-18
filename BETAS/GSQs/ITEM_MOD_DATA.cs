@@ -37,8 +37,8 @@ public static class ItemModData
     {
         if (!GameStateQuery.Helpers.TryGetItemArg(query, 1, context.TargetItem, context.InputItem, out var item,
                 out var error) || !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int Minimum") ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int Maximum"))
+            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int #Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int #Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

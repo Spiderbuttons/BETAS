@@ -13,10 +13,10 @@ public static class RegionalFriendship
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!TokenizableArgUtility.TryGet(args, 1, out string? region, out error,
-                allowBlank: false) || !TokenizableArgUtility.TryGetInt(args, 2, out var amount, out error) ||
-            !TokenizableArgUtility.TryGetOptionalBool(args, 3, out var set, out error, defaultValue: false))
+                allowBlank: false, name: "string Region") ||
+            !TokenizableArgUtility.TryGetInt(args, 2, out var amount, out error, name: "int #Amount") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 3, out var set, out error, defaultValue: false, name: "bool Set?"))
         {
-            error = "Usage: Spiderbuttons.BETAS_RegionalFriendship <Region> <Amount> [Set?]";
             return false;
         }
 
@@ -37,9 +37,10 @@ public static class RegionalFriendship
                     else Game1.player.changeFriendship(amount, current);
                 }
             }
+
             return true;
         });
-        
+
         return true;
     }
 }

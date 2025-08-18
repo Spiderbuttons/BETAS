@@ -11,9 +11,8 @@ public static class FadeToBlack
     [Action("FadeToBlack")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out var duration, out error, defaultValue: 1000))
+        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out var duration, out error, defaultValue: 1000, name: "int #Duration"))
         {
-            error = "Usage: Spiderbuttons.BETAS_FadeToBlack <Duration>";
             return false;
         }
 

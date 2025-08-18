@@ -11,10 +11,9 @@ public static class AddExperience
     [Action("AddExperience")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out var amount, out error, defaultValue: 1) ||
-            !TokenizableArgUtility.TryGetOptional(args, 2, out var skill, out error))
+        if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out var amount, out error, defaultValue: 1, name: "int #Amount") ||
+            !TokenizableArgUtility.TryGetOptional(args, 2, out var skill, out error, name: "string Skill"))
         {
-            error = "Usage: Spiderbuttons.BETAS_AddExperience [Amount] [Skill]";
             return false;
         }
 

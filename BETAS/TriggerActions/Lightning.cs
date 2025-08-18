@@ -3,6 +3,7 @@ using BETAS.Helpers;
 using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Delegates;
+
 // ReSharper disable PossibleLossOfFraction
 
 namespace BETAS.TriggerActions;
@@ -14,11 +15,10 @@ public static class Lightning
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!TokenizableArgUtility.TryGetOptionalInt(args, 1, out int x, out error,
-                defaultValue: Game1.player.TilePoint.X) ||
+                defaultValue: Game1.player.TilePoint.X, name: "int #X Coordinate") ||
             !TokenizableArgUtility.TryGetOptionalInt(args, 2, out int y, out error,
-                defaultValue: Game1.player.TilePoint.Y))
+                defaultValue: Game1.player.TilePoint.Y, name: "int #Y Coordinate"))
         {
-            error = "Usage: Spiderbuttons.BETAS_Lightning [X] [Y]";
             return false;
         }
 

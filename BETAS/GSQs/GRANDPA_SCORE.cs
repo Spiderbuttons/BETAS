@@ -13,8 +13,8 @@ public static class GrandpaScore
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var scoreType, out var error, name: "string Score Type") ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out var min, out error, name: "int Minimum") ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var max, out error, defaultValue: int.MaxValue, name: "int Maximum"))
+            !TokenizableArgUtility.TryGetInt(query, 2, out var min, out error, name: "int #Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 3, out var max, out error, defaultValue: int.MaxValue, name: "int #Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

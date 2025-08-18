@@ -34,8 +34,8 @@ public static class PlayerModData
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
             !TokenizableArgUtility.TryGet(query, 2, out var key, out error, name: "string Key") ||
-            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int Minimum") ||
-            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int Maximum"))
+            !TokenizableArgUtility.TryGetInt(query, 3, out var minRange, out error, name: "int #Minimum") ||
+            !TokenizableArgUtility.TryGetOptionalInt(query, 4, out var maxRange, out error, int.MaxValue, name: "int #Maximum"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);
         }

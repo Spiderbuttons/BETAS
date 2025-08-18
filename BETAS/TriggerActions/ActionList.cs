@@ -11,9 +11,8 @@ public static class ActionList
     [Action("ActionList")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out var _, out error, allowBlank: false))
+        if (!TokenizableArgUtility.TryGet(args, 1, out _, out error, allowBlank: false, name: "string Action String"))
         {
-            error = "Usage: Spiderbuttons.BETAS_ActionList <Action String>+";
             return false;
         }
 

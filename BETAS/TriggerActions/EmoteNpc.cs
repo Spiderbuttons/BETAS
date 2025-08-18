@@ -11,8 +11,8 @@ public static class EmoteNpc
     [Action("EmoteNpc")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false) ||
-            !TokenizableArgUtility.TryGetInt(args, 2, out int emote, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out string? npcName, out error, allowBlank: false, name: "string NPC") ||
+            !TokenizableArgUtility.TryGetInt(args, 2, out int emote, out error, name: "int #Emote ID"))
         {
             error = "Usage: Spiderbuttons.BETAS_EmoteNpc <NPC Name> <EmoteId>";
             return false;

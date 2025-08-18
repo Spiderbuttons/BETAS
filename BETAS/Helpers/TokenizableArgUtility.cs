@@ -178,6 +178,35 @@ public static class TokenizableArgUtility
         return true;
     }
     
+    public static bool TryGetOptionalLocationName(string[] array, int index, GameLocation contextualLocation,
+        [NotNullWhen(true)] out string? locationName, out string? error, string? defaultValue = null)
+    {
+        if (!TryGetOptional(array, index, out locationName, out error, defaultValue, allowBlank: false))
+        {
+            return false;
+        }
+        
+        if (string.IsNullOrWhiteSpace(locationName))
+        {
+            locationName = defaultValue ?? Game1.player.currentLocation.Name;
+            return true;
+        }
+
+        if (string.Equals(locationName, "Here", StringComparison.OrdinalIgnoreCase))
+        {
+            locationName = Game1.player.currentLocation.Name;
+            return true;
+        }
+        
+        if (string.Equals(locationName, "Target", StringComparison.OrdinalIgnoreCase))
+        {
+            locationName = contextualLocation.Name ?? Game1.currentLocation.Name;
+            return true;
+        }
+
+        return true;
+    }
+    
     public static bool TryGetOptionalLocation(string[]? query, int index, [NotNullWhen(true)] ref GameLocation? location, out string? error,
         GameLocation? defaultValue = null)
     {

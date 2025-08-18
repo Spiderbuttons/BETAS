@@ -12,10 +12,9 @@ public static class ReloadItemField
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
         if (!TokenizableArgUtility.TryGet(args, 1, out string? itemId, out error,
-                allowBlank: false) ||
-            !TokenizableArgUtility.TryGet(args, 2, out var _, out error))
+                allowBlank: false, name: "string Item ID") ||
+            !TokenizableArgUtility.TryGet(args, 2, out _, out error, name: "string Field"))
         {
-            error = "Usage: Spiderbuttons.BETAS_ReloadItemField <ItemId> <Field>+";
             return false;
         }
         

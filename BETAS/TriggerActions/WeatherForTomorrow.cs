@@ -12,12 +12,12 @@ public static class WeatherForTomorrow
     [Action("WeatherForTomorrow")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out var locationContext, out error) || !TokenizableArgUtility.TryGet(args, 2, out var weather, out error))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var locationContext, out error, name: "string Location Context ID") ||
+            !TokenizableArgUtility.TryGet(args, 2, out var weather, out error, name: "string Weather"))
         {
-            error = "Usage: Spiderbuttons.BETAS_WeatherForTomorrow <Context ID> <Weather>";
             return false;
         }
-        
+
         weather = weather.ToLower() switch
         {
             "wind" => "Wind",
@@ -48,6 +48,7 @@ public static class WeatherForTomorrow
         {
             Game1.netWorldState.Value.GetWeatherForLocation(locationContext).WeatherForTomorrow = weather;
         }
+
         return true;
     }
 }

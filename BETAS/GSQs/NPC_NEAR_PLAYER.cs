@@ -14,7 +14,7 @@ public static class NpcNearPlayer
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
-            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error, name: "int Radius") ||
+            !TokenizableArgUtility.TryGetInt(query, 2, out var radius, out error, name: "int #Radius") ||
             !TokenizableArgUtility.TryGetOptional(query, 3, out _, out error, name: "string NPC"))
         {
             return GameStateQuery.Helpers.ErrorResult(query, error);

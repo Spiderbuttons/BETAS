@@ -13,12 +13,11 @@ public static class Jump
     [Action("Jump")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptional(args, 1, out string? npcName, out error, defaultValue: "All") ||
-            !TokenizableArgUtility.TryGetOptionalFloat(args, 2, out float jumpVelocity, out error, defaultValue: 4f) ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 3, out int yVelocity, out error, defaultValue: 0) ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out int xVelocity, out error, defaultValue: 0))
+        if (!TokenizableArgUtility.TryGetOptional(args, 1, out string? npcName, out error, defaultValue: "All", name: "string NPC/Farmer") ||
+            !TokenizableArgUtility.TryGetOptionalFloat(args, 2, out float jumpVelocity, out error, defaultValue: 4f, name: "float #Velocity") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 3, out int yVelocity, out error, defaultValue: 0, name: "int #Vertical Speed") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out int xVelocity, out error, defaultValue: 0, name: "int #Horizontal Speed"))
         {
-            error = "Usage: Spiderbuttons.BETAS_Jump [NPC/Farmer] [Velocity] [Vertical Speed] [Horizontal Speed]";
             return false;
         }
 

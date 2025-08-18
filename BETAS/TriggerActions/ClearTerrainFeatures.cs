@@ -13,18 +13,18 @@ public static class ClearTerrainFeatures
     [Action("ClearTerrainFeatures")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGetOptional(args, 1, out var location, out error, defaultValue: "Here") ||
-            !TokenizableArgUtility.TryGetOptional(args, 2, out var type, out error, defaultValue: "All") ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 3, out var topLeftX, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out var topLeftY, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 5, out var bottomRightX, out error) ||
-            !TokenizableArgUtility.TryGetOptionalInt(args, 6, out var bottomRightY, out error))
+        GameLocation? location = Game1.player.currentLocation;
+        if (!TokenizableArgUtility.TryGetOptionalLocation(args, 1, ref location, out error, defaultValue: Game1.player.currentLocation) ||
+            !TokenizableArgUtility.TryGetOptional(args, 2, out var type, out error, defaultValue: "All", name: "string Type") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 3, out var topLeftX, out error, name: "int #Top Left X Coordinate") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 4, out var topLeftY, out error, name: "int #Top Left Y Coordinate") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 5, out var bottomRightX, out error, name: "int #Bottom Right X Coordinate") ||
+            !TokenizableArgUtility.TryGetOptionalInt(args, 6, out var bottomRightY, out error, name: "int #Bottom Right Y Coordinate"))
         {
-            error = "Usage: Spiderbuttons.BETAS_ClearTerrainFeatures [Location] [Type] [TopLeftX] [TopLeftY] [BottomRightX] [BottomRightY]";
             return false;
         }
 
-        var loc = location.EqualsIgnoreCase("Here") ? Game1.player.currentLocation : Game1.RequireLocation(location);
+        var loc = location;
 
         if (!ArgUtility.HasIndex(args, 1) || !ArgUtility.HasIndex(args, 2))
         {
