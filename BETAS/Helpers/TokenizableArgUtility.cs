@@ -177,6 +177,28 @@ public static class TokenizableArgUtility
         location = loaded;
         return true;
     }
+    
+    public static bool TryGetOptionalLocation(string[]? query, int index, [NotNullWhen(true)] ref GameLocation? location, out string? error,
+        GameLocation? defaultValue = null)
+    {
+        if (query == null)
+        {
+            location = defaultValue ?? Game1.player.currentLocation;
+            error = null;
+            return true;
+        }
+        
+        query = CombineTokenizableIndices(query);
+        
+        if (index < 0 || index >= query.Length || query[index] == string.Empty)
+        {
+            location = defaultValue ?? Game1.player.currentLocation;
+            error = null;
+            return true;
+        }
+
+        return TryGetLocation(query, index, ref location, out error);
+    }
 
     public static bool TryGetInt(string[] array, int index, out int value, out string? error, [CallerArgumentExpression("value")] string? name = null)
     {
