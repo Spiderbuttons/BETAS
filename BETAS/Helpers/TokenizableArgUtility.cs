@@ -107,7 +107,7 @@ public static class TokenizableArgUtility
         return true;
     }
 
-    public static bool TryGetOptional(string[]? array, int index, out string? value,
+    public static bool TryGetOptional(string[]? array, int index, [NotNullIfNotNull("defaultValue")] out string? value,
         out string? error, string? defaultValue = null, bool allowBlank = true, [CallerArgumentExpression("value")] string? name = null)
     {
         if (array == null)
