@@ -15,8 +15,6 @@ public static class AddFestivalScore
         {
             return false;
         }
-        
-        Log.Warn(amount);
 
         Game1.player.festivalScore += amount;
         return true;
