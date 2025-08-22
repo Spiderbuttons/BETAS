@@ -26,7 +26,7 @@ public static class DialogueBox
         var NPC = Game1.getCharacterFromName(name);
         Texture2D? portraitTexture = null;
 
-        if (ArgUtility.HasIndex(args, 3) && !portrait.EqualsIgnoreCase("null"))
+        if (ArgUtility.HasIndex(args, 3) && !portrait.EqualsIgnoreCase("null") && !portrait.EqualsIgnoreCase("none"))
         {
             if (!Game1.content.DoesAssetExist<Texture2D>(portrait))
             {
@@ -38,22 +38,20 @@ public static class DialogueBox
             }
         }
 
-        if (portraitTexture is not null)
+        if (NPC is not null)
         {
-            if (NPC is not null)
+            NPC = new NPC(NPC.Sprite, Vector2.Zero, "", 0, NPC.Name,
+                portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
+                eventActor: false);
+            NPC.displayName = displayName ?? NPC.displayName;
+        }
+        else
+        {
+            NPC = new NPC(new AnimatedSprite("Characters\\Abigail", 0, 16, 16),
+                Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
             {
-                NPC = new NPC(NPC.Sprite, Vector2.Zero, "", 0, NPC.Name, portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
-                    eventActor: false);
-                NPC.displayName = displayName ?? NPC.displayName;
-            }
-            else
-            {
-                NPC = new NPC(new AnimatedSprite("Characters\\Abigail", 0, 16, 16),
-                    Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
-                {
-                    displayName = displayName ?? name
-                };
-            }
+                displayName = displayName ?? name
+            };
         }
 
         try
