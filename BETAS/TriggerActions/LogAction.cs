@@ -1,4 +1,5 @@
-﻿using BETAS.AdvancedPermissions;
+﻿using System.ComponentModel;
+using BETAS.AdvancedPermissions;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using StardewModdingAPI;
@@ -14,7 +15,8 @@ public static class LogAction
     {
         if (!TokenizableArgUtility.TryGet(args, 1, out var uniqueId, out error, name: "string UniqueID") ||
             !TokenizableArgUtility.TryGet(args, 2, out var message, out error, name: "string Message") ||
-            !TokenizableArgUtility.TryGetOptionalEnum(args, 3, out var logLevel, out error, defaultValue: LogLevel.Info, name: "LogLevelEnum Log Level"))
+            !TokenizableArgUtility.TryGetOptionalEnum(args, 3, out var logLevel, out error, defaultValue: LogLevel.Info, name: "LogLevelEnum Log Level") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 4, out var onceOnly, out error, defaultValue: false, name: "bool Once Only"))
         {
             return false;
         }
@@ -26,6 +28,6 @@ public static class LogAction
             return false;
         }
 
-        return Logging.TryLogAsMod(mod, message, logLevel, out error);
+        return Logging.TryLogAsMod(mod, message, logLevel, onceOnly, out error);
     }
 }
