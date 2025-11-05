@@ -16,11 +16,8 @@ namespace BETAS.Triggers
         
         private static void OnMenuChanged(object? sender, MenuChangedEventArgs e)
         {
-            if (!Context.IsWorldReady) return;
             var newMenuItem = ItemRegistry.Create(e.NewMenu?.GetType().Name ?? "null");
             var oldMenuItem = ItemRegistry.Create(e.OldMenu?.GetType().Name ?? "null");
-            if (newMenuItem.ItemId is "null") newMenuItem = null;
-            if (oldMenuItem.ItemId is "null") oldMenuItem = null;
             TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_MenuChanged", targetItem: newMenuItem, inputItem: oldMenuItem);
         }
     }
