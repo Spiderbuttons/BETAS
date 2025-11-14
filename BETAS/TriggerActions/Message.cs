@@ -12,7 +12,8 @@ public static class Message
     [Action("Message")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
-        if (!TokenizableArgUtility.TryGet(args, 1, out var message, out error, allowBlank: false, name: "string Text"))
+        if (!TokenizableArgUtility.TryGet(args, 1, out var message, out error, allowBlank: false, name: "string Text") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 2, out var typing, out error, defaultValue: false, name: "bool Typing?"))
         {
             return false;
         }
@@ -22,11 +23,13 @@ public static class Message
             try
             {
                 var msg = Game1.content.LoadString(message);
-                Game1.drawDialogueNoTyping(msg);
+                if (!typing) Game1.drawDialogueNoTyping(msg);
+                else Game1.drawObjectDialogue(msg);
             }
             catch (Exception)
             {
-                Game1.drawDialogueNoTyping(message);
+                if (!typing) Game1.drawDialogueNoTyping(message);
+                else Game1.drawObjectDialogue(message);
             }
 
             return true;

@@ -18,7 +18,8 @@ public static class DialogueBox
         if (!TokenizableArgUtility.TryGet(args, 1, out var name, out error, name: "string NPC") ||
             !TokenizableArgUtility.TryGet(args, 2, out var message, out error, name: "string Message") ||
             !TokenizableArgUtility.TryGetOptional(args, 3, out var portrait, out error, defaultValue: "null", name: "string Portrait") ||
-            !TokenizableArgUtility.TryGetOptional(args, 4, out var displayName, out error, name: "string DisplayName"))
+            !TokenizableArgUtility.TryGetOptional(args, 4, out var displayName, out error, defaultValue: "null", name: "string DisplayName") ||
+            !TokenizableArgUtility.TryGetOptionalBool(args, 5, out var typing, out error, defaultValue: true, name: "bool Typing?"))
         {
             return false;
         }
@@ -43,14 +44,24 @@ public static class DialogueBox
             NPC = new NPC(NPC.Sprite, Vector2.Zero, "", 0, NPC.Name,
                 portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
                 eventActor: false);
-            NPC.displayName = displayName ?? NPC.displayName;
+            NPC.displayName = displayName switch
+            {
+                null => NPC.displayName,
+                "null" => NPC.displayName,
+                _ => displayName
+            } ?? NPC.displayName;
         }
         else
         {
             NPC = new NPC(new AnimatedSprite("Characters\\Abigail", 0, 16, 16),
                 Vector2.Zero, "", 0, "???", portraitTexture, eventActor: false)
             {
-                displayName = displayName ?? name
+                displayName = displayName switch
+                {
+                    null => name,
+                    "null" => name,
+                    _ => displayName
+                }
             };
         }
 
@@ -62,6 +73,11 @@ public static class DialogueBox
         {
             var dialogue = new Dialogue(NPC, null, message);
             Game1.DrawDialogue(dialogue);
+        }
+        
+        if (Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox)
+        {
+            dialogueBox.showTyping = typing;
         }
 
         return true;
