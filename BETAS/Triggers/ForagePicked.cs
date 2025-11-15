@@ -63,8 +63,6 @@ namespace BETAS.Triggers
                     codeMatcher.Advance(4);
                 });
 
-                Log.ILCode(matcher.InstructionEnumeration(), code);
-
                 return matcher.InstructionEnumeration();
             }
             catch (Exception ex)
