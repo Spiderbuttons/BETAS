@@ -219,16 +219,16 @@ namespace BETAS
                     method.CreateDelegate<TriggerActionDelegate>());
                 GameLocation.RegisterTileAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
                 {
-                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out _, out Exception ex))
+                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out _))
                         return true;
-                    Log.Error($"Error in BETAS TileAction '{name}': {ex}");
+                    Log.Error($"Error in BETAS TileAction '{name}': {error}");
                     return false;
                 });
                 GameLocation.RegisterTouchAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
                 {
-                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out _, out Exception ex))
+                    if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out _))
                         return;
-                    Log.Error($"Error in BETAS TouchAction '{name}': {ex}");
+                    Log.Error($"Error in BETAS TouchAction '{name}': {error}");
                 });
             }
         }
