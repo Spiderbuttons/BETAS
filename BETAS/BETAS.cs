@@ -221,14 +221,14 @@ namespace BETAS
                 {
                     if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out _))
                         return true;
-                    Log.Error($"Error in BETAS TileAction '{name}': {error}");
+                    Log.Error($"Error in BETAS TriggerAction-as-TileAction '{name}': {error}");
                     return false;
                 });
                 GameLocation.RegisterTouchAction($"{Manifest.UniqueID}_{name}", (_, args, _, _) =>
                 {
                     if (TriggerActionManager.TryRunAction(args.Join(null, " "), out string error, out _))
                         return;
-                    Log.Error($"Error in BETAS TouchAction '{name}': {error}");
+                    Log.Error($"Error in BETAS TriggerAction-as-TouchAction '{name}': {error}");
                 });
             }
         }
