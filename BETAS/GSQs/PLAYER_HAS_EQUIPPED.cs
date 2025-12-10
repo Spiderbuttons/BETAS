@@ -20,8 +20,11 @@ public static class PlayerHasEquipped
 
         return GameStateQuery.Helpers.WithPlayer(context.Player, playerKey, delegate(Farmer target)
         {
-            var equipment = target.GetEquippedItems().Concat(target.trinketItems).Select(item => item.QualifiedItemId).ToHashSet();
-            equipment.LogPairs();
+            var equipment = target.GetEquippedItems()
+                .Concat(target.trinketItems)
+                .Where(i => i is not null)
+                .Select(item => item.QualifiedItemId)
+                .ToHashSet();
             return TokenizableArgUtility.AnyArgMatches(query, 2, itemId => equipment.Contains(ItemRegistry.QualifyItemId(itemId)));
         });
     }
