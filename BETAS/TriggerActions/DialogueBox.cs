@@ -11,7 +11,7 @@ namespace BETAS.TriggerActions;
 
 public static class DialogueBox
 {
-    // Make the current farmer perform an emote.
+    // Create a dialogue box to display a message on screen, emulating an NPC dialogue box.
     [Action("DialogueBox")]
     public static bool Action(string[] args, TriggerActionContext context, out string? error)
     {
@@ -23,8 +23,7 @@ public static class DialogueBox
         {
             return false;
         }
-
-        var NPC = Game1.getCharacterFromName(name);
+        
         Texture2D? portraitTexture = null;
 
         if (ArgUtility.HasIndex(args, 3) && !portrait.EqualsIgnoreCase("null") && !portrait.EqualsIgnoreCase("none"))
@@ -39,17 +38,20 @@ public static class DialogueBox
             }
         }
 
+        var NPC = Game1.getCharacterFromName(name);
         if (NPC is not null)
         {
-            NPC = new NPC(NPC.Sprite, Vector2.Zero, "", 0, NPC.Name,
+            NPC = new NPC(new AnimatedSprite($"Characters\\{NPC.Name}", 0, 16, 16), Vector2.Zero, "", NPC.FacingDirection, NPC.Name,
                 portrait.EqualsIgnoreCase("null") ? NPC.Portrait : portraitTexture,
-                eventActor: false);
-            NPC.displayName = displayName switch
+                eventActor: false)
             {
-                null => NPC.displayName,
-                "null" => NPC.displayName,
-                _ => displayName
-            } ?? NPC.displayName;
+                displayName = displayName switch
+                {
+                    null => NPC.displayName,
+                    "null" => NPC.displayName,
+                    _ => displayName
+                } ?? NPC.displayName
+            };
         }
         else
         {
