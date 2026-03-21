@@ -12,17 +12,17 @@ public class MultiplayerNpcCache
     // This NpcCache isn't good enough because we'd need to iterate over every NPC in this cache to know which location they're in.
     // That's not great!
     
-    public class NpcCacheData(string npcName, string locationName, Point tilePoint, Vector2 position)
+    public class NpcCacheData(string npcName, string? locationName, Point tilePoint, Vector2 position)
     {
         public readonly string NpcName = npcName;
-        public string LocationName = locationName;
+        public string? LocationName = locationName;
         public Point TilePoint = tilePoint;
         public Vector2 Position = position;
         public int skippedFrames;
         
         public bool HasChanged(NPC npc)
         {
-            return !LocationName.Equals(npc.currentLocation.Name) || !TilePoint.Equals(npc.TilePoint) || !Position.Equals(npc.Position);
+            return LocationName?.Equals(npc.currentLocation?.NameOrUniqueName) == false || !TilePoint.Equals(npc.TilePoint) || !Position.Equals(npc.Position);
         }
 
         public void Update(string locationName, Point tilePoint, Vector2 position)
@@ -62,7 +62,7 @@ public class MultiplayerNpcCache
             }
             else
             {
-                L1Cache.Add(rawNpc.Name, new NpcCacheData(rawNpc.Name, rawNpc.currentLocation.Name,rawNpc.TilePoint, rawNpc.Position));
+                L1Cache.Add(rawNpc.Name, new NpcCacheData(rawNpc.Name, rawNpc.currentLocation?.Name, rawNpc.TilePoint, rawNpc.Position));
             }
 
             return true;
