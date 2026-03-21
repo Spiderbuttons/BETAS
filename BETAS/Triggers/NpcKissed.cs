@@ -36,13 +36,15 @@ namespace BETAS.Triggers
                     Log.Error("Report this error to BETAS, not to Polyamory Sweet Kiss!");
                 }
             }
-
-            if (BETAS.ModHelper.ModRegistry.IsLoaded("JoXW.HugsAndKisses"))
+            
+            if (BETAS.ModHelper.ModRegistry.IsLoaded("JoXW.HugsAndKisses") || BETAS.ModHelper.ModRegistry.IsLoaded("aedenthorn.HugsAndKisses"))
             {
                 Log.Trace("Adding Hugs and Kisses compatibility patch for NpcKissed...");
+                string methodName = BETAS.ModHelper.ModRegistry.IsLoaded("JoXW.HugsAndKisses") ? 
+                    "HugsAndKisses.Framework.Kissing:PlayerNPCKiss" : "HugsAndKisses.Kissing:PlayerNPCKiss";
                 try
                 {
-                    BETAS.Harmony.Patch(original: AccessTools.Method("HugsAndKisses.Framework.Kissing:PlayerNPCKiss"),
+                    BETAS.Harmony.Patch(original: AccessTools.Method(methodName),
                         transpiler: new HarmonyMethod(typeof(NpcKissed), nameof(Transpiler_Compatibility_PolySweetHugsAndKisses)));
                 }
                 catch (Exception ex)
