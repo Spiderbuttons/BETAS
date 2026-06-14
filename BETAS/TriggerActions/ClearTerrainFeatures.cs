@@ -33,8 +33,8 @@ public static class ClearTerrainFeatures
             loc.largeTerrainFeatures.Clear();
         }
         
-        if (type.EqualsIgnoreCase("!All")) return false;
-        var negate = type is not null && type.StartsWith("!");
+        if (type.EqualsIgnoreCase("!All")) return true;
+        var negate = type.StartsWith("!");
 
         if (!ArgUtility.HasIndex(args, 3))
         {
