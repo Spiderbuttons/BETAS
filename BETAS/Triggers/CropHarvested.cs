@@ -24,6 +24,7 @@ namespace BETAS.Triggers
         }
 
         [HarmonyTranspiler]
+        [HarmonyPriority(Priority.First + 69)]
         [HarmonyPatch(typeof(Crop), nameof(Crop.harvest))]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
