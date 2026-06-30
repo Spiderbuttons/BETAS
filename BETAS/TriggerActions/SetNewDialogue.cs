@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using BETAS.Attributes;
 using BETAS.Helpers;
+using HarmonyLib;
 using StardewValley;
 using StardewValley.Delegates;
 
@@ -34,7 +36,8 @@ public static class SetNewDialogue
             if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox &&
                 dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
             {
-                dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, dialogue, dialogueText).dialogues);
+                dialogueText = $"Dummy text.#" + dialogueText; // https://discord.com/channels/137344473976799233/1275188689152114708/1503962597681004576
+                dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, dialogue, dialogueText).dialogues.Skip(1));
             }
             else
             {
@@ -46,7 +49,8 @@ public static class SetNewDialogue
             if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox2 &&
                 dialogueBox2.characterDialogue.speaker.Name.Equals(npcName))
             {
-                dialogueBox2.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues);
+                dialogue = $"Dummy text.#" + dialogue;
+                dialogueBox2.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues.Skip(1));
             }
             else
             {
