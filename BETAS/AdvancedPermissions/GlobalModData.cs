@@ -15,7 +15,7 @@ public static class GlobalModData
         error = null;
         if (!mod.HasPermission(Permissions.GlobalModData))
         {
-            error = $"Mod with UniqueID '{mod.Manifest.UniqueID}' has not enabled the 'GlobalModData' permission in its manifest.";
+            error = $"Mod with UniqueID '{mod.Manifest.UniqueID}' has not enabled the 'GlobalModData' permission in its manifest";
             return false;
         }
 
@@ -64,7 +64,7 @@ public static class GlobalModData
 
         if (!mod.HasPermission(Permissions.GlobalModData))
         {
-            error = $"Mod with UniqueID '{mod.Manifest.UniqueID}' has not enabled the 'GlobalModData' permission in its manifest.";
+            error = $"Mod with UniqueID '{mod.Manifest.UniqueID}' has not enabled the 'GlobalModData' permission in its manifest";
             return false;
         }
 
@@ -76,7 +76,7 @@ public static class GlobalModData
                 DataHelper helper = (BETAS.ModHelper.Data as DataHelper)!;
                 if (!helper.JsonHelper.ReadJsonFileIfExists(path, out Dictionary<string, string>? data))
                 {
-                    error = $"No global mod data found for mod '{mod.Manifest.UniqueID}'.";
+                    error = $"No global mod data found for mod '{mod.Manifest.UniqueID}'";
                     return false;
                 }
                 value = data.GetValueOrDefault(key);
@@ -86,7 +86,7 @@ public static class GlobalModData
                 var data = mod.Mod!.Helper.Data.ReadGlobalData<Dictionary<string, string>>("betas");
                 if (data is null || !data.TryGetValue(key, out value))
                 {
-                    error = $"Global mod data for mod '{mod.Manifest.UniqueID}' does not contain the key '{key}'.";
+                    error = $"Global mod data for mod '{mod.Manifest.UniqueID}' does not contain the key '{key}'";
                     return false;
                 }
             }

@@ -11,16 +11,22 @@ public static class TKFarmModData
     /// <summary>When given a key, returns the value of that key in the farm's mod data.</summary>
     /// <inheritdoc cref="T:StardewValley.TokenizableStrings.TokenParserDelegate" />
     [TKString("FarmModData")]
-    public static bool Parse(string[] query, out string replacement, Random random, Farmer player)
+    public static bool Parse(string[] query, out string? replacement, Random random, Farmer player)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error) ||
+            !TokenizableArgUtility.TryGetOptional(query, 2, out var defaultValue, out error))
         {
             return TokenParser.LogTokenError(query, error, out replacement);
         }
         
         if (!Game1.getFarm().modData.TryGetValue(key, out var value))
         {
-            return TokenParser.LogTokenError(query, $"Key not found in farm mod data: {key}", out replacement);
+            if (defaultValue is null)
+            {
+                return TokenParser.LogTokenError(query, $"Key not found in farm mod data: {key}", out replacement);
+            }
+            
+            value = defaultValue;
         }
         
         replacement = value;

@@ -13,14 +13,20 @@ public static class TKPlayerModData
     [TKString("PlayerModData")]
     public static bool Parse(string[] query, out string replacement, Random random, Farmer player)
     {
-        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error))
+        if (!TokenizableArgUtility.TryGet(query, 1, out var key, out var error) ||
+            !TokenizableArgUtility.TryGetOptional(query, 2, out var defaultValue, out error))
         {
             return TokenParser.LogTokenError(query, error, out replacement);
         }
         
         if (!Game1.player.modData.TryGetValue(key, out var value))
         {
-            return TokenParser.LogTokenError(query, $"Key not found in player mod data: {key}", out replacement);
+            if (defaultValue is null)
+            {
+                return TokenParser.LogTokenError(query, $"Key not found in player mod data: {key}", out replacement);
+            }
+
+            value = defaultValue;
         }
         
         replacement = value;

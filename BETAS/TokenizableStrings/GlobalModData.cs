@@ -15,7 +15,8 @@ public static class TKGlboalModData
     public static bool Parse(string[] query, out string replacement, Random random, Farmer player)
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var uniqueId, out var error) ||
-            !TokenizableArgUtility.TryGet(query, 2, out var key, out error))
+            !TokenizableArgUtility.TryGet(query, 2, out var key, out error) ||
+            !TokenizableArgUtility.TryGetOptional(query, 3, out var defaultValue, out error))
         {
             return TokenParser.LogTokenError(query, error, out replacement);
         }
@@ -28,7 +29,12 @@ public static class TKGlboalModData
         
         if (!GlobalModData.TryReadGlobalModData(mod, key, out var value, out error))
         {
-            return TokenParser.LogTokenError(query, error, out replacement);
+            if (defaultValue is null || !mod.HasPermission(Permissions.GlobalModData))
+            {
+                return TokenParser.LogTokenError(query, error, out replacement);
+            }
+            
+            value = defaultValue;
         }
         
         replacement = value;
