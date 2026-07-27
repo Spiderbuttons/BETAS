@@ -25,9 +25,9 @@ public static class GlobalModData
             {
                 string path = Path.Combine(Constants.DataPath, ".smapi", "mod-data", mod.ContentPack!.Manifest.UniqueID.ToLower(), "betas.json");
                 DataHelper helper = (BETAS.ModHelper.Data as DataHelper)!;
-                if (!helper.JsonHelper.ReadJsonFileIfExists(path, out Dictionary<string, string>? data))
+                if (!helper.JsonHelper.ReadJsonFileIfExists(path, out Dictionary<string, object>? data))
                 {
-                    data = new Dictionary<string, string>();
+                    data = new Dictionary<string, object>();
                 }
 
                 if (value is null)
@@ -38,8 +38,8 @@ public static class GlobalModData
             }
             else
             {
-                var data = mod.Mod!.Helper.Data.ReadGlobalData<Dictionary<string, string>>("betas");
-                data ??= new Dictionary<string, string>();
+                var data = mod.Mod!.Helper.Data.ReadGlobalData<Dictionary<string, object>>("betas");
+                data ??= new Dictionary<string, object>();
                 if (value is null)
                 {
                     data.Remove(key);
