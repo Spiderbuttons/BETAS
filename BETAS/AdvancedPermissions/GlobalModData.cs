@@ -70,28 +70,35 @@ public static class GlobalModData
 
         try
         {
+            Dictionary<string, object?>? data;
             if (mod.IsContentPack)
             {
                 string path = Path.Combine(Constants.DataPath, ".smapi", "mod-data", mod.ContentPack!.Manifest.UniqueID.ToLower(), "betas.json");
                 DataHelper helper = (BETAS.ModHelper.Data as DataHelper)!;
-                if (!helper.JsonHelper.ReadJsonFileIfExists(path, out Dictionary<string, string>? data))
-                {
-                    error = $"No global mod data found for mod '{mod.Manifest.UniqueID}'";
-                    return false;
-                }
-                value = data.GetValueOrDefault(key);
+                helper.JsonHelper.ReadJsonFileIfExists(path, out data);
             }
-            else
+            else data = mod.Mod!.Helper.Data.ReadGlobalData<Dictionary<string, object?>>("betas");
+
+            if (data is null)
             {
-                var data = mod.Mod!.Helper.Data.ReadGlobalData<Dictionary<string, string>>("betas");
-                if (data is null || !data.TryGetValue(key, out value))
-                {
-                    error = $"Global mod data for mod '{mod.Manifest.UniqueID}' does not contain the key '{key}'";
-                    return false;
-                }
+                error = $"No global mod data found for mod '{mod.Manifest.UniqueID}'";
+                return false;
+            }
+            
+            if (!data.TryGetValue(key, out var objValue))
+            {
+                error = $"Global mod data for mod '{mod.Manifest.UniqueID}' does not contain the key '{key}'";
+                return false;
             }
 
-            return value is not null;
+            if (objValue is null)
+            {
+                error = $"Global mod data for mod '{mod.Manifest.UniqueID}' does not contain a valid value for the key '{key}'";
+                return false;
+            }
+            
+            value = objValue.ToString()!;
+            return true;
         }
         catch (Exception ex)
         {
