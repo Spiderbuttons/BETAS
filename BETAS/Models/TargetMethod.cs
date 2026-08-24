@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
+using StardewValley;
 
 namespace BETAS.Models;
 
@@ -20,5 +21,5 @@ public class TargetMethod
     public bool IsSetter = false;
 
     [ContentSerializer(Optional = true)]
-    public string Assembly = "Stardew Valley";
+    public string Assembly = typeof(Game1).Assembly.FullName!;
 }
