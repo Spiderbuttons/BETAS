@@ -70,7 +70,7 @@ public static class Log
         Debug($"{code.opcode} {code.operand}");
     }
 
-    public static void LogPairs(this IEnumerable? enumerable, int depth = 0)
+    public static void LogEach(this IEnumerable? enumerable, int depth = 0)
     {
         if (enumerable is null)
         {
@@ -85,7 +85,7 @@ public static class Log
                 if (kvp.Value is IEnumerable innerEnumerable and not string)
                 {
                     Debug($"{new string(' ', depth * 2)}{kvp.Key}:");
-                    innerEnumerable.LogPairs(depth + 1);
+                    innerEnumerable.LogEach(depth + 1);
                 }
                 else Debug($"{new string(' ', depth * 2)}{kvp.Key}: {kvp.Value}");
             }
