@@ -54,7 +54,7 @@ namespace BETAS.Triggers
 
                 var treeItem = ItemRegistry.Create(__instance.treeId.Value ?? "Fruit Tree");
 
-                var fruits = __instance.fruit.Select(fruit => fruit.QualifiedItemId).ToList();
+                var fruits = __instance.fruit?.Select(fruit => fruit?.QualifiedItemId ?? "Unknown").ToList() ?? [];
                 if (__instance.struckByLightningCountdown.Value > 0) fruits.Add("(O)382");
                 var possibleFruits = __instance.GetData()?.Fruit
                     .Select(fruit => ItemRegistry.QualifyItemId(fruit.ItemId)).ToList();
@@ -63,7 +63,7 @@ namespace BETAS.Triggers
                 treeItem.modData["BETAS/FloraShaken/Seed"] = $"{ItemRegistry.QualifyItemId(__instance.treeId.Value)}";
                 treeItem.modData["BETAS/FloraShaken/Quality"] = $"{__instance.GetQuality()}";
                 if (fruits.Count != 0) treeItem.modData["BETAS/FloraShaken/Produce"] = $"{string.Join(",", fruits)}";
-                treeItem.modData["BETAS/FloraShaken/ProduceCount"] = $"{__instance.fruit.Count}";
+                treeItem.modData["BETAS/FloraShaken/ProduceCount"] = $"{__instance.fruit?.Count ?? 0}";
                 treeItem.modData["BETAS/FloraShaken/PossibleProduce"] = $"{string.Join(",", possibleFruits ?? [])}";
                 treeItem.modData["BETAS/FloraShaken/WasInSeason"] = $"{__instance.IsInSeasonHere()}";
                 treeItem.modData["BETAS/FloraShaken/WasMossy"] = "false";
