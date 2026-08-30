@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 using BETAS.Attributes;
 using BETAS.Helpers;
 using HarmonyLib;
+using Microsoft.Xna.Framework;
 using StardewValley;
 using StardewValley.Characters;
 using StardewValley.Triggers;
@@ -37,11 +38,13 @@ namespace BETAS.Triggers
                 // Edit from future me: Apparently forageCrop just never happens? I wasted half my time here? Oh well...
                 // Edit from even more future me: Apparently it's for spring onions. I really don't care about those...
                 matcher.MatchEndForward(
-                    new CodeMatch(static i => i.opcode == OpCodes.Call && i.operand.ToString()!.Contains("Clamp")),
-                    new CodeMatch(OpCodes.Stloc_S),
+                    new CodeMatch(i => i.Calls(AccessTools.Method(typeof(MathHelper), nameof(MathHelper.Clamp), [typeof(int), typeof(int), typeof(int)])))
+                ).ThrowIfNotMatch("Could not find proper entry point #1 for Crop_harvest_Transpiler");
+                
+                matcher.MatchEndForward(
                     new CodeMatch(OpCodes.Ldc_I4_1),
                     new CodeMatch(OpCodes.Stloc_S)
-                ).ThrowIfNotMatch("Could not find proper entry point #1 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #2 for Crop_harvest_Transpiler");
 
                 var numToHarvestLocal = (LocalBuilder)matcher.Operand;
                 matcher.Start();
@@ -53,7 +56,7 @@ namespace BETAS.Triggers
                         AccessTools.Method(typeof(JunimoHarvester), nameof(JunimoHarvester.tryToAddItemToHut))),
                     new CodeMatch(OpCodes.Ldc_I4_1),
                     new CodeMatch(OpCodes.Ret)
-                ).ThrowIfNotMatch("Could not find proper entry point #2 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #3 for Crop_harvest_Transpiler");
 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
@@ -72,7 +75,7 @@ namespace BETAS.Triggers
                     new CodeMatch(OpCodes.Ldstr, "moss_cut"),
                     new CodeMatch(OpCodes.Ldloca_S),
                     new CodeMatch(OpCodes.Initobj)
-                ).ThrowIfNotMatch("Could not find proper entry point #3 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #4 for Crop_harvest_Transpiler");
 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
@@ -91,7 +94,7 @@ namespace BETAS.Triggers
                     new CodeMatch(op => (op.opcode == OpCodes.Call || op.opcode == OpCodes.Callvirt) && op.operand.ToString()!.Contains("addItemToInventoryBool")),
                     new CodeMatch(OpCodes.Brfalse),
                     new CodeMatch(OpCodes.Ldloca_S)
-                ).ThrowIfNotMatch("Could not find proper entry point #4 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #5 for Crop_harvest_Transpiler");
 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_1),
@@ -110,7 +113,7 @@ namespace BETAS.Triggers
                     new CodeMatch(OpCodes.Callvirt,
                         AccessTools.Method(typeof(JunimoHarvester), nameof(JunimoHarvester.tryToAddItemToHut))),
                     new CodeMatch(OpCodes.Br_S)
-                ).ThrowIfNotMatch("Could not find proper entry point #5 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #6 for Crop_harvest_Transpiler");
 
                 var harvestItem = (LocalBuilder)matcher.Operand;
 
@@ -118,7 +121,7 @@ namespace BETAS.Triggers
                     new CodeMatch(OpCodes.Ldc_I4_1),
                     new CodeMatch(OpCodes.Stloc_0),
                     new CodeMatch(OpCodes.Br)
-                ).ThrowIfNotMatch("Could not find proper entry point #6 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #7 for Crop_harvest_Transpiler");
 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_S, harvestItem.LocalIndex),
@@ -134,7 +137,7 @@ namespace BETAS.Triggers
                     new CodeMatch(OpCodes.Ldc_I4_1),
                     new CodeMatch(OpCodes.Stloc_0),
                     new CodeMatch(OpCodes.Br_S)
-                ).ThrowIfNotMatch("Could not find proper entry point #7 for Crop_harvest_Transpiler");
+                ).ThrowIfNotMatch("Could not find proper entry point #8 for Crop_harvest_Transpiler");
 
                 matcher.Insert(
                     new CodeInstruction(OpCodes.Ldloc_S, harvestItem.LocalIndex),
