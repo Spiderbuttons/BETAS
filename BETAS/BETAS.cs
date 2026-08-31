@@ -159,7 +159,7 @@ namespace BETAS
         {
             switch (e.Type)
             {
-                case "BETAS.NpcCache" when !Context.IsMainPlayer:
+                case "BETAS.NpcCache" when !Context.IsMainPlayer && !Context.IsSplitScreen:
                 {
                     Cache ??= new MultiplayerNpcCache();
 
