@@ -208,7 +208,7 @@ public static class TokenizableArgUtility
     }
     
     public static bool TryGetOptionalLocation(string[]? query, int index, [NotNullWhen(true)] ref GameLocation? location, out string? error,
-        GameLocation? defaultValue = null)
+        GameLocation? defaultValue = null, [CallerArgumentExpression("location")] string? name = null)
     {
         if (query == null)
         {
