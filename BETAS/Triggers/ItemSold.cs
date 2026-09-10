@@ -51,7 +51,7 @@ namespace BETAS.Triggers
             };
         }
 
-        [HarmonyTranspiler]
+        [HarmonyTranspiler, HarmonyPriority(Priority.HigherThanNormal)]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator il)
         {
             if (Constants.Platform is Platform.Android) return ShopMenu_AndroidTranspiler(instructions, il);
