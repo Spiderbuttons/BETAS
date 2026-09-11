@@ -34,7 +34,7 @@ public static class SetNewDialogue
         {
             var dialogueText = Game1.content.LoadString(dialogue);
             if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox &&
-                dialogueBox.characterDialogue.speaker.Name.Equals(npcName))
+                dialogueBox.characterDialogue?.speaker?.Name?.Equals(npcName) == true)
             {
                 dialogueText = $"Dummy text.#" + dialogueText; // https://discord.com/channels/137344473976799233/1275188689152114708/1503962597681004576
                 dialogueBox.characterDialogue.dialogues.AddRange(new Dialogue(npc, dialogue, dialogueText).dialogues.Skip(1));
@@ -46,15 +46,24 @@ public static class SetNewDialogue
         }
         catch (Exception)
         {
-            if (Game1.activeClickableMenu is not null && Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox2 &&
-                dialogueBox2.characterDialogue.speaker.Name.Equals(npcName))
+            try
             {
-                dialogue = $"Dummy text.#" + dialogue;
-                dialogueBox2.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues.Skip(1));
+                if (Game1.activeClickableMenu is not null &&
+                    Game1.activeClickableMenu is StardewValley.Menus.DialogueBox dialogueBox2 &&
+                    dialogueBox2.characterDialogue?.speaker?.Name?.Equals(npcName) == true)
+                {
+                    dialogue = $"Dummy text.#" + dialogue;
+                    dialogueBox2.characterDialogue.dialogues.AddRange(new Dialogue(npc, null, dialogue).dialogues.Skip(1));
+                }
+                else
+                {
+                    npc.setNewDialogue(new Dialogue(npc, null, dialogue), append);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                npc.setNewDialogue(new Dialogue(npc, null, dialogue), append);
+                error = $"Failed to set new dialogue for NPC '{npcName}': {ex.Message}";
+                return false;
             }
         }
 
