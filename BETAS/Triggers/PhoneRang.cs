@@ -12,12 +12,12 @@ namespace BETAS.Triggers
     {
         [HarmonyPostfix]
         [HarmonyPatch(typeof(Phone), nameof(Phone.Ring))]
-        public static void Ring_Postfix(Phone __instance, string callId)
+        public static void Ring_Postfix(string callId)
         {
             if (string.IsNullOrWhiteSpace(callId)) return; // Means it actually STOPPED ringing.
 
             Item ringItem = ItemRegistry.Create(callId);
-            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_PhoneRang", targetItem: ringItem, inputItem: __instance, location: __instance.Location);
+            TriggerActionManager.Raise($"{BETAS.Manifest.UniqueID}_PhoneRang", targetItem: ringItem, inputItem: ringItem);
         }
     }
 }
