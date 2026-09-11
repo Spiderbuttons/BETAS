@@ -5,10 +5,10 @@ using StardewValley.Delegates;
 
 namespace BETAS.GSQs;
 
-public static class DaysUntilAnniversary
+public static class PlayerDaysUntilAnniversary
 {
     // Check whether or not the days remaining until the player's anniversary is between min and max.
-    [GSQ("DAYS_UNTIL_ANNIVERSARY")]
+    [GSQ("PLAYER_DAYS_UNTIL_ANNIVERSARY")]
     public static bool Query(string[] query, GameStateQueryContext context)
     {
         if (!TokenizableArgUtility.TryGet(query, 1, out var playerKey, out var error, name: "string Player") ||
